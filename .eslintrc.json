@@ -1,0 +1,82 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "react-refresh",
+    "simple-import-sort"
+  ],
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "rules": {
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "single"],
+    "semi": ["error", "always"],
+    "react-refresh/only-export-components": [
+      "warn",
+      { "allowConstantExport": true }
+    ],
+    "react/react-in-jsx-scope": "off",
+    "no-console": "warn",
+    "no-empty-pattern": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.js", "**/*.ts", "**/*.tsx"],
+      "rules": {
+        "simple-import-sort/imports": [
+          "error",
+          {
+            "groups": [
+              // `react` first
+              ["^react$"],
+              // Packages starting with `@godiet`
+              ["^@godiet"],
+              // Packages starting with a character
+              ["^@?\\w"],
+              // Packages starting with `@`
+              ["^@"],
+              // Packages starting with `~`
+              ["^~"],
+              // Imports starting with `../`
+              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+              // Imports starting with `./`
+              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+              // Style imports
+              ["^.+\\.s?css$"],
+              // Side effect imports
+              ["^\\u0000"]
+            ]
+          }
+        ]
+      },
+      "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": 2023
+      }
+    }
+  ]
+}

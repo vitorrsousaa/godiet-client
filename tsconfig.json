@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Aliases */
+    "baseUrl": ".",
+    "paths": {
+      "@godiet-assets/*": ["./src/view/assets/*"],
+      "@godiet-pages/*": ["./src/view/pages/*"],
+      "@godiet-layouts/*": ["./src/view/layouts/*"],
+      "@godiet-components/*": ["./src/view/ui/*"],
+      "@godiet-hooks/*": ["./src/app/hooks/*"],
+      "@godiet-storage": ["src/app/storage/index.ts"],
+      "@godiet-utils/*": ["./src/app/utils/*"],
+      "@godiet-contexts/*": ["./src/app/contexts/*"],
+    },
+  },
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }],
+}
