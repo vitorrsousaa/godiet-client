@@ -18,6 +18,7 @@ export default defineConfig({
       '@godiet-pages': path.resolve(__dirname, './src/view/pages'),
       '@godiet-layouts': path.resolve(__dirname, './src/view/layouts'),
       '@godiet-contexts': path.resolve(__dirname, './src/app/contexts'),
+      '@godiet-constants': path.resolve(__dirname, './src/app/constants'),
     },
   },
 });

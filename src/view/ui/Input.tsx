@@ -1,0 +1,50 @@
+import * as React from 'react';
+
+import { cn } from '@godiet-utils/cn';
+
+import { CrossCircledIcon } from '@radix-ui/react-icons';
+
+export interface InputProps extends React.ComponentProps<'input'> {
+  name: string;
+  error?: string;
+}
+
+const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  const { className, type, id, name, placeholder, error, ...inputProps } =
+    props;
+
+  const inputId = id ?? name;
+
+  return (
+    <div className="relative">
+      <input
+        {...inputProps}
+        type={type}
+        id={inputId}
+        className={cn(
+          'peer flex h-[3.25rem] w-full rounded-md border border-input bg-transparent px-3 py-1 pt-5 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground placeholder-shown:pt-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 ',
+          className
+        )}
+        ref={ref}
+        placeholder=" "
+      />
+
+      <label
+        htmlFor={inputId}
+        className="peer pointer-events-none absolute left-[13px] top-2 text-xs text-gray-700 transition-all peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-base"
+      >
+        {placeholder}
+      </label>
+      {error && (
+        <div className="mt-2 flex items-center gap-2 text-red-700 ">
+          <CrossCircledIcon />
+          <span className="text-sx">{error}</span>
+        </div>
+      )}
+    </div>
+  );
+});
+
+Input.displayName = 'Input';
+
+export { Input };
