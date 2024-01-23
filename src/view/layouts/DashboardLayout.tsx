@@ -25,8 +25,8 @@ import { Link, Outlet } from 'react-router-dom';
 
 export function DashboardLayout() {
   return (
-    <div>
-      <header className="flex h-20 items-center justify-between border border-gray-200 px-3 sm:px-8">
+    <div className="h-full">
+      <header className="flex h-20 items-center justify-between border-b-[1px] border-gray-200 px-3 sm:px-8">
         <div className="flex gap-1 sm:gap-4">
           <Logo />
           <NavigationMenu.Root>
@@ -55,12 +55,12 @@ export function DashboardLayout() {
                   to={routes.SETTINGS}
                   className={navigationMenuTriggerStyle()}
                 >
-                  <GearIcon className="h-4 w-4 text-gray-600 sm:h-5 sm:w-5" />
+                  <GearIcon className="text-icon h-4 w-4 sm:h-5 sm:w-5" />
                 </Link>
               </NavigationMenu.Item>
               <NavigationMenu.Item>
                 <Link to="/" className={navigationMenuTriggerStyle()}>
-                  <BellIcon className="h-4 w-4 text-gray-600 sm:h-5 sm:w-5" />
+                  <BellIcon className="text-icon h-4 w-4 sm:h-5 sm:w-5" />
                 </Link>
               </NavigationMenu.Item>
               <DropdownMenu>
@@ -99,7 +99,7 @@ export function DashboardLayout() {
         </div>
       </header>
 
-      <div className="p-3 sm:p-8">
+      <div className="h-full p-3 sm:p-8">
         <Outlet />
       </div>
     </div>

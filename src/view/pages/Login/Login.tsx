@@ -1,10 +1,9 @@
+import logo from '@godiet-assets/logo.svg';
 import { Button } from '@godiet-components/Button';
 import { Input } from '@godiet-components/Input';
 import { routes } from '@godiet-constants/routes';
 
 import { Link } from 'react-router-dom';
-
-import logo from '../../../../public/logo.svg';
 
 export function Login() {
   return (
