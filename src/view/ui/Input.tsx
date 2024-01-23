@@ -19,6 +19,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     <div className="relative">
       <input
         {...inputProps}
+        name={name}
         type={type}
         id={inputId}
         className={cn(
@@ -31,7 +32,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
       <label
         htmlFor={inputId}
-        className="text-icon peer pointer-events-none absolute left-[13px] top-0.5 text-[10px] transition-all peer-placeholder-shown:top-1.5 peer-placeholder-shown:text-sm sm:top-2 sm:peer-placeholder-shown:top-3.5 sm:peer-placeholder-shown:text-base"
+        className="peer pointer-events-none absolute left-[13px] top-0.5 text-[10px] text-icon transition-all peer-placeholder-shown:top-1.5 peer-placeholder-shown:text-sm sm:top-2 sm:peer-placeholder-shown:top-3.5 sm:peer-placeholder-shown:text-base"
       >
         {placeholder}
       </label>

@@ -5,7 +5,11 @@ import { routes } from '@godiet-config';
 
 import { Link } from 'react-router-dom';
 
+import { useLoginHook } from './Login.hook';
+
 export function Login() {
+  const { errors, isLoading, handleSubmit, register } = useLoginHook();
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-4 bg-gray-100">
       <header className="flex flex-col items-center gap-5 text-center">
@@ -21,10 +25,25 @@ export function Login() {
         </p>
       </header>
       <div className="bg-red-440 flex w-full items-center justify-center p-4">
-        <form className="flex w-full max-w-[504px] flex-col gap-4 rounded-lg border border-gray-300 bg-white p-4 shadow-sm md:p-8">
-          <Input name="email" type="email" placeholder="Email de acesso" />
-          <Input name="password" type="password" placeholder="Senha" />
-          <Button>Entrar</Button>
+        <form
+          className="flex w-full max-w-[504px] flex-col gap-4 rounded-lg border border-gray-300 bg-white p-4 shadow-sm md:p-8"
+          onSubmit={handleSubmit}
+        >
+          <Input
+            type="email"
+            placeholder="Email de acesso"
+            error={errors.email?.message}
+            {...register('email')}
+          />
+          <Input
+            type="password"
+            placeholder="Senha"
+            error={errors.password?.message}
+            {...register('password')}
+          />
+          <Button type="submit" isLoading={isLoading}>
+            Entrar
+          </Button>
         </form>
       </div>
     </div>

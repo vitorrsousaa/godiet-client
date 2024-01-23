@@ -5,7 +5,11 @@ import { routes } from '@godiet-config';
 
 import { Link } from 'react-router-dom';
 
+import { useRegisterHook } from './Register.hook';
+
 export function Register() {
+  const { errors, isLoading, handleSubmit, register } = useRegisterHook();
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-center gap-4 bg-gray-100">
       <header className="flex flex-col items-center gap-5 text-center">
@@ -21,16 +25,37 @@ export function Register() {
         </p>
       </header>
       <div className="bg-red-440 flex w-full items-center justify-center p-4">
-        <form className="flex w-full max-w-[504px] flex-col gap-4 rounded-lg border border-gray-300 bg-white p-4 shadow-sm md:p-8">
-          <Input name="name" type="text" placeholder="Seu nome" />
-          <Input name="email" type="email" placeholder="Email de acesso" />
-          <Input name="password" type="password" placeholder="Senha" />
+        <form
+          className="flex w-full max-w-[504px] flex-col gap-4 rounded-lg border border-gray-300 bg-white p-4 shadow-sm md:p-8"
+          onSubmit={handleSubmit}
+        >
           <Input
-            name="confirmation"
+            type="text"
+            placeholder="Seu nome"
+            {...register('name')}
+            error={errors.name?.message}
+          />
+          <Input
+            type="email"
+            placeholder="Email de acesso"
+            error={errors.email?.message}
+            {...register('email')}
+          />
+          <Input
+            type="password"
+            placeholder="Senha"
+            error={errors.password?.message}
+            {...register('password')}
+          />
+          <Input
             type="password"
             placeholder="Confirme sua senha"
+            error={errors.confirmPassword?.message}
+            {...register('confirmPassword')}
           />
-          <Button>Criar sua conta</Button>
+          <Button type="submit" isLoading={isLoading}>
+            Criar sua conta
+          </Button>
         </form>
       </div>
     </div>
