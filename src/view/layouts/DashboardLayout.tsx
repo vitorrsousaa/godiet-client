@@ -13,7 +13,7 @@ import {
   NavigationMenu,
   navigationMenuTriggerStyle,
 } from '@godiet-components/NavigationMenu';
-import { routes } from '@godiet-constants/routes';
+import { routes } from '@godiet-config';
 
 import {
   BellIcon,
@@ -55,12 +55,12 @@ export function DashboardLayout() {
                   to={routes.SETTINGS}
                   className={navigationMenuTriggerStyle()}
                 >
-                  <GearIcon className="text-icon h-4 w-4 sm:h-5 sm:w-5" />
+                  <GearIcon className="h-4 w-4 text-icon sm:h-5 sm:w-5" />
                 </Link>
               </NavigationMenu.Item>
               <NavigationMenu.Item>
                 <Link to="/" className={navigationMenuTriggerStyle()}>
-                  <BellIcon className="text-icon h-4 w-4 sm:h-5 sm:w-5" />
+                  <BellIcon className="h-4 w-4 text-icon sm:h-5 sm:w-5" />
                 </Link>
               </NavigationMenu.Item>
               <DropdownMenu>

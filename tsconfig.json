@@ -31,7 +31,7 @@
       "@godiet-storage": ["src/app/storage/index.ts"],
       "@godiet-utils/*": ["./src/app/utils/*"],
       "@godiet-contexts/*": ["./src/app/contexts/*"],
-      "@godiet-constants/*": ["./src/app/constants/*"],
+      "@godiet-config": ["./src/app/config/index.ts"],
     },
   },
   "include": ["src"],

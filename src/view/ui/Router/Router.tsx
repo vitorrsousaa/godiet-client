@@ -1,4 +1,4 @@
-import { routes } from '@godiet-constants/routes';
+import { routes } from '@godiet-config';
 import { DashboardLayout } from '@godiet-layouts/DashboardLayout';
 import { SettingsLayout } from '@godiet-layouts/SettingsLayout';
 import { Dashboard } from '@godiet-pages/Dashboard';

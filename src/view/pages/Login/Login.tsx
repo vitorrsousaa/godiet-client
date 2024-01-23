@@ -1,7 +1,7 @@
 import logo from '@godiet-assets/logo.svg';
 import { Button } from '@godiet-components/Button';
 import { Input } from '@godiet-components/Input';
-import { routes } from '@godiet-constants/routes';
+import { routes } from '@godiet-config';
 
 import { Link } from 'react-router-dom';
 

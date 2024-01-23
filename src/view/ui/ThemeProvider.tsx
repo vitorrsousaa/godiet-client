@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import { localStorageKeys } from '@godiet-config';
 import { Theme, ThemeProviderContext } from '@godiet-contexts/theme';
-import { THEME_STORAGE } from '@godiet-storage';
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -15,7 +15,8 @@ export function ThemeProvider({
   ...props
 }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>(
-    () => (localStorage.getItem(THEME_STORAGE) as Theme) || defaultTheme
+    () =>
+      (localStorage.getItem(localStorageKeys.THEME) as Theme) || defaultTheme
   );
 
   useEffect(() => {
@@ -30,6 +31,7 @@ export function ThemeProvider({
         : 'light';
 
       root.classList.add(systemTheme);
+
       return;
     }
 
@@ -38,8 +40,10 @@ export function ThemeProvider({
 
   const value = {
     theme,
+
     setTheme: (theme: Theme) => {
-      localStorage.setItem(THEME_STORAGE, theme);
+      localStorage.setItem(localStorageKeys.THEME, theme);
+
       setTheme(theme);
     },
   };
