@@ -1,9 +1,3 @@
-import { AvatarFallback } from './Fallback';
-import { AvatarImage } from './Image';
-import { AvatarRoot } from './Root';
+import { Avatar } from './Avatar';
 
-export const Avatar = {
-  Root: AvatarRoot,
-  Image: AvatarImage,
-  Fallback: AvatarFallback,
-};
+export { Avatar };

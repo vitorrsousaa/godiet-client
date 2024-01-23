@@ -48,8 +48,6 @@ export function useCreatePatientModalHook(props: CreatePatientModalProps) {
 
   const { errors } = formState;
 
-  console.log(errors);
-
   const handleSubmit = hookFormSubmit(async (data) => {
     try {
       console.log(data);

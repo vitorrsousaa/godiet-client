@@ -6,7 +6,7 @@ import { DangerModal } from '@godiet-components/DangerModal';
 import { PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { CreatePatientModal } from './components/modals/CreatePatientModal';
-import { usePatientsHook } from './components/Patients.hook';
+import { usePatientsHook } from './Patients.hook';
 
 export function Patients() {
   const {
@@ -16,6 +16,7 @@ export function Patients() {
     toggleModalCreatePatient,
     toggleModalDeletePatient,
     handleDeletePatient,
+    handleNavigateToPatientPage,
   } = usePatientsHook();
 
   return (
@@ -44,7 +45,11 @@ export function Patients() {
                   <Card.Description>Description</Card.Description>
                 </Card.Header>
                 <Card.Footer>
-                  <Button>Ver mais</Button>
+                  <Button
+                    onClick={() => handleNavigateToPatientPage(patient.id)}
+                  >
+                    Ver mais
+                  </Button>
                   <Button
                     variant={'destructive'}
                     onClick={() => toggleModalDeletePatient(patient.id)}

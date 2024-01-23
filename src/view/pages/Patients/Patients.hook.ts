@@ -1,5 +1,9 @@
 import { useCallback, useState } from 'react';
 
+import { replaceRouteParams } from '@godiet-utils/replaceRouteParams';
+
+import { useNavigate } from 'react-router-dom';
+
 interface TPatient {
   name: string;
   id: string;
@@ -27,6 +31,8 @@ export function usePatientsHook() {
     string | null
   >(null);
 
+  const navigate = useNavigate();
+
   const toggleModalCreatePatient = useCallback(
     () => setIsCreatePatientModalOpen((prevState) => !prevState),
     []
@@ -43,6 +49,13 @@ export function usePatientsHook() {
     toggleModalDeletePatient(null);
   }, [selectedPatientToDelete, toggleModalDeletePatient]);
 
+  const handleNavigateToPatientPage = useCallback(
+    (patientId: string) => {
+      navigate(replaceRouteParams('PATIENTS_BY_ID', { id: patientId }));
+    },
+    [navigate]
+  );
+
   return {
     patients,
     isCreatePatientModalOpen,
@@ -50,5 +63,6 @@ export function usePatientsHook() {
     toggleModalCreatePatient,
     toggleModalDeletePatient,
     handleDeletePatient,
+    handleNavigateToPatientPage,
   };
 }

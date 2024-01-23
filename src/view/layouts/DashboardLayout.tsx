@@ -25,7 +25,7 @@ import { Link, Outlet } from 'react-router-dom';
 
 export function DashboardLayout() {
   return (
-    <div className="h-full">
+    <section className="h-full">
       <header className="flex h-20 items-center justify-between border-b-[1px] border-gray-200 px-3 sm:px-8">
         <div className="flex gap-1 sm:gap-4">
           <Logo />
@@ -66,10 +66,11 @@ export function DashboardLayout() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <NavigationMenu.Item>
-                    <Avatar.Root className="ml-2 hover:cursor-pointer">
-                      <Avatar.Image src="https://github.com/shadcn.png" />
-                      <Avatar.Fallback>CN</Avatar.Fallback>
-                    </Avatar.Root>
+                    <Avatar
+                      className="ml-2 hover:cursor-pointer"
+                      src="https://github.com/shadcn.png"
+                      name="Joaquim"
+                    />
                   </NavigationMenu.Item>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="mr-8 min-w-56">
@@ -102,6 +103,6 @@ export function DashboardLayout() {
       <div className="h-full p-3 sm:p-8">
         <Outlet />
       </div>
-    </div>
+    </section>
   );
 }

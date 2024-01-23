@@ -39,10 +39,11 @@ export function Settings() {
               Atualize a sua foto de perfil e escolha onde deseja exibi-la.
             </small>
           </div>
-          <Avatar.Root className="h-16 w-16">
-            <Avatar.Image src="https://github.com/shadcn.png" />
-            <Avatar.Fallback>CN</Avatar.Fallback>
-          </Avatar.Root>
+          <Avatar
+            name="jonas"
+            className="h-16 w-16"
+            src="https://github.com/shadcn.png"
+          />
         </div>
         <Separator className="my-6" />
         <div className="flex w-full flex-col justify-between sm:flex-row">
