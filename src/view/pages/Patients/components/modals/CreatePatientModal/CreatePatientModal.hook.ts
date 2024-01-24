@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -23,9 +25,8 @@ const schema = z.object({
         .join(' ');
     }),
   birthDate: z
-    .string()
-    .nonempty('Data de nascimento é obrigatória')
-    .refine((date) => new Date(date) <= new Date(), {
+    .date({ required_error: 'Data é obrigatória' })
+    .refine((date) => date <= new Date(), {
       message: 'Data de nascimento não pode ser no futuro',
     }),
   gender: z.enum(['MASC', 'FEM']),
@@ -42,8 +43,14 @@ export function useCreatePatientModalHook(props: CreatePatientModalProps) {
     control,
     register,
     setError,
+    reset,
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      email: '',
+      gender: 'MASC',
+      name: '',
+    },
   });
 
   const { errors } = formState;
@@ -63,10 +70,16 @@ export function useCreatePatientModalHook(props: CreatePatientModalProps) {
     }
   });
 
+  const handleCloseModal = useCallback(() => {
+    reset();
+    onClose();
+  }, [onClose, reset]);
+
   return {
     errors,
     control,
     register,
     handleSubmit,
+    handleCloseModal,
   };
 }

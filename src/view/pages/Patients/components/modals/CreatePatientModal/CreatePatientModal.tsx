@@ -1,4 +1,5 @@
 import { Button } from '@godiet-components/Button';
+import { DatePicker } from '@godiet-components/DatePicker';
 import { Input } from '@godiet-components/Input';
 import { Modal } from '@godiet-components/Modal';
 import { ToggleGroup } from '@godiet-components/ToggleGroup';
@@ -13,13 +14,13 @@ export interface CreatePatientModalProps {
 }
 
 export function CreatePatientModal(props: CreatePatientModalProps) {
-  const { isOpen, onClose } = props;
+  const { isOpen } = props;
 
-  const { errors, control, handleSubmit, register } =
+  const { errors, control, handleSubmit, register, handleCloseModal } =
     useCreatePatientModalHook(props);
 
   return (
-    <Modal.Root isOpen={isOpen} onClose={onClose}>
+    <Modal.Root isOpen={isOpen} onClose={handleCloseModal}>
       <Modal.Header>
         <Modal.Title>Criar novo paciente</Modal.Title>
         <Modal.Description>
@@ -41,14 +42,23 @@ export function CreatePatientModal(props: CreatePatientModalProps) {
           {...register('email')}
         />
         {/* <Input name="phone" type="text" placeholder="Telefone do paciente" /> */}
-        <Input
-          type="date"
-          placeholder="Data de nascimento"
-          error={errors.birthDate?.message}
-          {...register('birthDate')}
+        <Controller
+          control={control}
+          name="birthDate"
+          render={({ field: { onChange, value } }) => (
+            <DatePicker
+              error={errors.birthDate?.message}
+              onChange={onChange}
+              value={value}
+              placeholder={'Data de nascimento'}
+            />
+          )}
         />
+
         <div>
-          <small className="text-xs sm:text-sm">Selecione o gênero:</small>
+          <small className="text-xs text-muted-foreground sm:text-sm">
+            Selecione o gênero:
+          </small>
           <Controller
             control={control}
             name="gender"
@@ -74,7 +84,7 @@ export function CreatePatientModal(props: CreatePatientModalProps) {
           <Button
             variant={'destructive'}
             className="mt-2 sm:mt-0"
-            onClick={onClose}
+            onClick={handleCloseModal}
             type="button"
           >
             Cancelar
