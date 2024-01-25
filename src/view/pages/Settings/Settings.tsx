@@ -15,44 +15,37 @@ import { useTheme } from '@godiet-hooks/theme';
 
 import { TrashIcon } from '@radix-ui/react-icons';
 
+import { Header } from './components/Header';
+import { Section } from './components/Section';
+
 export function Settings() {
   const { setTheme } = useTheme();
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 pb-8">
       <div className="flex flex-col gap-4">
-        <header className="flex flex-col items-start justify-between sm:flex-row sm:items-center">
-          <div className="flex flex-col">
-            <h1 className="text-lg font-medium">Informações pessoais</h1>
-            <small className="hidden font-medium text-gray-500 sm:block">
-              Gerencie e atualize suas informações pessoais aqui, como nome,
-              foto e outras informações.
-            </small>
-          </div>
-          <Button>Salvar</Button>
-        </header>
+        <Header title={'Informações pessoais'} extra={<Button>Salvar</Button>}>
+          Gerencie e atualize suas informações pessoais aqui, como nome, foto e
+          outras informações.
+        </Header>
         <Separator />
-        <div className="flex w-full flex-col justify-between sm:flex-row">
-          <div className="mb-6 sm:mb-0 sm:w-72">
-            <h2 className=" text-sm font-medium">Foto</h2>
-            <small className="font-medium text-gray-500">
-              Atualize a sua foto de perfil e escolha onde deseja exibi-la.
-            </small>
-          </div>
+        <Section
+          title="Foto"
+          description="Atualize a sua foto de perfil e escolha onde deseja exibi-la."
+        >
           <Avatar
             name="jonas"
             className="h-16 w-16"
             src="https://github.com/shadcn.png"
           />
-        </div>
+        </Section>
+
         <Separator className="my-6" />
-        <div className="flex w-full flex-col justify-between sm:flex-row">
-          <div className="mb-6 w-40 sm:mb-0 sm:w-72">
-            <h2 className=" text-sm font-medium">Aparência</h2>
-            <small className="font-medium text-gray-500">
-              Personalize a aparência da sua aplicação.
-            </small>
-          </div>
+        <Section
+          title="Aparência"
+          description="Personalize a aparência da sua aplicação."
+          className="w-72  sm:w-40"
+        >
           <div>
             <Select onValueChange={(event) => setTheme(event as Theme)}>
               <SelectTrigger className="sm:w-[180px]">
@@ -67,64 +60,55 @@ export function Settings() {
               </SelectContent>
             </Select>
           </div>
-        </div>
+        </Section>
+
         <Separator className="my-6" />
-        <div className="flex w-full flex-col justify-between sm:flex-row ">
-          <div className="mb-6 sm:mb-0 sm:w-72">
-            <h2 className=" text-sm font-medium">Nome</h2>
-            <small className="font-medium text-gray-500">
-              Insira seu nome completo
-            </small>
-          </div>
+        <Section
+          title="Nome"
+          description="Insira seu nome completo"
+          className="w-72 sm:w-40"
+        >
           <div>
             <Input name="name" placeholder="Nome" />
           </div>
-        </div>
+        </Section>
       </div>
       <Separator />
       <div className="flex flex-col gap-4">
-        <header className="flex flex-col items-start justify-between sm:flex-row sm:items-center">
-          <div className="flex flex-col">
-            <h1 className="text-lg font-medium">Área crítica</h1>
-            <small className="hidden font-medium text-gray-500 sm:block">
-              Aqui você pode atualizar sua senha, configurar autenticação de
-              dois fatores ou excluir sua conta. Por favor, esteja ciente das
-              ações que você está realizando.
-            </small>
-          </div>
-        </header>
+        <Header title={'Área crítica'}>
+          Aqui você pode atualizar sua senha, configurar autenticação de dois
+          fatores ou excluir sua conta. Por favor, esteja ciente das ações que
+          você está realizando.
+        </Header>
+
         <Separator />
-        <div className="flex w-full flex-col justify-between sm:flex-row ">
-          <div className="mb-6 sm:mb-0 sm:w-72">
-            <h2 className=" text-sm font-medium">Senha</h2>
-            <small className="font-medium text-gray-500">
-              Recupere ou atualize sua senha, se necessário.
-            </small>
-          </div>
+        <Section
+          title="Senha"
+          description="Recupere ou atualize sua senha, se necessário."
+          className="w-72 sm:mb-6 md:mb-0 md:w-40 lg:w-72"
+          classContainer="sm:flex-col md:flex-row "
+        >
           <div className="space-y-4 text-right sm:min-w-72">
             <Input name="password" placeholder="Senha atual" />
             <Input name="new-password" placeholder="Nova senha" />
             <Button className="">Atualizar senha</Button>
           </div>
-        </div>
+        </Section>
+
         <Separator className="my-6" />
-        <div className="flex w-full flex-col justify-between sm:flex-row ">
-          <div className="mb-6 sm:mb-0 sm:w-72">
-            <h2 className=" text-sm font-medium text-red-600">
-              Excluir minha conta
-            </h2>
-            <small className="font-medium text-gray-500">
-              Esta ação é irreversível. Ao deletar sua conta, todos os seus
-              dados serão permanentemente removidos.
-            </small>
-          </div>
+        <Section
+          danger
+          title="Excluir minha conta"
+          description="Esta ação é irreversível. Ao deletar sua conta, todos os seus dados serão permanentemente removidos."
+          className="w-96 sm:w-40 md:w-72 lg:w-full"
+        >
           <div>
             <Button variant={'destructive'}>
               <TrashIcon className="mr-1 h-4 w-4" />
               Deletar minha conta
             </Button>
           </div>
-        </div>
+        </Section>
       </div>
     </div>
   );
