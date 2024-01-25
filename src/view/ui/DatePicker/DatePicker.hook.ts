@@ -3,9 +3,8 @@ import * as React from 'react';
 import { DatePickerProps } from './DatePicker';
 
 export function useDatePickerHook(props: DatePickerProps) {
-  const { value, onChange } = props;
+  const { onChange } = props;
 
-  const [selectedDate, setSelectedDate] = React.useState(value);
   const [popoverIsVisible, setPopoverIsVisible] = React.useState(false);
 
   const togglePopoverIsVisible = React.useCallback(() => {
@@ -14,7 +13,6 @@ export function useDatePickerHook(props: DatePickerProps) {
 
   const handleChangeDate = React.useCallback(
     (date: Date) => {
-      setSelectedDate(date);
       onChange?.(date);
       togglePopoverIsVisible();
     },
@@ -22,7 +20,6 @@ export function useDatePickerHook(props: DatePickerProps) {
   );
 
   return {
-    selectedDate,
     popoverIsVisible,
     togglePopoverIsVisible,
     handleChangeDate,

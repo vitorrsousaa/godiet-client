@@ -1,10 +1,5 @@
-import { Button } from '@godiet-components/Button';
-import { DatePicker } from '@godiet-components/DatePicker';
-import { Input } from '@godiet-components/Input';
 import { Modal } from '@godiet-components/Modal';
-import { ToggleGroup } from '@godiet-components/ToggleGroup';
-
-import { Controller } from 'react-hook-form';
+import { PatientForm } from '@godiet-components/PatientForm';
 
 import { useCreatePatientModalHook } from './CreatePatientModal.hook';
 
@@ -14,13 +9,12 @@ export interface CreatePatientModalProps {
 }
 
 export function CreatePatientModal(props: CreatePatientModalProps) {
-  const { isOpen } = props;
+  const { isOpen, onClose } = props;
 
-  const { errors, control, handleSubmit, register, handleCloseModal } =
-    useCreatePatientModalHook(props);
+  const { patientFormRef, handleSubmit } = useCreatePatientModalHook(props);
 
   return (
-    <Modal.Root isOpen={isOpen} onClose={handleCloseModal}>
+    <Modal.Root isOpen={isOpen} onClose={onClose}>
       <Modal.Header>
         <Modal.Title>Criar novo paciente</Modal.Title>
         <Modal.Description>
@@ -28,70 +22,11 @@ export function CreatePatientModal(props: CreatePatientModalProps) {
           na ficha do paciente.
         </Modal.Description>
       </Modal.Header>
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-        <Input
-          type="text"
-          placeholder="Nome do paciente"
-          error={errors.name?.message}
-          {...register('name')}
-        />
-        <Input
-          type="email"
-          placeholder="E-mail do paciente"
-          error={errors.email?.message}
-          {...register('email')}
-        />
-        {/* <Input name="phone" type="text" placeholder="Telefone do paciente" /> */}
-        <Controller
-          control={control}
-          name="birthDate"
-          render={({ field: { onChange, value } }) => (
-            <DatePicker
-              error={errors.birthDate?.message}
-              onChange={onChange}
-              value={value}
-              placeholder={'Data de nascimento'}
-            />
-          )}
-        />
-
-        <div>
-          <small className="text-xs text-muted-foreground sm:text-sm">
-            Selecione o gênero:
-          </small>
-          <Controller
-            control={control}
-            name="gender"
-            render={({ field: { onChange, value } }) => (
-              <ToggleGroup.Root
-                type="single"
-                defaultValue="MASC"
-                onValueChange={onChange}
-                value={value}
-              >
-                <ToggleGroup.Item value="MASC" variant={'outline'}>
-                  MASC
-                </ToggleGroup.Item>
-                <ToggleGroup.Item value="FEM" variant={'outline'}>
-                  FEM
-                </ToggleGroup.Item>
-              </ToggleGroup.Root>
-            )}
-          />
-        </div>
-
-        <Modal.Footer>
-          <Button
-            variant={'destructive'}
-            className="mt-2 sm:mt-0"
-            onClick={handleCloseModal}
-            type="button"
-          >
-            Cancelar
-          </Button>
-          <Button type="submit">Salvar</Button>
-        </Modal.Footer>
-      </form>
+      <PatientForm
+        onCancel={onClose}
+        onSubmit={handleSubmit}
+        ref={patientFormRef}
+      />
     </Modal.Root>
   );
 }

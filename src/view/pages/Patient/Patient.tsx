@@ -1,10 +1,17 @@
+import { useCallback, useState } from 'react';
+
 import { Avatar } from '@godiet-components/Avatar';
+import { Button } from '@godiet-components/Button';
 
 import {
   CalendarIcon,
   InfoCircledIcon,
   PersonIcon,
 } from '@radix-ui/react-icons';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+
+import { EditPatientModal } from './components/modals/EditPatientModal';
 
 export function Patient() {
   const patient = {
@@ -13,11 +20,19 @@ export function Patient() {
     birthDate: '01/01/1990',
   };
 
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const toggleEditModal = useCallback(() => {
+    setIsEditModalOpen((prevState) => !prevState);
+  }, []);
+
   return (
     <div className="flex flex-col gap-4">
-      <div className="flex justify-between ">
+      <div className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Perfil do paciente</h1>
-        <span>Editar dados</span>
+        <Button variant={'outline'} onClick={toggleEditModal}>
+          Editar dados
+        </Button>
       </div>
       <div className="flex items-center gap-4 ">
         <Avatar name={patient.name} />
@@ -29,10 +44,13 @@ export function Patient() {
             <InfoCircledIcon /> {patient.email}
           </span>
           <span className="flex items-center gap-1">
-            <CalendarIcon /> {patient.birthDate}
+            <CalendarIcon />
+            {format(patient.birthDate, 'PPP', { locale: ptBR })}
           </span>
         </div>
       </div>
+
+      <EditPatientModal isOpen={isEditModalOpen} onClose={toggleEditModal} />
     </div>
   );
 }

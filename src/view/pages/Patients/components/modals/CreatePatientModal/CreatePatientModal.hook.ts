@@ -1,85 +1,41 @@
-import { useCallback } from 'react';
+import { useCallback, useRef } from 'react';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { FormValues, PatientFormRef } from '@godiet-components/PatientForm';
+
 import toast from 'react-hot-toast';
-import * as z from 'zod';
 
 import { CreatePatientModalProps } from './CreatePatientModal';
-
-const schema = z.object({
-  email: z
-    .string()
-    .nonempty('E-mail é obrigatório')
-    .email('Informe um e-mail válido'),
-  name: z
-    .string()
-    .nonempty('O nome é obrigatório')
-    .transform((text) => {
-      return text
-        .trim()
-        .split(' ')
-        .map((word) => {
-          return word[0].toLocaleUpperCase().concat(word.substring(1));
-        })
-        .join(' ');
-    }),
-  birthDate: z
-    .date({ required_error: 'Data é obrigatória' })
-    .refine((date) => date <= new Date(), {
-      message: 'Data de nascimento não pode ser no futuro',
-    }),
-  gender: z.enum(['MASC', 'FEM']),
-});
-
-type FormValues = z.infer<typeof schema>;
 
 export function useCreatePatientModalHook(props: CreatePatientModalProps) {
   const { onClose } = props;
 
-  const {
-    formState,
-    handleSubmit: hookFormSubmit,
-    control,
-    register,
-    setError,
-    reset,
-  } = useForm<FormValues>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      email: '',
-      gender: 'MASC',
-      name: '',
-    },
-  });
+  const patientFormRef = useRef<PatientFormRef>(null);
 
-  const { errors } = formState;
+  const handleSubmit = useCallback(
+    async (data: FormValues) => {
+      try {
+        console.log(data);
 
-  const handleSubmit = hookFormSubmit(async (data) => {
-    try {
-      console.log(data);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      if (error.message === '404 - Email already in use') {
-        toast.error('Este e-mail já esta em uso');
-        setError('email', { message: 'E-mail já cadastrado' });
-        return;
+        toast.success('Paciente criado com sucesso');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        if (error.message === '404 - Email already in use') {
+          toast.error('Este e-mail já esta em uso');
+          patientFormRef?.current?.setError('email', {
+            message: 'E-mail já cadastrado',
+          });
+          return;
+        }
+        toast.error('Erro ao criar paciente');
+      } finally {
+        onClose();
       }
-      toast.error('Erro ao criar paciente');
-      onClose();
-    }
-  });
-
-  const handleCloseModal = useCallback(() => {
-    reset();
-    onClose();
-  }, [onClose, reset]);
+    },
+    [onClose]
+  );
 
   return {
-    errors,
-    control,
-    register,
+    patientFormRef,
     handleSubmit,
-    handleCloseModal,
   };
 }

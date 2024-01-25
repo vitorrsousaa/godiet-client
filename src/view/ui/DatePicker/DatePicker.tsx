@@ -18,17 +18,14 @@ export interface DatePickerProps {
   onChange?: (date: Date) => void;
   error?: string;
   placeholder?: string;
+  disabledAfterDays?: boolean;
 }
 
 export function DatePicker(props: DatePickerProps) {
-  const { error, placeholder } = props;
+  const { error, placeholder, value, disabledAfterDays } = props;
 
-  const {
-    selectedDate,
-    popoverIsVisible,
-    togglePopoverIsVisible,
-    handleChangeDate,
-  } = useDatePickerHook(props);
+  const { popoverIsVisible, togglePopoverIsVisible, handleChangeDate } =
+    useDatePickerHook(props);
 
   return (
     <div className="w-full">
@@ -38,11 +35,11 @@ export function DatePicker(props: DatePickerProps) {
             variant={'outline'}
             className={cn(
               'h-8 w-full justify-between text-left text-sm font-normal  sm:h-[3.25rem] sm:text-base',
-              !selectedDate && 'text-muted-foreground'
+              !value && 'text-muted-foreground'
             )}
           >
-            {selectedDate ? (
-              format(selectedDate, 'PPP', { locale: ptBR })
+            {value ? (
+              format(value, 'PPP', { locale: ptBR })
             ) : (
               <span className="text-muted-foreground">
                 {placeholder ? placeholder : 'Selecione a data'}
@@ -54,8 +51,9 @@ export function DatePicker(props: DatePickerProps) {
         <PopoverContent className="w-auto p-0">
           <Calendar
             onChange={handleChangeDate}
-            value={selectedDate}
+            value={value}
             initialFocus
+            disabled={(date) => (disabledAfterDays ? date > new Date() : false)}
           />
         </PopoverContent>
       </Popover>
