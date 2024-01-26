@@ -1,6 +1,9 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-import { FormValues, PatientFormRef } from '@godiet-components/PatientForm';
+import {
+  FormValues,
+  usePatientFormController,
+} from '@godiet-components/PatientForm';
 import { delay } from '@godiet-utils/delay';
 
 import toast from 'react-hot-toast';
@@ -30,11 +33,11 @@ function usePatient(id: string | undefined) {
 export function useEditPatientModalHook(props: EditPatientModalProps) {
   const { onClose } = props;
 
-  const patientFormRef = useRef<PatientFormRef>(null);
-
   const { id } = useParams<{ id: string }>();
 
   const { patient, isLoading } = usePatient(id);
+
+  const controller = usePatientFormController();
 
   const handleSubmit = useCallback(
     async (data: FormValues) => {
@@ -46,7 +49,7 @@ export function useEditPatientModalHook(props: EditPatientModalProps) {
       } catch (error: any) {
         if (error.message === '404 - Email already in use') {
           toast.error('Este e-mail já esta em uso');
-          patientFormRef?.current?.setError('email', {
+          controller.setError('email', {
             message: 'E-mail já cadastrado',
           });
           return;
@@ -56,8 +59,8 @@ export function useEditPatientModalHook(props: EditPatientModalProps) {
         onClose();
       }
     },
-    [onClose]
+    [controller, onClose]
   );
 
-  return { patient, patientFormRef, isLoading, handleSubmit };
+  return { patient, controller, isLoading, handleSubmit };
 }

@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
+import { castToInternalUse } from './Patient.controller';
 import { PatientFormProps } from './PatientForm';
 
 const schema = z.object({
@@ -34,7 +35,7 @@ const schema = z.object({
 export type FormValues = z.infer<typeof schema>;
 
 export function usePatientFormHook(props: PatientFormProps) {
-  const { patient, onSubmit, onCancel } = props;
+  const { patient, controller, onSubmit, onCancel } = props;
 
   const {
     formState,
@@ -62,13 +63,21 @@ export function usePatientFormHook(props: PatientFormProps) {
   }, [onCancel]);
 
   useEffect(() => {
-    if (patient) {
-      setValue('name', patient.name);
-      setValue('email', patient.email);
-      setValue('birthDate', patient.birthDate);
-      setValue('gender', patient.gender);
-    }
+    // if (patient) {
+    //   setValue('name', patient.name);
+    //   setValue('email', patient.email);
+    //   setValue('birthDate', patient.birthDate);
+    //   setValue('gender', patient.gender);
+    // }
   }, [patient]);
+
+  useEffect(() => {
+    if (controller) {
+      castToInternalUse(controller)._refs.setValuesRef.current = setValue;
+      castToInternalUse(controller)._refs.setErrorRef.current =
+        hookFormSetError;
+    }
+  }, [controller, hookFormSetError, setValue]);
 
   return {
     errors,

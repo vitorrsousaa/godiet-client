@@ -7,12 +7,14 @@ import { ToggleGroup } from '@godiet-components/ToggleGroup';
 
 import { Controller } from 'react-hook-form';
 
+import { UsePatientFormController } from './Patient.controller';
 import { FormValues, usePatientFormHook } from './PatientForm.hook';
 
 export interface PatientFormProps {
   onSubmit: (data: FormValues) => Promise<void>;
   onCancel: () => void;
   patient?: FormValues;
+  controller?: UsePatientFormController;
 }
 
 export interface PatientFormRef {

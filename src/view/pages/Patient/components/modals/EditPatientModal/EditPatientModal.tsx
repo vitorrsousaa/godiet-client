@@ -11,8 +11,7 @@ export interface EditPatientModalProps {
 export function EditPatientModal(props: EditPatientModalProps) {
   const { isOpen, onClose } = props;
 
-  const { patientFormRef, patient, handleSubmit } =
-    useEditPatientModalHook(props);
+  const { patient, controller, handleSubmit } = useEditPatientModalHook(props);
 
   return (
     <Modal.Root isOpen={isOpen} onClose={onClose}>
@@ -23,7 +22,7 @@ export function EditPatientModal(props: EditPatientModalProps) {
       <PatientForm
         onCancel={onClose}
         onSubmit={handleSubmit}
-        ref={patientFormRef}
+        controller={controller}
         patient={patient}
       />
     </Modal.Root>
