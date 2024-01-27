@@ -19,6 +19,8 @@ export default defineConfig({
       '@godiet-layouts': path.resolve(__dirname, './src/view/layouts'),
       '@godiet-contexts': path.resolve(__dirname, './src/app/contexts'),
       '@godiet-config': path.resolve(__dirname, './src/app/config/index.ts'),
+      '@godiet-query': path.resolve(__dirname, './src/app/libs/query.tsx'),
+      '@godiet-services': path.resolve(__dirname, './src/app/service'),
     },
   },
 });

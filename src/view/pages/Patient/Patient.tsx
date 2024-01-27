@@ -1,7 +1,6 @@
-import { useCallback, useState } from 'react';
-
 import { Avatar } from '@godiet-components/Avatar';
 import { Button } from '@godiet-components/Button';
+import { Separator } from '@godiet-components/Separator';
 
 import {
   CalendarIcon,
@@ -12,19 +11,15 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
 import { EditPatientModal } from './components/modals/EditPatientModal';
+import { usePatientHook } from './Patient.hook';
 
 export function Patient() {
-  const patient = {
-    name: 'João da Silva',
-    email: 'email@paciente.com',
-    birthDate: '01/01/1990',
-  };
-
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-  const toggleEditModal = useCallback(() => {
-    setIsEditModalOpen((prevState) => !prevState);
-  }, []);
+  const {
+    patient,
+    isEditModalOpen,
+    toggleEditModal,
+    handleNavigateToCreatePlanning,
+  } = usePatientHook();
 
   return (
     <div className="flex flex-col gap-4">
@@ -48,6 +43,25 @@ export function Patient() {
             {format(patient.birthDate, 'PPP', { locale: ptBR })}
           </span>
         </div>
+      </div>
+      <Separator />
+
+      <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
+        <Button variant={'outline'} className="cursor-not-allowed">
+          Anamnese
+        </Button>
+        <Button variant={'outline'} className="cursor-not-allowed">
+          Antropometria
+        </Button>
+        <Button variant={'outline'} onClick={handleNavigateToCreatePlanning}>
+          Planejamento alimentar
+        </Button>
+        <Button variant={'outline'} className="cursor-not-allowed">
+          Orientações nutricionais
+        </Button>
+        <Button variant={'outline'} className="cursor-not-allowed">
+          Cálculo energético
+        </Button>
       </div>
 
       <EditPatientModal isOpen={isEditModalOpen} onClose={toggleEditModal} />

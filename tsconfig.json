@@ -32,6 +32,8 @@
       "@godiet-utils/*": ["./src/app/utils/*"],
       "@godiet-contexts/*": ["./src/app/contexts/*"],
       "@godiet-config": ["./src/app/config/index.ts"],
+      "@godiet-query": ["./src/app/libs/query.tsx"],
+      "@godiet-services/*": ["./src/app/services/*"],
     },
   },
   "include": ["src"],

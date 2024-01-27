@@ -35,7 +35,15 @@ export function useEditPatientModalHook(props: EditPatientModalProps) {
 
   const { id } = useParams<{ id: string }>();
 
-  const { patient, isLoading } = usePatient(id);
+  // const { patient, isLoading } = usePatient(id);
+
+  const patient = {
+    name: 'Paciente',
+    email: 'paciente99@email.com',
+    id: id || '1',
+    birthDate: new Date(2003, 0, 1),
+    gender: 'FEM',
+  };
 
   const controller = usePatientFormController();
 
@@ -62,5 +70,5 @@ export function useEditPatientModalHook(props: EditPatientModalProps) {
     [controller, onClose]
   );
 
-  return { patient, controller, isLoading, handleSubmit };
+  return { patient, controller, handleSubmit };
 }

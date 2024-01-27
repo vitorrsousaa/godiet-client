@@ -63,12 +63,12 @@ export function usePatientFormHook(props: PatientFormProps) {
   }, [onCancel]);
 
   useEffect(() => {
-    // if (patient) {
-    //   setValue('name', patient.name);
-    //   setValue('email', patient.email);
-    //   setValue('birthDate', patient.birthDate);
-    //   setValue('gender', patient.gender);
-    // }
+    if (patient) {
+      setValue('name', patient.name);
+      setValue('email', patient.email);
+      setValue('birthDate', patient.birthDate);
+      setValue('gender', patient.gender);
+    }
   }, [patient]);
 
   useEffect(() => {
