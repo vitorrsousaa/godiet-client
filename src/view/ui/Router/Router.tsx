@@ -3,25 +3,29 @@ import { Suspense } from 'react';
 
 import { Logo } from '@godiet-components/Logo';
 import { Spinner } from '@godiet-components/Spinner';
-import { routes } from '@godiet-config';
+import { ROUTES } from '@godiet-config';
 import { NotFound } from '@godiet-pages/NotFound';
-import { Patient } from '@godiet-pages/Patient';
 import { lazyLoad } from '@godiet-utils/lazyLoad';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AuthGuard } from './AuthGuard';
 
+const { CreatePlanning } = lazyLoad(
+  () => import('@godiet-pages/CreatePlanning')
+);
+
+const { Dashboard } = lazyLoad(() => import('@godiet-pages/Dashboard'));
 const { DashboardLayout } = lazyLoad(
   () => import('@godiet-layouts/DashboardLayout')
 );
-const { SettingsLayout } = lazyLoad(
-  () => import('@godiet-layouts/SettingsLayout')
-);
-const { Dashboard } = lazyLoad(() => import('@godiet-pages/Dashboard'));
+
 const { Login } = lazyLoad(() => import('@godiet-pages/Login'));
 const { Register } = lazyLoad(() => import('@godiet-pages/Register'));
 const { Settings } = lazyLoad(() => import('@godiet-pages/Settings'));
+const { SettingsLayout } = lazyLoad(
+  () => import('@godiet-layouts/SettingsLayout')
+);
 const { SettingsNotification } = lazyLoad(
   () => import('@godiet-pages/SettingsNotification')
 );
@@ -29,6 +33,7 @@ const { SettingsRewards } = lazyLoad(
   () => import('@godiet-pages/SettingsRewards')
 );
 const { Patients } = lazyLoad(() => import('@godiet-pages/Patients'));
+const { Patient } = lazyLoad(() => import('@godiet-pages/Patient'));
 
 export function Router() {
   return (
@@ -47,33 +52,37 @@ export function Router() {
         <Routes>
           <Route path={'*'} element={<NotFound />} />
           <Route element={<AuthGuard isPrivate={false} />}>
-            <Route path={routes.LOGIN} element={<Login />} />
-            <Route path={routes.REGISTER} element={<Register />} />
+            <Route path={ROUTES.LOGIN} element={<Login />} />
+            <Route path={ROUTES.REGISTER} element={<Register />} />
           </Route>
           <Route element={<AuthGuard isPrivate={true} />}>
             <Route element={<DashboardLayout />}>
-              <Route path={routes.HOME} element={<Dashboard />} />
+              <Route path={ROUTES.HOME} element={<Dashboard />} />
               <Route element={<SettingsLayout />}>
-                <Route path={routes.SETTINGS} element={<Settings />} />
+                <Route path={ROUTES.SETTINGS} element={<Settings />} />
                 <Route
-                  path={routes.SETTINGS_NOTIFICATIONS}
+                  path={ROUTES.SETTINGS_NOTIFICATIONS}
                   element={<SettingsNotification />}
                 />
                 <Route
-                  path={routes.SETTINGS_REWARDS}
+                  path={ROUTES.SETTINGS_REWARDS}
                   element={<SettingsRewards />}
                 />
                 <Route
-                  path={routes.SETTINGS_PAYMENTS}
+                  path={ROUTES.SETTINGS_PAYMENTS}
                   element={<div>Pagamentos</div>}
                 />
                 <Route
-                  path={routes.SETTINGS_MYPLAN}
+                  path={ROUTES.SETTINGS_MYPLAN}
                   element={<div>Meu plano</div>}
                 />
               </Route>
-              <Route path={routes.PATIENTS} element={<Patients />} />
-              <Route path={routes.PATIENTS_BY_ID} element={<Patient />} />
+              <Route path={ROUTES.PATIENTS} element={<Patients />} />
+              <Route path={ROUTES.PATIENTS_BY_ID} element={<Patient />} />
+              <Route
+                path={ROUTES.CREATE_PLANNING_CONVENTIONAL}
+                element={<CreatePlanning />}
+              />
             </Route>
           </Route>
         </Routes>

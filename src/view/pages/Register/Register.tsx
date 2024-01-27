@@ -1,7 +1,7 @@
 import logo from '@godiet-assets/logo.svg';
 import { Button } from '@godiet-components/Button';
 import { Input } from '@godiet-components/Input';
-import { routes } from '@godiet-config';
+import { ROUTES } from '@godiet-config';
 
 import { Link } from 'react-router-dom';
 
@@ -19,7 +19,7 @@ export function Register() {
           <span className="tracking-[-0.5px] text-gray-500">
             Já possui uma conta?
           </span>
-          <Link to={routes.LOGIN} className="text-green-600 hover:underline">
+          <Link to={ROUTES.LOGIN} className="text-green-600 hover:underline">
             Fazer login
           </Link>
         </p>

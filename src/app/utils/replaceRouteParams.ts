@@ -1,12 +1,12 @@
-import { routes } from '@godiet-config';
+import { ROUTES } from '@godiet-config';
 
-type TRoute = keyof typeof routes;
+type TRoute = keyof typeof ROUTES;
 
 export function replaceRouteParams(
   route: TRoute,
   params: Record<string, string>
 ) {
-  let originalRoute = routes[route] as string;
+  let originalRoute = ROUTES[route] as string;
 
   Object.entries(params).map(([key, value]) => {
     originalRoute = originalRoute.replace(`:${key}`, value);

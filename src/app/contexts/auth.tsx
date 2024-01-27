@@ -1,7 +1,7 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
 
 import { PageLoader } from '@godiet-components/PageLoader';
-import { localStorageKeys } from '@godiet-config';
+import { LOCAL_STORAGE_KEYS } from '@godiet-config';
 
 import toast from 'react-hot-toast';
 
@@ -18,7 +18,7 @@ export const AuthContext = createContext<AuthContextValue>(
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [signedIn, setSignedIn] = useState<boolean>(() => {
     const storageAccessToken = localStorage.getItem(
-      localStorageKeys.ACCESS_TOKEN
+      LOCAL_STORAGE_KEYS.ACCESS_TOKEN
     );
 
     return !!storageAccessToken;
@@ -29,13 +29,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const isError = false;
 
   const signin = useCallback((accessToken: string) => {
-    localStorage.setItem(localStorageKeys.ACCESS_TOKEN, accessToken);
+    localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, accessToken);
 
     setSignedIn(true);
   }, []);
 
   const signout = useCallback(() => {
-    localStorage.removeItem(localStorageKeys.ACCESS_TOKEN);
+    localStorage.removeItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
     // queryClient.invalidateQueries({
     //   queryKey: ["users", "me"],
     // });

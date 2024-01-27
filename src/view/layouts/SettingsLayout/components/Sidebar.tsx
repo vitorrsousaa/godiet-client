@@ -1,5 +1,5 @@
 import { Button } from '@godiet-components/Button';
-import { routes } from '@godiet-config';
+import { ROUTES } from '@godiet-config';
 import { cn } from '@godiet-utils/cn';
 
 import {
@@ -18,17 +18,17 @@ const sideBarItens = [
       {
         icon: <PersonIcon />,
         title: 'Meu perfil',
-        href: routes.SETTINGS,
+        href: ROUTES.SETTINGS,
       },
       {
         icon: <BellIcon />,
         title: 'Notificações',
-        href: routes.SETTINGS_NOTIFICATIONS,
+        href: ROUTES.SETTINGS_NOTIFICATIONS,
       },
       {
         icon: <StarFilledIcon />,
         title: 'Recompensas',
-        href: routes.SETTINGS_REWARDS,
+        href: ROUTES.SETTINGS_REWARDS,
       },
     ],
   },
@@ -38,12 +38,12 @@ const sideBarItens = [
       {
         icon: <DashboardIcon />,
         title: 'Meu plano',
-        href: routes.SETTINGS_MYPLAN,
+        href: ROUTES.SETTINGS_MYPLAN,
       },
       {
         icon: <IdCardIcon />,
         title: 'Pagamentos',
-        href: routes.SETTINGS_PAYMENTS,
+        href: ROUTES.SETTINGS_PAYMENTS,
       },
     ],
   },
