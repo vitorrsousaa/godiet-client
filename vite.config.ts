@@ -21,6 +21,10 @@ export default defineConfig({
       '@godiet-config': path.resolve(__dirname, './src/app/config/index.ts'),
       '@godiet-query': path.resolve(__dirname, './src/app/libs/query.tsx'),
       '@godiet-services': path.resolve(__dirname, './src/app/service'),
+      '@godiet-entities': path.resolve(
+        __dirname,
+        './src/app/entities/index.ts'
+      ),
     },
   },
 });

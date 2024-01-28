@@ -1,7 +1,7 @@
-import axios from 'axios';
+import { LOCAL_STORAGE_KEYS } from '@godiet-config';
+import { delay } from '@godiet-utils/delay';
 
-import { LOCAL_STORAGE_KEYS } from '../config/constants';
-import { sleep } from '../utils/sleep';
+import axios from 'axios';
 
 const { VITE_API_BASE_URL, DEV: IS_DEVELOPMENT } = import.meta.env;
 
@@ -27,7 +27,7 @@ httpClient.interceptors.request.use((config) => {
 
 httpClient.interceptors.response.use(async (data) => {
   if (IS_DEVELOPMENT && VITE_API_RESPONSE_SLEEP_MS) {
-    await sleep(VITE_API_RESPONSE_SLEEP_MS);
+    await delay(VITE_API_RESPONSE_SLEEP_MS);
   }
 
   return data;
