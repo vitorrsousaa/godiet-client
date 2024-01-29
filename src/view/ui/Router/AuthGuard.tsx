@@ -1,3 +1,5 @@
+import { useAuth } from '@godiet-hooks/auth';
+
 import { Navigate, Outlet } from 'react-router-dom';
 
 // import { useAuth } from '@app/hooks/useAuth';
@@ -7,9 +9,7 @@ interface AuthGuardProps {
 }
 
 export function AuthGuard({ isPrivate }: AuthGuardProps) {
-  // const { signedIn } = useAuth();
-
-  const signedIn = true;
+  const { signedIn } = useAuth();
 
   if (!signedIn && isPrivate) {
     return <Navigate to="/login" replace />;

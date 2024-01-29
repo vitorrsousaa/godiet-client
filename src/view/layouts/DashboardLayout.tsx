@@ -14,6 +14,7 @@ import {
   navigationMenuTriggerStyle,
 } from '@godiet-components/NavigationMenu';
 import { ROUTES } from '@godiet-config';
+import { useAuth } from '@godiet-hooks/auth';
 
 import {
   BellIcon,
@@ -24,6 +25,8 @@ import {
 import { Link, Outlet } from 'react-router-dom';
 
 export function DashboardLayout() {
+  const { signout } = useAuth();
+
   return (
     <section className="h-full">
       <header className="flex h-20 items-center justify-between border-b-[1px] border-gray-200 px-3 sm:px-8">
@@ -88,7 +91,10 @@ export function DashboardLayout() {
                       <ExclamationTriangleIcon />
                       <span>Ajuda</span>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="space-x-4 hover:cursor-pointer">
+                    <DropdownMenuItem
+                      className="space-x-4 hover:cursor-pointer"
+                      onClick={signout}
+                    >
                       <ExitIcon />
                       <span>Log out</span>
                     </DropdownMenuItem>

@@ -2,6 +2,8 @@ import { createContext, useCallback, useEffect, useState } from 'react';
 
 import { PageLoader } from '@godiet-components/PageLoader';
 import { LOCAL_STORAGE_KEYS } from '@godiet-config';
+import { useQuery, useQueryClient } from '@godiet-query';
+import { userService } from '@godiet-services/user';
 
 import toast from 'react-hot-toast';
 
@@ -9,6 +11,8 @@ interface AuthContextValue {
   signedIn: boolean;
   signin: (accessToken: string) => void;
   signout: () => void;
+  email?: string;
+  name?: string;
 }
 
 export const AuthContext = createContext<AuthContextValue>(
@@ -24,9 +28,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return !!storageAccessToken;
   });
 
-  const isFetching = false;
-  const isSuccess = true;
-  const isError = false;
+  const queryClient = useQueryClient();
+
+  const { data, isError, isFetching, isSuccess } = useQuery({
+    queryKey: ['users', 'me'],
+    queryFn: async () => userService.me(),
+    enabled: signedIn,
+    staleTime: Infinity,
+  });
 
   const signin = useCallback((accessToken: string) => {
     localStorage.setItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN, accessToken);
@@ -36,12 +45,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signout = useCallback(() => {
     localStorage.removeItem(LOCAL_STORAGE_KEYS.ACCESS_TOKEN);
-    // queryClient.invalidateQueries({
-    //   queryKey: ["users", "me"],
-    // });
+    queryClient.invalidateQueries({
+      queryKey: ['users', 'me'],
+    });
 
     setSignedIn(false);
-  }, []);
+  }, [queryClient]);
 
   useEffect(() => {
     if (isError) {
@@ -54,7 +63,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ signedIn: isSuccess && signedIn, signin, signout }}
+      value={{
+        signedIn: isSuccess && signedIn,
+        signin,
+        signout,
+        email: data?.email,
+        name: data?.name,
+      }}
     >
       <PageLoader isLoading={isFetching} />
       {!isFetching && children}

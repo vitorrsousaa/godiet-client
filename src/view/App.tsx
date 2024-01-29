@@ -7,15 +7,15 @@ import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
-    <AuthProvider>
-      <ThemeProvider>
-        <QueryClientProvider>
+    <QueryClientProvider>
+      <AuthProvider>
+        <ThemeProvider>
           <Router />
 
           <Toaster />
-        </QueryClientProvider>
-      </ThemeProvider>
-    </AuthProvider>
+        </ThemeProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
 

@@ -1,3 +1,7 @@
+import { useAuth } from '@godiet-hooks/auth';
+import { useMutation } from '@godiet-query';
+import { authService } from '@godiet-services/auth';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -48,9 +52,16 @@ export function useRegisterHook() {
 
   const { errors } = formState;
 
+  const { signin } = useAuth();
+
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: authService.signup,
+  });
+
   const handleSubmit = hookFormSubmit(async (data) => {
     try {
-      console.log(data);
+      const { accessToken } = await mutateAsync(data);
+      signin(accessToken);
     } catch {
       toast.error('Credenciais inválidas');
     }
@@ -58,7 +69,7 @@ export function useRegisterHook() {
 
   return {
     errors,
-    isLoading: false,
+    isLoading: isPending,
     handleSubmit,
     register,
   };
