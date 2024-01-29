@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 
+import { ROUTES } from '@godiet-config';
 import { replaceRouteParams } from '@godiet-utils/replaceRouteParams';
 
 import { useNavigate } from 'react-router-dom';
@@ -18,8 +19,6 @@ export function usePatientsHook() {
       birthDate: '01/01/2000',
     },
   ];
-
-  // const patients: TPatient[] = [];
 
   const [isCreatePatientModalOpen, setIsCreatePatientModalOpen] =
     useState(false);
@@ -51,7 +50,7 @@ export function usePatientsHook() {
 
   const handleNavigateToPatientPage = useCallback(
     (patientId: string) => {
-      navigate(replaceRouteParams('PATIENTS_BY_ID', { id: patientId }));
+      navigate(replaceRouteParams(ROUTES.PATIENTS_BY_ID, { id: patientId }));
     },
     [navigate]
   );

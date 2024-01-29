@@ -11,8 +11,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AuthGuard } from './AuthGuard';
 
-const { CreatePlanning } = lazyLoad(
-  () => import('@godiet-pages/CreatePlanning')
+const { CreatePlanningEquivalent } = lazyLoad(
+  () => import('@godiet-pages/CreatePlanningEquivalent')
 );
 
 const { Dashboard } = lazyLoad(() => import('@godiet-pages/Dashboard'));
@@ -80,8 +80,8 @@ export function Router() {
               <Route path={ROUTES.PATIENTS} element={<Patients />} />
               <Route path={ROUTES.PATIENTS_BY_ID} element={<Patient />} />
               <Route
-                path={ROUTES.CREATE_PLANNING_CONVENTIONAL}
-                element={<CreatePlanning />}
+                path={ROUTES.CREATE_PLANNING_GODIET}
+                element={<CreatePlanningEquivalent />}
               />
             </Route>
           </Route>

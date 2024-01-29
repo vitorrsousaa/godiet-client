@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 
+import { ROUTES } from '@godiet-config';
 import { replaceRouteParams } from '@godiet-utils/replaceRouteParams';
 
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +19,7 @@ export function usePatientHook() {
 
   const handleNavigateToCreatePlanning = useCallback(() => {
     navigate(
-      replaceRouteParams('CREATE_PLANNING_CONVENTIONAL', { id: patient.id })
+      replaceRouteParams(ROUTES.CREATE_PLANNING_GODIET, { id: patient.id })
     );
   }, [navigate, patient.id]);
 
