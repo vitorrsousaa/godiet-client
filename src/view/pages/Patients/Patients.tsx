@@ -2,6 +2,7 @@ import noData from '@godiet-assets/no_data.svg';
 import { Button } from '@godiet-components/Button';
 import { Card } from '@godiet-components/Card';
 import { DangerModal } from '@godiet-components/DangerModal';
+import { formatDate } from '@godiet-utils/formatDate';
 
 import { PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 
@@ -13,6 +14,7 @@ export function Patients() {
     patients,
     isCreatePatientModalOpen,
     isDeletePatientModalOpen,
+    isFetchingPatients,
     toggleModalCreatePatient,
     toggleModalDeletePatient,
     handleDeletePatient,
@@ -36,13 +38,17 @@ export function Patients() {
         </div>
       </div>
       <div className="flex h-full w-full flex-col items-center justify-center gap-4">
-        {patients.length > 0 ? (
+        {isFetchingPatients ? (
+          <div>Carregando...</div>
+        ) : patients.length > 0 ? (
           <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
             {patients.map((patient) => (
               <Card.Root key={patient.id}>
                 <Card.Header>
                   <Card.Title>{patient.name}</Card.Title>
-                  <Card.Description>Description</Card.Description>
+                  <Card.Description>
+                    {formatDate(patient.birthDate, 'P')}
+                  </Card.Description>
                 </Card.Header>
                 <Card.Footer>
                   <Button

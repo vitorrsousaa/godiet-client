@@ -1,14 +1,13 @@
 import { Avatar } from '@godiet-components/Avatar';
 import { Button } from '@godiet-components/Button';
 import { Separator } from '@godiet-components/Separator';
+import { formatDate } from '@godiet-utils/formatDate';
 
 import {
   CalendarIcon,
   InfoCircledIcon,
   PersonIcon,
 } from '@radix-ui/react-icons';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
 
 import { EditPatientModal } from './components/modals/EditPatientModal';
 import { usePatientHook } from './Patient.hook';
@@ -40,7 +39,7 @@ export function Patient() {
           </span>
           <span className="flex items-center gap-1">
             <CalendarIcon />
-            {format(patient.birthDate, 'PPP', { locale: ptBR })}
+            {formatDate(patient.birthDate, 'PPP')}
           </span>
         </div>
       </div>

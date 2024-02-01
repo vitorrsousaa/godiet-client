@@ -1,3 +1,3 @@
 export function SettingsRewards() {
-  return <div>Recompensas</div>;
+  return <div className="h-full">Recompensas</div>;
 }

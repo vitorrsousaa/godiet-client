@@ -15,6 +15,7 @@ export interface PatientFormProps {
   onCancel: () => void;
   patient?: FormValues;
   controller?: UsePatientFormController;
+  isLoading?: boolean;
 }
 
 export interface PatientFormRef {
@@ -24,6 +25,8 @@ export interface PatientFormRef {
 
 const PatientForm = forwardRef<PatientFormRef, PatientFormProps>(
   (props, ref) => {
+    const { isLoading } = props;
+
     const {
       control,
       errors,
@@ -109,10 +112,13 @@ const PatientForm = forwardRef<PatientFormRef, PatientFormProps>(
               className="mt-2 sm:mt-0"
               onClick={handleCancel}
               type="button"
+              disabled={isLoading}
             >
               Cancelar
             </Button>
-            <Button type="submit">Salvar</Button>
+            <Button type="submit" isLoading={isLoading}>
+              Salvar
+            </Button>
           </div>
         </form>
       </>

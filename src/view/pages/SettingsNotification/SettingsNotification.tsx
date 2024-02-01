@@ -1,3 +1,3 @@
 export function SettingsNotification() {
-  return <div>Notificações</div>;
+  return <div className="h-full">Notificações</div>;
 }

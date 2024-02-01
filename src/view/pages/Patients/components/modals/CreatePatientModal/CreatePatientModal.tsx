@@ -11,7 +11,8 @@ export interface CreatePatientModalProps {
 export function CreatePatientModal(props: CreatePatientModalProps) {
   const { isOpen, onClose } = props;
 
-  const { controller, handleSubmit } = useCreatePatientModalHook(props);
+  const { controller, isCreatingPatient, handleSubmit } =
+    useCreatePatientModalHook(props);
 
   return (
     <Modal.Root isOpen={isOpen} onClose={onClose}>
@@ -26,6 +27,7 @@ export function CreatePatientModal(props: CreatePatientModalProps) {
         controller={controller}
         onCancel={onClose}
         onSubmit={handleSubmit}
+        isLoading={isCreatingPatient}
       />
     </Modal.Root>
   );

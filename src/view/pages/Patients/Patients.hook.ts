@@ -1,25 +1,12 @@
 import { useCallback, useState } from 'react';
 
 import { ROUTES } from '@godiet-config';
+import { useGetAllPatients } from '@godiet-hooks/patient';
 import { replaceRouteParams } from '@godiet-utils/replaceRouteParams';
 
 import { useNavigate } from 'react-router-dom';
 
-interface TPatient {
-  name: string;
-  id: string;
-  birthDate: string;
-}
-
 export function usePatientsHook() {
-  const patients: TPatient[] = [
-    {
-      id: '1',
-      name: 'Paciente 1',
-      birthDate: '01/01/2000',
-    },
-  ];
-
   const [isCreatePatientModalOpen, setIsCreatePatientModalOpen] =
     useState(false);
 
@@ -29,6 +16,8 @@ export function usePatientsHook() {
   const [selectedPatientToDelete, setSelectedPatientToDelete] = useState<
     string | null
   >(null);
+
+  const { isFetchingPatients, patients } = useGetAllPatients();
 
   const navigate = useNavigate();
 
@@ -59,6 +48,7 @@ export function usePatientsHook() {
     patients,
     isCreatePatientModalOpen,
     isDeletePatientModalOpen,
+    isFetchingPatients,
     toggleModalCreatePatient,
     toggleModalDeletePatient,
     handleDeletePatient,
