@@ -1,9 +1,18 @@
 import { TFood } from '@godiet-entities';
 import { httpClient } from '@godiet-services/httpClient';
 
-export async function getAll(categoryId?: string) {
+interface GetAllFoodParamsInput {
+  categoryId?: string;
+  portion?: number;
+}
+
+export async function getAll(input: GetAllFoodParamsInput) {
+  const { categoryId, portion } = input;
+  const categoryParams = categoryId ? `?categoryId=${categoryId}` : '';
+  const portionParams = portion ? `&portion=${portion}` : '';
+
   const { data } = await httpClient.get<TFood[]>(
-    `/foods${categoryId && `?categoryId=${categoryId}`}`
+    `/foods${categoryParams}${portionParams}`
   );
 
   return data;

@@ -111,10 +111,11 @@ interface ModalProps {
   isOpen: boolean;
   children: React.ReactNode;
   onClose?: () => void;
+  className?: string;
 }
 
 function ModalBase(props: ModalProps) {
-  const { isOpen, children, onClose } = props;
+  const { isOpen, children, className, onClose } = props;
 
   return (
     <ModalRoot
@@ -123,7 +124,7 @@ function ModalBase(props: ModalProps) {
         onClose?.();
       }}
     >
-      <ModalContent>{children}</ModalContent>
+      <ModalContent className={className}>{children}</ModalContent>
     </ModalRoot>
   );
 }

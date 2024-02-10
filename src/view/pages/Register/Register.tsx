@@ -19,7 +19,7 @@ export function Register() {
           <span className="tracking-[-0.5px] text-gray-500">
             Já possui uma conta?
           </span>
-          <Link to={ROUTES.LOGIN} className="text-green-600 hover:underline">
+          <Link to={ROUTES.LOGIN} className="text-teal-600 hover:underline">
             Fazer login
           </Link>
         </p>

@@ -68,8 +68,8 @@ export function Sidebar({ className }: SidebarProps) {
                   <Button
                     variant="ghost"
                     className={cn(
-                      'w-full justify-center sm:justify-start',
-                      pathname === item.href && 'bg-gray-50 text-green-600'
+                      'w-full justify-center transition-all sm:justify-start',
+                      pathname === item.href && 'bg-gray-50 text-teal-600'
                     )}
                   >
                     <span className="inline-flex items-center gap-1 ">

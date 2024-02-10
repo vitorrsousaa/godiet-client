@@ -19,7 +19,7 @@ export function Login() {
           <span className="tracking-[-0.5px] text-gray-500">
             Novo por aqui?
           </span>
-          <Link to={ROUTES.REGISTER} className="text-green-600 hover:underline">
+          <Link to={ROUTES.REGISTER} className="text-teal-600 hover:underline">
             Crie uma conta
           </Link>
         </p>

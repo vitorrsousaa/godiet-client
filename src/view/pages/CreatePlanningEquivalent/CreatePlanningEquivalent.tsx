@@ -2,15 +2,15 @@ import React from 'react';
 
 import { Button } from '@godiet-components/Button';
 import { Card } from '@godiet-components/Card';
-import { CategoryIcon } from '@godiet-components/icons/CategoryIcon';
 import { Input } from '@godiet-components/Input';
-import { SimpleInput } from '@godiet-components/SimpleInput';
 import { Spinner } from '@godiet-components/Spinner';
-import { Tooltip } from '@godiet-components/Tooltip';
 
+import { DevTool } from '@hookform/devtools';
 import { TrashIcon } from '@radix-ui/react-icons';
 import { FormProvider } from 'react-hook-form';
 
+import { CreateCategoriesInput } from './components/CreateCategoriesInput';
+import { HeaderContent } from './components/HeaderContent';
 import { IncreaseFoodModal } from './components/modals/IncreaseFoodModal';
 import { useCreatePlanningEquivalenteHook } from './CreatePlanningEquivalent.hook';
 
@@ -22,7 +22,9 @@ export function CreatePlanningEquivalent() {
     formMethods,
     increaseFoodModalOpen,
     errors,
-    prefetchFoods,
+    selectedCategories,
+    control,
+    formIsValid,
     hasCategories,
     toggleIncreaseFoodModal,
     register,
@@ -40,6 +42,7 @@ export function CreatePlanningEquivalent() {
         </h4>
       </div>
       <FormProvider {...formMethods}>
+        <DevTool control={control} />
         <form>
           {!isFetchingCategories ? (
             <>
@@ -74,78 +77,16 @@ export function CreatePlanningEquivalent() {
                           </Card.Description>
                         </Card.Header>
                         <Card.Content>
-                          <div className="mb-5 flex flex-col items-start justify-between gap-2 sm:flex-row sm:gap-8">
-                            <div className="w-full">
-                              <Input
-                                placeholder="Nome da refeição"
-                                className="w-full"
-                                {...register(`meals.${index}.name`)}
-                                error={errors.meals?.[index]?.name?.message}
-                              />
-                            </div>
-                            <div className="w-full">
-                              <Input
-                                placeholder="Horário"
-                                type="time"
-                                className="w-full"
-                                {...register(`meals.${index}.time`)}
-                                error={errors.meals?.[index]?.time?.message}
-                              />
-                            </div>
-                            <Button variant="outline" className="">
-                              0 Kcal
-                            </Button>
-                          </div>
+                          <HeaderContent mealIndex={index} />
                           <div className="grid w-full grid-cols-3 place-items-center gap-4 sm:grid-cols-5 md:grid-cols-9 lg:grid-cols-12 xl:grid-cols-16">
                             {formatedCategories.map(
                               (category, categoryIndex) => (
-                                <div
-                                  className="flex flex-col items-center gap-2"
+                                <CreateCategoriesInput
+                                  category={category}
+                                  categoryIndex={categoryIndex}
+                                  mealIndex={index}
                                   key={`category-${category.id}-meal-${meal.id}`}
-                                >
-                                  <Tooltip
-                                    content={
-                                      <div className="flex flex-col">
-                                        <strong className="text-lg">
-                                          {category.name}
-                                        </strong>
-                                        <p>
-                                          Proteínas: {category.baseProtein}{' '}
-                                          g/porção
-                                        </p>
-                                        <p>
-                                          Lipídios: {category.baseFat} g/porção
-                                        </p>
-                                        <p>
-                                          Carboidratos: {category.baseCarbo}
-                                          g/porção
-                                        </p>
-                                        <p>
-                                          Calorias: {category.baseEnergy}
-                                          kcal/porção
-                                        </p>
-                                      </div>
-                                    }
-                                  >
-                                    <CategoryIcon category={category.name} />
-                                  </Tooltip>
-
-                                  <SimpleInput
-                                    placeholder="0"
-                                    {...register(
-                                      `meals.${index}.categories.${categoryIndex}.qty`
-                                    )}
-                                    onInput={() => prefetchFoods(category.id)}
-                                  />
-
-                                  <input
-                                    type="hidden"
-                                    {...register(
-                                      `meals.${index}.categories.${categoryIndex}.id`
-                                    )}
-                                    value={category.id}
-                                  />
-                                </div>
+                                />
                               )
                             )}
                           </div>
@@ -165,6 +106,7 @@ export function CreatePlanningEquivalent() {
                         isOpen={increaseFoodModalOpen}
                         onClose={toggleIncreaseFoodModal}
                         mealIndex={index}
+                        selectedCategories={selectedCategories[index]}
                       />
                     </React.Fragment>
                   );
@@ -175,7 +117,11 @@ export function CreatePlanningEquivalent() {
                 <Button type="button" onClick={handleAddNewMeal}>
                   Adicionar nova refeição
                 </Button>
-                <Button type="submit" onClick={handleSubmit}>
+                <Button
+                  type="submit"
+                  onClick={handleSubmit}
+                  disabled={!formIsValid}
+                >
                   Criar plano alimentar
                 </Button>
               </div>

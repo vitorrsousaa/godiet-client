@@ -1,3 +1,5 @@
+import { TCategoryName } from './CategoryName';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type TFood = {
   id: string;
@@ -6,4 +8,5 @@ export type TFood = {
   baseUnit: string;
   categoryNameId: string;
   attributes?: Record<string, any>[] | undefined;
+  categoryName?: TCategoryName;
 };

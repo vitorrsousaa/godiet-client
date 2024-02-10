@@ -5,7 +5,7 @@ import { cn } from '@godiet-utils/cn';
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {}
 
-const SimpleInput = React.forwardRef<HTMLInputElement, InputProps>(
+const SimpleInputComponent = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, ...props }, ref) => {
     return (
       <input
@@ -20,6 +20,8 @@ const SimpleInput = React.forwardRef<HTMLInputElement, InputProps>(
     );
   }
 );
-SimpleInput.displayName = 'SimpleInput';
+
+SimpleInputComponent.displayName = 'SimpleInput';
+const SimpleInput = React.memo(SimpleInputComponent);
 
 export { SimpleInput };

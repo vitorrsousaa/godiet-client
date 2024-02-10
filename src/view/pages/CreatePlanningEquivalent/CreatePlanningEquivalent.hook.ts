@@ -1,15 +1,31 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useGetAllCategoryName } from '@godiet-hooks/categoryName';
-import { usePrefetchFoods } from '@godiet-hooks/foods';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
 
+export const FoodSchema = z.object({
+  id: z.string(),
+  portion: z
+    .string()
+    .or(z.number())
+    .refine((value) => Number(value)),
+  categoryId: z.string(),
+  options: z.array(
+    z.object({
+      foodId: z.string(),
+      baseQty: z.number(),
+    })
+  ),
+});
+
 export const CategorySchema = z.object({
-  qty: z.number().pipe(z.coerce.number()),
+  qty: z
+    .string()
+    .pipe(z.coerce.number().min(0, 'A quantidade deve ser maior que 0')),
   id: z.string(),
 });
 
@@ -21,9 +37,13 @@ export const CreateMealSchema = z.object({
   categories: z
     .array(CategorySchema)
     .refine(
-      (value) => value.filter((category) => category.qty > 0).length > 0,
+      (value) =>
+        value
+          .map((category) => ({ qty: Number(category.qty) }))
+          .filter((category) => Number(category.qty) > 0).length > 0,
       'Selecione pelo menos uma categoria.'
     ),
+  foods: z.array(FoodSchema).refine((value) => value.length > 0),
 });
 
 export const CreatePlanningMealSchema = z.object({
@@ -46,6 +66,7 @@ export function useCreatePlanningEquivalenteHook() {
           name: '',
           time: '',
           categories: [],
+          foods: [],
         },
       ],
     },
@@ -53,7 +74,7 @@ export function useCreatePlanningEquivalenteHook() {
 
   const {
     handleSubmit: hookFormSubmit,
-    formState: { errors },
+    formState: { errors, isValid },
     control,
     register,
   } = methods;
@@ -72,11 +93,8 @@ export function useCreatePlanningEquivalenteHook() {
   const { categoriesName, isFetchingCategories, isErrorCategories } =
     useGetAllCategoryName();
 
-  const prefetchFoods = usePrefetchFoods();
-
-  console.log(errors);
-
   const handleSubmit = hookFormSubmit((data) => {
+    // Remover o local storage
     console.log('submit', data);
   });
 
@@ -85,20 +103,42 @@ export function useCreatePlanningEquivalenteHook() {
       name: '',
       time: '',
       categories: [],
+      foods: [],
     });
   }, [appendMeals]);
 
   const handleRemoveMeal = useCallback(
     (index: number) => {
-      if (index === 0) return;
-      removeMeal(index);
+      if (watchMeals.length > 1) {
+        removeMeal(index);
+      }
     },
-    [removeMeal]
+    [removeMeal, watchMeals]
   );
 
   const toggleIncreaseFoodModal = useCallback(() => {
     setIncreaseFoodModalOpen((prev) => !prev);
   }, []);
+
+  const hasCategories = useCallback(
+    (index: number) => {
+      if (watchMeals[index]) {
+        return watchMeals[index].categories.some(
+          (category) => category.qty > 0
+        );
+      }
+
+      return false;
+    },
+    [watchMeals]
+  );
+
+  const selectedCategories = useMemo(() => {
+    return watchMeals.map((meal, index) => ({
+      mealIndex: index,
+      categories: meal.categories.filter((category) => category.qty > 0),
+    }));
+  }, [watchMeals]);
 
   const formatedCategories = useMemo(() => {
     if (isFetchingCategories) return [];
@@ -115,18 +155,20 @@ export function useCreatePlanningEquivalenteHook() {
     }));
   }, [categoriesName, isFetchingCategories, isErrorCategories]);
 
-  const hasCategories = useCallback(
-    (index: number) => {
-      if (watchMeals[index]) {
-        return watchMeals[index].categories.some(
-          (category) => category.qty > 0
-        );
-      }
+  const formIsValid = useMemo(() => {
+    const categories = watchMeals.map((meal) => meal.categories).flat();
+    const foods = watchMeals.map((meal) => meal.foods).flat();
 
-      return false;
-    },
-    [watchMeals]
-  );
+    const quantityCategories = categories.filter(
+      (category) => Number(category.qty) > 0
+    );
+
+    const allCategoriesHasFoods = quantityCategories.every((category) => {
+      return foods.some((food) => food.categoryId === category.id);
+    });
+
+    return isValid || allCategoriesHasFoods;
+  }, [isValid, watchMeals]);
 
   useEffect(() => {
     if (errors) {
@@ -146,14 +188,15 @@ export function useCreatePlanningEquivalenteHook() {
 
   return {
     formatedCategories,
+    selectedCategories,
     isFetchingCategories,
     meals: fields,
     control,
     formMethods: methods,
     increaseFoodModalOpen,
     errors,
+    formIsValid,
     hasCategories,
-    prefetchFoods,
     handleSubmit,
     toggleIncreaseFoodModal,
     register,

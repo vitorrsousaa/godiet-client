@@ -61,7 +61,7 @@ export function DashboardLayout() {
                   <GearIcon className="h-4 w-4 text-icon sm:h-5 sm:w-5" />
                 </Link>
               </NavigationMenu.Item>
-              <NavigationMenu.Item>
+              <NavigationMenu.Item className="hidden sm:block">
                 <Link to="/" className={navigationMenuTriggerStyle()}>
                   <BellIcon className="h-4 w-4 text-icon sm:h-5 sm:w-5" />
                 </Link>
