@@ -2,11 +2,9 @@ import React from 'react';
 
 import {
   ColumnDef,
-  ColumnFiltersState,
   getCoreRowModel,
   getPaginationRowModel,
   useReactTable,
-  VisibilityState,
 } from '@tanstack/react-table';
 
 import {
@@ -49,17 +47,17 @@ export function useDataTable<TData, TValue>(
   const {
     data,
     columns,
-    searchableColumns = [],
-    filterableColumns = [],
+    // searchableColumns = [],
+    // filterableColumns = [],
   } = props;
 
   // Table states
   const [rowSelection, setRowSelection] = React.useState({});
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
+  // const [columnVisibility, setColumnVisibility] =
+  //   React.useState<VisibilityState>({});
+  // const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+  //   []
+  // );
 
   const dataTable = useReactTable({
     data,
