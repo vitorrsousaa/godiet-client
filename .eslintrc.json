@@ -46,7 +46,7 @@
   },
   "overrides": [
     {
-      "files": ["**/*.js", "**/*.ts", "**/*.tsx"],
+      "files": ["**/*.ts", "**/*.tsx"],
       "rules": {
         "simple-import-sort/imports": [
           "error",
@@ -77,6 +77,12 @@
       "parserOptions": {
         "sourceType": "module",
         "ecmaVersion": 2023
+      }
+    },
+    {
+      "files": ["**/*.js"],
+      "parserOptions": {
+        "sourceType": "script"
       }
     }
   ]
