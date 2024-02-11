@@ -2,7 +2,6 @@ import { createContext, useCallback, useEffect, useState } from 'react';
 
 import { PageLoader } from '@godiet-components/PageLoader';
 import { LOCAL_STORAGE_KEYS } from '@godiet-config';
-import { useRowStorageContext } from '@godiet-hooks/rowStorage';
 import { useQuery, useQueryClient } from '@godiet-query';
 import { userService } from '@godiet-services/user';
 
@@ -30,7 +29,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   });
 
   const queryClient = useQueryClient();
-  const { removeAllRowSelectionStorage } = useRowStorageContext();
 
   const { data, isError, isFetching, isSuccess } = useQuery({
     queryKey: ['users', 'me'],
@@ -51,10 +49,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       queryKey: ['users', 'me'],
     });
 
-    removeAllRowSelectionStorage();
-
     setSignedIn(false);
-  }, [queryClient, removeAllRowSelectionStorage]);
+  }, [queryClient]);
 
   useEffect(() => {
     if (isError) {

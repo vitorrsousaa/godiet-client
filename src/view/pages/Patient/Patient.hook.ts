@@ -1,27 +1,22 @@
 import { useCallback, useState } from 'react';
 
-import { ROUTES } from '@godiet-config';
-import { replaceRouteParams } from '@godiet-utils/replaceRouteParams';
+import { useGetByPatientId } from '@godiet-hooks/patient';
+import { useNavigate } from '@godiet-hooks/routes';
 
-import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 export function usePatientHook() {
-  const patient = {
-    id: '65faa3b1-cd38-4816-98ec-3b0cd8a74f35',
-    name: 'João da Silva',
-    email: 'email@paciente.com',
-    birthDate: '01/01/1990',
-  };
-
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+
+  const { isFetchingPatient, patient } = useGetByPatientId(id);
+
+  const { navigate } = useNavigate();
 
   const handleNavigateToCreatePlanning = useCallback(() => {
-    navigate(
-      replaceRouteParams(ROUTES.CREATE_PLANNING_GODIET, { id: patient.id })
-    );
-  }, [navigate, patient.id]);
+    navigate('PLANNING_MEAL_BY_PATIENT', { id: patient?.id || '' });
+  }, [navigate, patient]);
 
   const toggleEditModal = useCallback(() => {
     setIsEditModalOpen((prevState) => !prevState);
@@ -30,6 +25,7 @@ export function usePatientHook() {
   return {
     patient,
     isEditModalOpen,
+    isFetchingPatient,
     toggleEditModal,
     handleNavigateToCreatePlanning,
   };

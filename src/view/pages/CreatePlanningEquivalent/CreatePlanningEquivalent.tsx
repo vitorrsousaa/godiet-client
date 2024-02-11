@@ -25,6 +25,8 @@ export function CreatePlanningEquivalent() {
     selectedCategories,
     control,
     formIsValid,
+    isFetchingPatient,
+    isErrorPatient,
     hasCategories,
     toggleIncreaseFoodModal,
     register,
@@ -41,98 +43,113 @@ export function CreatePlanningEquivalent() {
           Adicione as porções em cada grupo alimentar nas refeições
         </h4>
       </div>
-      <FormProvider {...formMethods}>
-        <DevTool control={control} />
-        <form>
-          {!isFetchingCategories ? (
-            <>
-              <div className="mb-4">
-                <Input
-                  {...register('name')}
-                  placeholder="Nome do plano alimentar"
-                  type="text"
-                  error={errors.name?.message}
-                />
-              </div>
+      {isFetchingPatient ? (
+        <div className="flex h-full w-full items-center justify-center">
+          <Spinner className="h-14 w-14" />
+        </div>
+      ) : isErrorPatient ? (
+        <div className="mt-8 flex w-full items-center justify-center text-center">
+          <p className="max-w-[540px] text-center text-xl">
+            Tivemos um erro para encontrar este paciente, por favor. Reinicie e
+            tente novamente.
+          </p>
+        </div>
+      ) : (
+        <>
+          <FormProvider {...formMethods}>
+            <DevTool control={control} />
+            <form>
+              {!isFetchingCategories ? (
+                <>
+                  <div className="mb-4">
+                    <Input
+                      {...register('name')}
+                      placeholder="Nome do plano alimentar"
+                      type="text"
+                      error={errors.name?.message}
+                    />
+                  </div>
 
-              <div className="flex flex-col gap-4">
-                {meals.map((meal, index) => {
-                  return (
-                    <React.Fragment key={`meal-form-${index}-${meal.id}}`}>
-                      <Card.Root>
-                        <Card.Header>
-                          <Card.Title className="flex w-full items-center justify-between">
-                            Refeição {index + 1}
-                            <Button
-                              variant={'destructive'}
-                              className="h-8 px-2"
-                              type="button"
-                              onClick={() => handleRemoveMeal(index)}
-                            >
-                              <TrashIcon />
-                            </Button>
-                          </Card.Title>
-                          <Card.Description>
-                            Adicione as informações da refeição
-                          </Card.Description>
-                        </Card.Header>
-                        <Card.Content>
-                          <HeaderContent mealIndex={index} />
-                          <div className="grid w-full grid-cols-3 place-items-center gap-4 sm:grid-cols-5 md:grid-cols-9 lg:grid-cols-12 xl:grid-cols-16">
-                            {formatedCategories.map(
-                              (category, categoryIndex) => (
-                                <CreateCategoriesInput
-                                  category={category}
-                                  categoryIndex={categoryIndex}
-                                  mealIndex={index}
-                                  key={`category-${category.id}-meal-${meal.id}`}
-                                />
-                              )
-                            )}
-                          </div>
-                        </Card.Content>
+                  <div className="flex flex-col gap-4">
+                    {meals.map((meal, index) => {
+                      return (
+                        <React.Fragment key={`meal-form-${index}-${meal.id}}`}>
+                          <Card.Root>
+                            <Card.Header>
+                              <Card.Title className="flex w-full items-center justify-between">
+                                Refeição {index + 1}
+                                <Button
+                                  variant={'destructive'}
+                                  className="h-8 px-2"
+                                  type="button"
+                                  onClick={() => handleRemoveMeal(index)}
+                                >
+                                  <TrashIcon />
+                                </Button>
+                              </Card.Title>
+                              <Card.Description>
+                                Adicione as informações da refeição
+                              </Card.Description>
+                            </Card.Header>
+                            <Card.Content>
+                              <HeaderContent mealIndex={index} />
+                              <div className="grid w-full grid-cols-3 place-items-center gap-4 sm:grid-cols-5 md:grid-cols-9 lg:grid-cols-12 xl:grid-cols-16">
+                                {formatedCategories.map(
+                                  (category, categoryIndex) => (
+                                    <CreateCategoriesInput
+                                      category={category}
+                                      categoryIndex={categoryIndex}
+                                      mealIndex={index}
+                                      key={`category-${category.id}-meal-${meal.id}`}
+                                    />
+                                  )
+                                )}
+                              </div>
+                            </Card.Content>
 
-                        <Card.Footer>
-                          <Button
-                            onClick={toggleIncreaseFoodModal}
-                            disabled={!hasCategories(index)}
-                          >
-                            Selecionar alimentos
-                          </Button>
-                          <Button>Adicionar observações</Button>
-                        </Card.Footer>
-                      </Card.Root>
-                      <IncreaseFoodModal
-                        isOpen={increaseFoodModalOpen}
-                        onClose={toggleIncreaseFoodModal}
-                        mealIndex={index}
-                        selectedCategories={selectedCategories[index]}
-                      />
-                    </React.Fragment>
-                  );
-                })}
-              </div>
+                            <Card.Footer>
+                              <Button
+                                onClick={toggleIncreaseFoodModal}
+                                disabled={!hasCategories(index)}
+                              >
+                                Selecionar alimentos
+                              </Button>
+                              <Button>Adicionar observações</Button>
+                            </Card.Footer>
+                          </Card.Root>
+                          <IncreaseFoodModal
+                            isOpen={increaseFoodModalOpen}
+                            onClose={toggleIncreaseFoodModal}
+                            mealIndex={index}
+                            selectedCategories={selectedCategories[index]}
+                          />
+                        </React.Fragment>
+                      );
+                    })}
+                  </div>
 
-              <div className="mt-8 space-x-4">
-                <Button type="button" onClick={handleAddNewMeal}>
-                  Adicionar nova refeição
-                </Button>
-                <Button
-                  type="submit"
-                  onClick={handleSubmit}
-                  disabled={!formIsValid}
-                >
-                  Criar plano alimentar
-                </Button>
-              </div>
-            </>
-          ) : (
-            <div className="grid h-full w-full place-items-center">
-              <Spinner />
-            </div>
-          )}
-        </form>
-      </FormProvider>
+                  <div className="mt-8 space-x-4">
+                    <Button type="button" onClick={handleAddNewMeal}>
+                      Adicionar nova refeição
+                    </Button>
+                    <Button
+                      type="submit"
+                      onClick={handleSubmit}
+                      disabled={!formIsValid}
+                    >
+                      Criar plano alimentar
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <div className="grid h-full w-full place-items-center">
+                  <Spinner />
+                </div>
+              )}
+            </form>
+          </FormProvider>
+        </>
+      )}
     </div>
   );
 }

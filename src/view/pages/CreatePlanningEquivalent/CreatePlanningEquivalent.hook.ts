@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useGetAllCategoryName } from '@godiet-hooks/categoryName';
+import { useGetByPatientId } from '@godiet-hooks/patient';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { useParams } from 'react-router-dom';
 import * as z from 'zod';
 
 export const FoodSchema = z.object({
@@ -57,6 +59,10 @@ export type TCreatePlanningMealDTO = z.infer<typeof CreatePlanningMealSchema>;
 
 export function useCreatePlanningEquivalenteHook() {
   const [increaseFoodModalOpen, setIncreaseFoodModalOpen] = useState(false);
+
+  const { id } = useParams<{ id: string }>();
+
+  const { isFetchingPatient, isErrorPatient } = useGetByPatientId(id);
 
   const methods = useForm<TCreatePlanningMealDTO>({
     resolver: zodResolver(CreatePlanningMealSchema),
@@ -196,6 +202,8 @@ export function useCreatePlanningEquivalenteHook() {
     increaseFoodModalOpen,
     errors,
     formIsValid,
+    isFetchingPatient,
+    isErrorPatient,
     hasCategories,
     handleSubmit,
     toggleIncreaseFoodModal,

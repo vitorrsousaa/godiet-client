@@ -35,6 +35,7 @@ const { SettingsRewards } = lazyLoad(
 );
 const { Patients } = lazyLoad(() => import('@godiet-pages/Patients'));
 const { Patient } = lazyLoad(() => import('@godiet-pages/Patient'));
+const { PlanningMeal } = lazyLoad(() => import('@godiet-pages/PlanningMeal'));
 
 export function Router() {
   return (
@@ -84,6 +85,10 @@ export function Router() {
               <Route
                 path={ROUTES.CREATE_PLANNING_GODIET}
                 element={<CreatePlanningEquivalent />}
+              />
+              <Route
+                path={ROUTES.PLANNING_MEAL_BY_PATIENT}
+                element={<PlanningMeal />}
               />
             </Route>
           </Route>

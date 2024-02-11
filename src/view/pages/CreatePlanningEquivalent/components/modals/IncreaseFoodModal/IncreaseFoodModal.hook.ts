@@ -37,7 +37,7 @@ export function useIncreaseFoodModalHook(props: IncreaseFoodModalProps) {
 
   const { control } = useFormContext<TCreatePlanningMealDTO>();
 
-  const { fields, remove, update } = useFieldArray({
+  const { fields, remove, update, append } = useFieldArray({
     control,
     name: `meals.${mealIndex}.foods`,
   });
@@ -60,7 +60,25 @@ export function useIncreaseFoodModalHook(props: IncreaseFoodModalProps) {
           });
         });
 
-        update(mealIndex, {
+        // Verificar se já existe a categoria no array de meals
+        const hasFoodIncreased = fields.find(
+          (field) => field.categoryId === categoryId
+        );
+
+        if (hasFoodIncreased) {
+          update(mealIndex, {
+            categoryId: categoryId,
+            portion:
+              propCategories.categories.find(
+                (category) => category.id === categoryId
+              )?.qty || 0,
+            options: newFoods,
+            id: categoryId,
+          });
+          return;
+        }
+
+        append({
           categoryId: categoryId,
           portion:
             propCategories.categories.find(
@@ -73,7 +91,7 @@ export function useIncreaseFoodModalHook(props: IncreaseFoodModalProps) {
 
       onClose();
     },
-    [fields, foodsSelected, onClose, propCategories, remove, update]
+    [fields, foodsSelected, onClose, propCategories, remove, update, append]
   );
 
   const handleFoodsSelected = useCallback(

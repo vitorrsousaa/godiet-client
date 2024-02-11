@@ -61,17 +61,6 @@ export function Settings() {
             </Select>
           </div>
         </Section>
-
-        <Separator className="my-6" />
-        <Section
-          title="Nome"
-          description="Insira seu nome completo"
-          className="w-72 sm:w-40"
-        >
-          <div>
-            <Input name="name" placeholder="Nome" />
-          </div>
-        </Section>
       </div>
       <Separator />
       <div className="flex flex-col gap-4">

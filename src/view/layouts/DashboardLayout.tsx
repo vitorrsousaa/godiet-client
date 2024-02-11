@@ -25,7 +25,7 @@ import {
 import { Link, Outlet } from 'react-router-dom';
 
 export function DashboardLayout() {
-  const { signout } = useAuth();
+  const { signout, email, name } = useAuth();
 
   return (
     <section className="h-full">
@@ -72,16 +72,18 @@ export function DashboardLayout() {
                     <Avatar
                       className="ml-2 hover:cursor-pointer"
                       src="https://github.com/shadcn.png"
-                      name="Joaquim"
+                      name={name || 'default'}
                     />
                   </NavigationMenu.Item>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="mr-8 min-w-56">
                   <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                      <p className="text-sm font-medium leading-none">shadcn</p>
+                      <p className="text-sm font-medium leading-none">
+                        {name || 'default'}
+                      </p>
                       <p className="text-xs leading-none text-muted-foreground">
-                        m@example.com
+                        {email}
                       </p>
                     </div>
                   </DropdownMenuLabel>

@@ -20,6 +20,20 @@ export function useCreatePatient() {
   };
 }
 
+export function useGetByPatientId(patientId: string | undefined) {
+  const { data, isLoading, isPending, isError } = useQuery({
+    queryKey: [QUERY_CACHE_KEYS.PATIENTS, patientId],
+    queryFn: () => patientServices.getById(patientId || ''),
+    enabled: !!patientId,
+  });
+
+  return {
+    patient: data,
+    isFetchingPatient: isLoading || isPending,
+    isErrorPatient: isError,
+  };
+}
+
 export function useGetAllPatients() {
   const { data, isLoading, isPending } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.PATIENTS],

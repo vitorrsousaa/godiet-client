@@ -19,12 +19,23 @@ export function EditPatientModal(props: EditPatientModalProps) {
         <Modal.Title>Dados cadastrais</Modal.Title>
         <Modal.Description>Edite as informações do paciente.</Modal.Description>
       </Modal.Header>
-      <PatientForm
-        onCancel={onClose}
-        onSubmit={handleSubmit}
-        controller={controller}
-        patient={patient}
-      />
+      {patient ? (
+        <>
+          <PatientForm
+            onCancel={onClose}
+            onSubmit={handleSubmit}
+            controller={controller}
+            patient={{
+              birthDate: new Date(patient.birthDate),
+              email: patient.email,
+              gender: patient.gender,
+              name: patient.name,
+            }}
+          />
+        </>
+      ) : (
+        <div>Paciente não encontrado</div>
+      )}
     </Modal.Root>
   );
 }

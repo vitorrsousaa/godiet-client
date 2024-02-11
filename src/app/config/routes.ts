@@ -4,6 +4,7 @@ export const ROUTES = {
   HOME: '/',
   PATIENTS: '/pacientes',
   PATIENTS_BY_ID: '/pacientes/:id',
+  PLANNING_MEAL_BY_PATIENT: '/pacientes/:id/plano',
   CREATE_PLANNING_CONVENTIONAL: '/pacientes/:id/plano/convencional',
   CREATE_PLANNING_GODIET: '/pacientes/:id/plano/godiet',
   SETTINGS: '/configuracoes',
