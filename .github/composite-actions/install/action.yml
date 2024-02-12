@@ -22,11 +22,6 @@ runs:
           **/.production
         key: node_modules-${{ hashFiles('**/package.json') }}
 
-    - name: Set CRLF line endings
-      run: |
-        git config --global core.autocrlf true
-      shell: bash
-
     - name: Install dependencies
       run: yarn install --frozen-lockfile
       shell: bash
