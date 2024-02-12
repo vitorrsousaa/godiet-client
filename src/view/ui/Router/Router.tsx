@@ -4,7 +4,6 @@ import { Suspense } from 'react';
 import { Logo } from '@godiet-components/Logo';
 import { Spinner } from '@godiet-components/Spinner';
 import { ROUTES } from '@godiet-config';
-import { LandingPage } from '@godiet-pages/LandingPage';
 import { NotFound } from '@godiet-pages/NotFound';
 import { lazyLoad } from '@godiet-utils/lazyLoad';
 
@@ -22,6 +21,7 @@ const { DashboardLayout } = lazyLoad(
 );
 
 const { Login } = lazyLoad(() => import('@godiet-pages/Login'));
+const { LandingPage } = lazyLoad(() => import('@godiet-pages/LandingPage'));
 const { Register } = lazyLoad(() => import('@godiet-pages/Register'));
 const { Settings } = lazyLoad(() => import('@godiet-pages/Settings'));
 const { SettingsLayout } = lazyLoad(
@@ -56,11 +56,11 @@ export function Router() {
           <Route element={<AuthGuard isPrivate={false} />}>
             <Route path={ROUTES.LOGIN} element={<Login />} />
             <Route path={ROUTES.REGISTER} element={<Register />} />
-            <Route path="/landing" element={<LandingPage />} />
+            <Route path={ROUTES.HOME} element={<LandingPage />} />
           </Route>
           <Route element={<AuthGuard isPrivate={true} />}>
             <Route element={<DashboardLayout />}>
-              <Route path={ROUTES.HOME} element={<Dashboard />} />
+              <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
               <Route element={<SettingsLayout />}>
                 <Route path={ROUTES.SETTINGS} element={<Settings />} />
                 <Route
