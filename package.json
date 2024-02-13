@@ -10,9 +10,9 @@
     "lint:fix": "prettier --write ./src && eslint ./src --ext .ts --fix",
     "preview": "vite preview",
     "prepare": "husky",
-    "test": "vitest --coverage",
-    "test:ci": "vitest --no-watch",
-    "test:ui": "vitest --ui",
+    "test": "vitest run --coverage",
+    "test:ci": "vitest run --no-watch --passWithNoTests ",
+    "test:ui": "vitest run --ui",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
