@@ -3,6 +3,7 @@ import { TCreatePlanningMealDTO } from '@godiet-pages/CreatePlanningEquivalent/C
 interface FoodToDatabase {
   portion: number;
   options: string[];
+  categoryNameId: string;
 }
 
 interface MealToDatabase {
@@ -37,6 +38,7 @@ function foodToDatabase(
   food: TCreatePlanningMealDTO['meals'][0]['foods'][0]
 ): FoodToDatabase {
   return {
+    categoryNameId: food.categoryId,
     portion: Number(food.portion),
     options: food.options.map((option) => option.foodId),
   };

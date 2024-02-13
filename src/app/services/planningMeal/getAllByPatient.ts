@@ -9,9 +9,20 @@ interface TPlanningMeal {
   createdAt: string;
 }
 
-export async function getAllByPatient(patientId: string) {
-  const { data } = await httpClient.get<TPlanningMeal[]>(
-    `/planningMeal/${patientId}`
+interface getAllByPatientParams {
+  patientId: string;
+  planningId?: string;
+}
+
+type TPlanningMealResponse<HasPlanningId extends boolean> =
+  HasPlanningId extends true ? TPlanningMeal : TPlanningMeal[];
+
+export async function getAllByPatient<T extends boolean>(
+  params: getAllByPatientParams
+) {
+  const { patientId, planningId } = params;
+  const { data } = await httpClient.get<TPlanningMealResponse<T>>(
+    `/planningMeal/${patientId}${planningId ? `?planningId=${planningId}` : ''}`
   );
 
   return data;
