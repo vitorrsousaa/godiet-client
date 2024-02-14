@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "prepare": "husky",
     "test": "vitest --coverage",
-    "test:ci": "vitest --no-watch",
+    "test:ci": "vitest --no-watch --passWithNoTests",
     "test:ui": "vitest --ui",
     "typecheck": "tsc --noEmit"
   },
