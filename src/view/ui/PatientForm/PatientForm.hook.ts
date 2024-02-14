@@ -29,6 +29,7 @@ const schema = z.object({
     .refine((date) => date <= new Date(), {
       message: 'Data de nascimento não pode ser no futuro',
     }),
+  phone: z.string().min(8),
   gender: z.enum(['MASC', 'FEM']),
 });
 
@@ -68,6 +69,7 @@ export function usePatientFormHook(props: PatientFormProps) {
       setValue('email', patient.email);
       setValue('birthDate', patient.birthDate);
       setValue('gender', patient.gender);
+      setValue('phone', patient.phone);
     }
   }, [patient]);
 

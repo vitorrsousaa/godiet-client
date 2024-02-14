@@ -6,6 +6,7 @@ interface CreatePatientInput {
     name: string;
     gender: string;
     birthDate: Date;
+    phone: string;
   };
 }
 

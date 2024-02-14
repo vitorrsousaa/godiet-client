@@ -46,6 +46,7 @@ const PatientForm = forwardRef<PatientFormRef, PatientFormProps>(
           setValue('email', values.email);
           setValue('birthDate', values.birthDate);
           setValue('gender', values.gender);
+          setValue('phone', values.phone);
         },
       }),
       [hookFormSetError, setValue]
@@ -66,7 +67,12 @@ const PatientForm = forwardRef<PatientFormRef, PatientFormProps>(
             error={errors.email?.message}
             {...register('email')}
           />
-          {/* <Input name="phone" type="text" placeholder="Telefone do paciente" /> */}
+          <Input
+            type="tel"
+            placeholder="Telefone do paciente"
+            error={errors.phone?.message}
+            {...register('phone')}
+          />
           <Controller
             control={control}
             name="birthDate"

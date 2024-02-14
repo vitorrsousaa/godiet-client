@@ -31,6 +31,7 @@ export function usePatientFormController(): UsePatientFormController {
       setValueRef.current('email', values.email);
       setValueRef.current('birthDate', values.birthDate);
       setValueRef.current('gender', values.gender);
+      setValueRef.current('phone', values.phone);
     }
   }, []);
 
