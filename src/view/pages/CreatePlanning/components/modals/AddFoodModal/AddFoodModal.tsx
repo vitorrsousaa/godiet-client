@@ -1,7 +1,7 @@
-import { Button } from '@godiet-components/Button';
-import { Input } from '@godiet-components/Input';
-import { Modal } from '@godiet-components/Modal';
-import { SelectAutoComplete } from '@godiet-components/SelectAutoComplete';
+import { Button } from '@godiet-ui/Button';
+import { Input } from '@godiet-ui/Input';
+import { Modal } from '@godiet-ui/Modal';
+import { SelectAutoComplete } from '@godiet-ui/SelectAutoComplete';
 
 import { useAddFoodModalHook } from './AddFoodModal.hook';
 

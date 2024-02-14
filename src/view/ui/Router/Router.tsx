@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Suspense } from 'react';
 
-import { Logo } from '@godiet-components/Logo';
-import { Spinner } from '@godiet-components/Spinner';
 import { ROUTES } from '@godiet-config';
 import { NotFound } from '@godiet-pages/NotFound';
+import { Logo } from '@godiet-ui/Logo';
+import { Spinner } from '@godiet-ui/Spinner';
 import { lazyLoad } from '@godiet-utils/lazyLoad';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';

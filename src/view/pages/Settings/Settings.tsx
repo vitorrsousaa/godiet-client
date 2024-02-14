@@ -1,6 +1,9 @@
-import { Avatar } from '@godiet-components/Avatar';
-import { Button } from '@godiet-components/Button';
-import { Input } from '@godiet-components/Input';
+import { HeaderSettings } from '@godiet-components/HeaderSettings';
+import { Theme } from '@godiet-contexts/theme';
+import { useTheme } from '@godiet-hooks/theme';
+import { Avatar } from '@godiet-ui/Avatar';
+import { Button } from '@godiet-ui/Button';
+import { Input } from '@godiet-ui/Input';
 import {
   Select,
   SelectContent,
@@ -8,14 +11,11 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@godiet-components/Select';
-import { Separator } from '@godiet-components/Separator';
-import { Theme } from '@godiet-contexts/theme';
-import { useTheme } from '@godiet-hooks/theme';
+} from '@godiet-ui/Select';
+import { Separator } from '@godiet-ui/Separator';
 
 import { TrashIcon } from '@radix-ui/react-icons';
 
-import { Header } from './components/Header';
 import { Section } from './components/Section';
 
 export function Settings() {
@@ -24,10 +24,13 @@ export function Settings() {
   return (
     <div className="flex flex-col gap-4 pb-8">
       <div className="flex flex-col gap-4">
-        <Header title={'Informações pessoais'} extra={<Button>Salvar</Button>}>
+        <HeaderSettings
+          title={'Informações pessoais'}
+          extra={<Button>Salvar</Button>}
+        >
           Gerencie e atualize suas informações pessoais aqui, como nome, foto e
           outras informações.
-        </Header>
+        </HeaderSettings>
         <Separator />
         <Section
           title="Foto"
@@ -64,11 +67,11 @@ export function Settings() {
       </div>
       <Separator />
       <div className="flex flex-col gap-4">
-        <Header title={'Área crítica'}>
+        <HeaderSettings title={'Área crítica'}>
           Aqui você pode atualizar sua senha, configurar autenticação de dois
           fatores ou excluir sua conta. Por favor, esteja ciente das ações que
           você está realizando.
-        </Header>
+        </HeaderSettings>
 
         <Separator />
         <Section

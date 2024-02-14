@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
-import { Button } from '@godiet-components/Button';
-import { Input } from '@godiet-components/Input';
+import { Button } from '@godiet-ui/Button';
+import { Input } from '@godiet-ui/Input';
 
 import { useHeaderContentHook } from './HeaderContent.hook';
 

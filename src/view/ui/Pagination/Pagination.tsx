@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { ButtonProps, buttonVariants } from '@godiet-components/Button';
+import { ButtonProps, buttonVariants } from '@godiet-ui/Button';
 import { cn } from '@godiet-utils/cn';
 
 import {

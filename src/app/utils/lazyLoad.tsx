@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Spinner } from '@godiet-components/Spinner';
+import { Spinner } from '@godiet-ui/Spinner';
 
 import loadable from '@loadable/component';
 

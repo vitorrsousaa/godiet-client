@@ -1,5 +1,5 @@
-import { Button } from '@godiet-components/Button';
-import { Modal } from '@godiet-components/Modal';
+import { Button } from '@godiet-ui/Button';
+import { Modal } from '@godiet-ui/Modal';
 
 interface DangerModalProps {
   isOpen: boolean;

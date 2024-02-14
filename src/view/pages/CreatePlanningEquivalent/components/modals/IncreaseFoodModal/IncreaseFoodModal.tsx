@@ -1,6 +1,6 @@
-import { Button } from '@godiet-components/Button';
-import { Modal } from '@godiet-components/Modal';
-import { Spinner } from '@godiet-components/Spinner';
+import { Button } from '@godiet-ui/Button';
+import { Modal } from '@godiet-ui/Modal';
+import { Spinner } from '@godiet-ui/Spinner';
 
 import { CrossCircledIcon } from '@radix-ui/react-icons';
 

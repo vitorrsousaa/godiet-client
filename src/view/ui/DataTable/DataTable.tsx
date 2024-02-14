@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import React from 'react';
 
-import { Input } from '@godiet-components/Input';
+import { Input } from '@godiet-ui/Input';
 import {
   Table,
   TableBody,
@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@godiet-components/Table';
+} from '@godiet-ui/Table';
 
 import {
   type ColumnDef,

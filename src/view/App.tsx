@@ -1,7 +1,7 @@
-import { Router } from '@godiet-components/Router';
-import { ThemeProvider } from '@godiet-components/ThemeProvider';
 import { AuthProvider } from '@godiet-contexts/auth';
 import { QueryClientProvider } from '@godiet-query';
+import { Router } from '@godiet-ui/Router';
+import { ThemeProvider } from '@godiet-ui/ThemeProvider';
 
 import { Toaster } from 'react-hot-toast';
 

@@ -1,12 +1,12 @@
 import { useCallback } from 'react';
 
-import { Avatar } from '@godiet-components/Avatar';
-import { Button } from '@godiet-components/Button';
-import { Separator } from '@godiet-components/Separator';
-import { Spinner } from '@godiet-components/Spinner';
 import { useGetByPatientId } from '@godiet-hooks/patient';
 import { useGetByPlanningId } from '@godiet-hooks/planningMeal';
 import { useNavigate } from '@godiet-hooks/routes';
+import { Avatar } from '@godiet-ui/Avatar';
+import { Button } from '@godiet-ui/Button';
+import { Separator } from '@godiet-ui/Separator';
+import { Spinner } from '@godiet-ui/Spinner';
 import { formatDate } from '@godiet-utils/formatDate';
 
 import {

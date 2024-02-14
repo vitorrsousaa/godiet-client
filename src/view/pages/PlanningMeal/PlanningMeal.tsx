@@ -1,5 +1,5 @@
-import { Button } from '@godiet-components/Button';
-import { Card } from '@godiet-components/Card';
+import { Button } from '@godiet-ui/Button';
+import { Card } from '@godiet-ui/Card';
 import { formatDate } from '@godiet-utils/formatDate';
 
 import {

@@ -1,5 +1,5 @@
-import { DataTable } from '@godiet-components/DataTable';
 import { TFood } from '@godiet-entities';
+import { DataTable } from '@godiet-ui/DataTable';
 
 import { columns } from './columns';
 import { useDataTableFoodHook } from './DataTableFood.hook';

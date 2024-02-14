@@ -1,6 +1,6 @@
-import { Avatar } from '@godiet-components/Avatar';
-import { Button } from '@godiet-components/Button';
-import { Separator } from '@godiet-components/Separator';
+import { Avatar } from '@godiet-ui/Avatar';
+import { Button } from '@godiet-ui/Button';
+import { Separator } from '@godiet-ui/Separator';
 import { formatDate } from '@godiet-utils/formatDate';
 
 import {

@@ -1,10 +1,7 @@
 import { useCallback } from 'react';
 
-import {
-  FormValues,
-  usePatientFormController,
-} from '@godiet-components/PatientForm';
 import { useGetByPatientId } from '@godiet-hooks/patient';
+import { FormValues, usePatientFormController } from '@godiet-ui/PatientForm';
 
 import toast from 'react-hot-toast';
 import { useParams } from 'react-router-dom';

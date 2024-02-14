@@ -1,5 +1,5 @@
-import { Button } from '@godiet-components/Button';
 import { ROUTES } from '@godiet-config';
+import { Button } from '@godiet-ui/Button';
 import { cn } from '@godiet-utils/cn';
 
 import {
