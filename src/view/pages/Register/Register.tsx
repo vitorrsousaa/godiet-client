@@ -42,6 +42,12 @@ export function Register() {
             {...register('email')}
           />
           <Input
+            type="tel"
+            placeholder="Telefone"
+            error={errors.phone?.message}
+            {...register('phone')}
+          />
+          <Input
             type="password"
             placeholder="Senha"
             error={errors.password?.message}

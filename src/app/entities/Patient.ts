@@ -6,5 +6,6 @@ export type TPatient = {
   birthDate: string;
   weight: number;
   height: number;
+  phone: string;
   gender: 'MASC' | 'FEM';
 };

@@ -4,6 +4,7 @@ interface SignupParams {
   email: string;
   password: string;
   name: string;
+  phone: string;
 }
 
 export async function signup(params: SignupParams) {

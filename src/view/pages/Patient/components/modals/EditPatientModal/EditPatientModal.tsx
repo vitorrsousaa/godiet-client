@@ -30,6 +30,7 @@ export function EditPatientModal(props: EditPatientModalProps) {
               email: patient.email,
               gender: patient.gender,
               name: patient.name,
+              phone: patient.phone,
             }}
           />
         </>
