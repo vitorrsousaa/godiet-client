@@ -2,6 +2,7 @@ export const ROUTES = {
   LOGIN: '/login',
   REGISTER: '/register',
   HOME: '/',
+  DASHBOARD: '/app',
   PATIENTS: '/pacientes',
   PATIENTS_BY_ID: '/pacientes/:id',
   PLANNING_MEAL_BY_PATIENT: '/pacientes/:id/plano',
