@@ -1,36 +1,10 @@
+import { TCreatePlanningMealDTO } from '@godiet-pages/CreatePlanningEquivalent/CreatePlanningEquivalent.hook';
 import { httpClient } from '@godiet-services/httpClient';
 
 import { mapperPlanningMeal } from './mapper';
 
-interface FoodOption {
-  baseQty: number;
-  foodId: string;
-}
-
-interface Food {
-  id: string;
-  portion: string;
-  categoryId: string;
-  options: FoodOption[];
-}
-
-interface Categories {
-  qty: number;
-  id: string;
-}
-
-interface Meal {
-  categories: Categories[];
-  foods: Food[];
-}
-
-interface PlanningMeal {
-  name: string;
-  meals: Meal[];
-}
-
 export interface CreatePlanningMealInput {
-  planningMeal: PlanningMeal;
+  planningMeal: TCreatePlanningMealDTO;
   patientId: string;
 }
 
