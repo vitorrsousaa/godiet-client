@@ -13,17 +13,26 @@ export function usePlanningMealHook() {
 
   const { isFetchingPatient, patient } = useGetByPatientId(id);
 
+  const { isFetchingPlanningMeals, planningMeals } = useGetAllByPatient({
+    patientId: patient?.id,
+  });
+
   const handleNavigateToCreatePlanning = useCallback(() => {
     navigate('CREATE_PLANNING_GODIET', { id: patient?.id || '' });
   }, [navigate, patient]);
 
-  const { isFetchingPlanningMeals, planningMeals } = useGetAllByPatient(
-    patient?.id
+  const handleNavigateToShowPlanning = useCallback(
+    (planningId: string) => {
+      navigate('PLANNING_MEAL_BY_PATIENT_SHOW', {
+        id: patient?.id || '',
+        planningId: planningId,
+      });
+    },
+    [navigate, patient?.id]
   );
 
   const isFetching = useMemo(
     () => isFetchingPatient || isFetchingPlanningMeals,
-
     [isFetchingPatient, isFetchingPlanningMeals]
   );
 
@@ -31,5 +40,6 @@ export function usePlanningMealHook() {
     isFetching,
     planningMeals,
     handleNavigateToCreatePlanning,
+    handleNavigateToShowPlanning,
   };
 }

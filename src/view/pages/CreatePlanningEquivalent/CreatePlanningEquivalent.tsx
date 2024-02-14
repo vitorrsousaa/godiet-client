@@ -27,6 +27,7 @@ export function CreatePlanningEquivalent() {
     formIsValid,
     isFetchingPatient,
     isErrorPatient,
+    isCreatingPlanningMeal,
     hasCategories,
     toggleIncreaseFoodModal,
     register,
@@ -110,11 +111,16 @@ export function CreatePlanningEquivalent() {
                             <Card.Footer>
                               <Button
                                 onClick={toggleIncreaseFoodModal}
-                                disabled={!hasCategories(index)}
+                                disabled={
+                                  !hasCategories(index) ||
+                                  isCreatingPlanningMeal
+                                }
                               >
                                 Selecionar alimentos
                               </Button>
-                              <Button>Adicionar observações</Button>
+                              <Button disabled={isCreatingPlanningMeal}>
+                                Adicionar observações
+                              </Button>
                             </Card.Footer>
                           </Card.Root>
                           <IncreaseFoodModal
@@ -129,13 +135,18 @@ export function CreatePlanningEquivalent() {
                   </div>
 
                   <div className="mt-8 space-x-4">
-                    <Button type="button" onClick={handleAddNewMeal}>
+                    <Button
+                      type="button"
+                      onClick={handleAddNewMeal}
+                      disabled={isCreatingPlanningMeal}
+                    >
                       Adicionar nova refeição
                     </Button>
                     <Button
                       type="submit"
                       onClick={handleSubmit}
                       disabled={!formIsValid}
+                      isLoading={isCreatingPlanningMeal}
                     >
                       Criar plano alimentar
                     </Button>

@@ -11,8 +11,12 @@ import {
 import { usePlanningMealHook } from './PlanningMeal.hook';
 
 export function PlanningMeal() {
-  const { isFetching, planningMeals, handleNavigateToCreatePlanning } =
-    usePlanningMealHook();
+  const {
+    isFetching,
+    planningMeals,
+    handleNavigateToCreatePlanning,
+    handleNavigateToShowPlanning,
+  } = usePlanningMealHook();
 
   return (
     <div className="flex flex-col gap-6">
@@ -34,7 +38,11 @@ export function PlanningMeal() {
                       <Button>
                         <DownloadIcon />
                       </Button>
-                      <Button>
+                      <Button
+                        onClick={() =>
+                          handleNavigateToShowPlanning(planningMeal.id)
+                        }
+                      >
                         <ExternalLinkIcon />
                       </Button>
                       <Button variant={'destructive'} type="button">
