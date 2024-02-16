@@ -8,7 +8,7 @@ export function SettingsLayout() {
       <aside className="h-90 h-full w-20 sm:w-1/3 lg:w-1/4">
         <Sidebar />
       </aside>
-      <div className="h-full w-full">
+      <div className="flex h-full w-full flex-col gap-4">
         <Outlet />
       </div>
     </section>
