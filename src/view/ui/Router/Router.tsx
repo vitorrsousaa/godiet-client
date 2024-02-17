@@ -11,6 +11,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AuthGuard } from './AuthGuard';
 
+const { Anamnesis } = lazyLoad(() => import('@godiet-pages/Anamnesis'));
 const { CreatePlanningEquivalent } = lazyLoad(
   () => import('@godiet-pages/CreatePlanningEquivalent')
 );
@@ -93,6 +94,7 @@ export function Router() {
               </Route>
               <Route path={ROUTES.PATIENTS} element={<Patients />} />
               <Route path={ROUTES.PATIENTS_BY_ID} element={<Patient />} />
+              <Route path={ROUTES.ANAMNESIS} element={<Anamnesis />} />
               <Route
                 path={ROUTES.CREATE_PLANNING_GODIET}
                 element={<CreatePlanningEquivalent />}

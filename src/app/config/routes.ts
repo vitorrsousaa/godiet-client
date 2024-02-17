@@ -1,4 +1,5 @@
 export const ROUTES = {
+  ANAMNESIS: '/pacientes/:id/anamnese',
   CREATE_PLANNING_CONVENTIONAL: '/pacientes/:id/plano/convencional',
   CREATE_PLANNING_GODIET: '/pacientes/:id/plano/godiet',
   DASHBOARD: '/app',

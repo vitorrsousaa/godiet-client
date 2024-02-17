@@ -18,6 +18,10 @@ export function usePatientHook() {
     navigate('PLANNING_MEAL_BY_PATIENT', { id: patient?.id || '' });
   }, [navigate, patient]);
 
+  const handleNavigateToAnamnesis = useCallback(() => {
+    navigate('ANAMNESIS', { id: patient?.id || '' });
+  }, [navigate, patient]);
+
   const toggleEditModal = useCallback(() => {
     setIsEditModalOpen((prevState) => !prevState);
   }, []);
@@ -28,5 +32,6 @@ export function usePatientHook() {
     isFetchingPatient,
     toggleEditModal,
     handleNavigateToCreatePlanning,
+    handleNavigateToAnamnesis,
   };
 }

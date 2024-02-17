@@ -19,6 +19,7 @@ export function Patient() {
     isFetchingPatient,
     toggleEditModal,
     handleNavigateToCreatePlanning,
+    handleNavigateToAnamnesis,
   } = usePatientHook();
 
   return (
@@ -51,7 +52,7 @@ export function Patient() {
           <Separator />
 
           <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-            <Button variant={'outline'} className="cursor-not-allowed">
+            <Button variant={'outline'} onClick={handleNavigateToAnamnesis}>
               Anamnese
             </Button>
             <Button variant={'outline'} className="cursor-not-allowed">
