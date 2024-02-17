@@ -32,3 +32,21 @@ export function useCreateAnamnesisTemplate() {
     createAnamnesisTemplate,
   };
 }
+
+export function useDeleteAnamnesisTemplate() {
+  const queryClient = useQueryClient();
+
+  const { isPending, mutateAsync: deleteAnamnesisTemplate } = useMutation({
+    mutationFn: anamnesisTemplateServices.delete,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_CACHE_KEYS.ANAMNESIS_TEMPLATE],
+      });
+    },
+  });
+
+  return {
+    isDeletingAnamnesisTemplate: isPending,
+    deleteAnamnesisTemplate,
+  };
+}

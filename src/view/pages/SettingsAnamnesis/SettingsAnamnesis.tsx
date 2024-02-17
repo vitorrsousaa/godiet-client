@@ -17,8 +17,11 @@ export function SettingsAnamnesis() {
     isErrorAnamnesisTemplate,
     isFetchingAnamnesisTemplate,
     modalDeleteAnamnesisTemplateIsOpen,
-    toggleModaDeleteAnamnesisTemplate,
+    isDeletingAnamnesisTemplate,
+    handleOpenModalDeleteAnamnesisTemplate,
+    toggleModalDeleteAnamnesisTemplate,
     toggleModalCreateAnamnesisTemplate,
+    handleDeleteAnamnesisTemplate,
   } = useSettingsAnamnesisHook();
 
   return (
@@ -59,7 +62,12 @@ export function SettingsAnamnesis() {
                   <Button variant={'outline'}>
                     <Pencil2Icon />
                   </Button>
-                  <Button variant={'destructive'}>
+                  <Button
+                    variant={'destructive'}
+                    onClick={() =>
+                      handleOpenModalDeleteAnamnesisTemplate(anamnesis.id)
+                    }
+                  >
                     <TrashIcon />
                   </Button>
                 </Card.Footer>
@@ -71,8 +79,9 @@ export function SettingsAnamnesis() {
 
       <DangerModal
         isOpen={modalDeleteAnamnesisTemplateIsOpen}
-        onClose={toggleModaDeleteAnamnesisTemplate}
-        onConfirm={() => {}}
+        onClose={toggleModalDeleteAnamnesisTemplate}
+        isLoading={isDeletingAnamnesisTemplate}
+        onConfirm={handleDeleteAnamnesisTemplate}
         description="Atenção, esta ação não pode ser desfeita."
         title="Deletar anamnese"
       />

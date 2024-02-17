@@ -1,19 +1,32 @@
-import { Button } from '@godiet-ui/Button';
+import { Editor } from '@godiet-ui/Editor';
+import { Input } from '@godiet-ui/Input';
 import { Modal } from '@godiet-ui/Modal';
+
+import { useModalCreateAnamnesisTemplateHook } from './ModalCreateAnamnesisTemplate.hook';
 
 export interface ModalCreateAnamnesisTemplateProps {
   isOpen: boolean;
-
   onClose: () => void;
 }
 
 export function ModalCreateAnamnesisTemplate(
   props: ModalCreateAnamnesisTemplateProps
 ) {
-  const { isOpen, onClose } = props;
+  const {
+    isOpen,
+    errors,
+    isCreatingAnamnesisTemplate,
+    onClose,
+    register,
+    handleSubmit,
+  } = useModalCreateAnamnesisTemplateHook(props);
 
   return (
-    <Modal.Root isOpen={isOpen} onClose={onClose}>
+    <Modal.Root
+      isOpen={isOpen}
+      onClose={onClose}
+      className="max-h-full max-w-[740px] overflow-y-auto"
+    >
       <Modal.Header>
         <Modal.Title>Criar nova anamnese</Modal.Title>
 
@@ -22,13 +35,21 @@ export function ModalCreateAnamnesisTemplate(
         </Modal.Description>
       </Modal.Header>
 
-      <Modal.Footer>
-        <Button variant={'destructive'} onClick={onClose}>
-          Cancelar
-        </Button>
+      <form className="flex flex-col space-y-4">
+        <Input
+          placeholder="Título da anamnese"
+          {...register('title')}
+          error={errors.title?.message}
+        />
 
-        <Button>Criar</Button>
-      </Modal.Footer>
+        <Editor
+          hasFooter
+          onBackButton={onClose}
+          isValid
+          isLoading={isCreatingAnamnesisTemplate}
+          onSave={handleSubmit}
+        />
+      </form>
     </Modal.Root>
   );
 }

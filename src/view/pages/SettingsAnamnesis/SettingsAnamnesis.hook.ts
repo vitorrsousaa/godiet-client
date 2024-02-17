@@ -1,33 +1,51 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useReducer, useState } from 'react';
 
-import { useGetAllAnamnesisTemplate } from '@godiet-hooks/anamnesisTemplate';
+import {
+  useDeleteAnamnesisTemplate,
+  useGetAllAnamnesisTemplate,
+} from '@godiet-hooks/anamnesisTemplate';
+
+import toast from 'react-hot-toast';
 
 export function useSettingsAnamnesisHook() {
+  const [anamnesisToDelete, setAnamnesisToDelete] = useState('');
+
   const {
     anamnesisTemplate,
     isErrorAnamnesisTemplate,
     isFetchingAnamnesisTemplate,
   } = useGetAllAnamnesisTemplate();
 
+  const { deleteAnamnesisTemplate, isDeletingAnamnesisTemplate } =
+    useDeleteAnamnesisTemplate();
+
   const [
     modalCreateAnamnesisTemplateIsOpen,
-    setModalCreateAnamnesisTemplateIsOpen,
-  ] = useState(false);
+    toggleModalCreateAnamnesisTemplate,
+  ] = useReducer((state) => !state, false);
 
   const [
     modalDeleteAnamnesisTemplateIsOpen,
-    setModalDeleteAnamnesisTemplateIsOpen,
-  ] = useState(false);
+    toggleModalDeleteAnamnesisTemplate,
+  ] = useReducer((state) => !state, false);
 
-  const toggleModalCreateAnamnesisTemplate = useCallback(
-    () => setModalCreateAnamnesisTemplateIsOpen((prev) => !prev),
-    []
-  );
+  const handleOpenModalDeleteAnamnesisTemplate = useCallback((id: string) => {
+    setAnamnesisToDelete(id);
+    toggleModalDeleteAnamnesisTemplate();
+  }, []);
 
-  const toggleModaDeleteAnamnesisTemplate = useCallback(
-    () => setModalDeleteAnamnesisTemplateIsOpen((prev) => !prev),
-    []
-  );
+  const handleDeleteAnamnesisTemplate = useCallback(async () => {
+    if (anamnesisToDelete.length === 0)
+      return toast.error('Erro ao deletar anamnese');
+
+    try {
+      await deleteAnamnesisTemplate(anamnesisToDelete);
+      toggleModalDeleteAnamnesisTemplate();
+      toast.success('Anamnese deletada com sucesso');
+    } catch {
+      toast.error('Erro ao deletar anamnese');
+    }
+  }, [anamnesisToDelete, deleteAnamnesisTemplate]);
 
   return {
     modalCreateAnamnesisTemplateIsOpen,
@@ -35,8 +53,10 @@ export function useSettingsAnamnesisHook() {
     isErrorAnamnesisTemplate,
     isFetchingAnamnesisTemplate,
     modalDeleteAnamnesisTemplateIsOpen,
-
-    toggleModaDeleteAnamnesisTemplate,
+    isDeletingAnamnesisTemplate,
+    toggleModalDeleteAnamnesisTemplate,
     toggleModalCreateAnamnesisTemplate,
+    handleOpenModalDeleteAnamnesisTemplate,
+    handleDeleteAnamnesisTemplate,
   };
 }
