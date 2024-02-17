@@ -1,8 +1,6 @@
-import { useMemo, useReducer } from 'react';
-
-import { usePatient } from '@godiet-hooks/patient';
 import { Button } from '@godiet-ui/Button';
 import { Card } from '@godiet-ui/Card';
+import { DangerModal } from '@godiet-ui/DangerModal';
 import { formatDate } from '@godiet-utils/formatDate';
 
 import {
@@ -11,40 +9,29 @@ import {
   TrashIcon,
 } from '@radix-ui/react-icons';
 
+import { ModalEditAnamnesis } from './components/modals/ModalEditAnamnesis';
 import { ModalSelecteCreateAnamnesis } from './components/modals/ModalSelectCreateAnamnesis';
+import { useAnamnesisHook } from './Anamnesis.hook';
 
 export function Anamnesis() {
-  const isFetchingAnamnesis = false;
-
-  const isErrorAnamnesis = false;
-
-  const { patient, isFetchingPatient } = usePatient();
-
-  const isFetching = useMemo(
-    () => isFetchingPatient || isFetchingAnamnesis,
-    [isFetchingAnamnesis, isFetchingPatient]
-  );
-
-  const anamnesis = [
-    {
-      id: '1',
-      name: 'Anamnese 1',
-      createdAt: '2021-10-10T00:00:00.000Z',
-    },
-    {
-      id: '2',
-      name: 'Anamnese 2',
-      createdAt: '2021-10-10T00:00:00.000Z',
-    },
-  ];
-
-  const [modalSelectAnamnesisIsOpen, toggleModalSelectAnamnesis] = useReducer(
-    (state) => !state,
-    false
-  );
+  const {
+    isFetching,
+    isErrorAnamnesis,
+    patient,
+    anamnesis,
+    modalSelectAnamnesisIsOpen,
+    modalDeleteAnamnesisIsOpen,
+    isDeletingAnamnesis,
+    modalEditAnamnesisIsOpen,
+    anamnesisToEdit,
+    handleOpenModalEditAnamnesis,
+    toggleModalSelectAnamnesis,
+    handleOpenModalDeleteAnamnesis,
+    handleDeleteAnamnesis,
+  } = useAnamnesisHook();
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="mb-10 flex flex-col gap-6">
       <section className="flex flex-row items-center justify-between">
         <h1 className="text-lg font-semibold ">Anamnesis</h1>
         <Button onClick={toggleModalSelectAnamnesis}>Criar novo</Button>
@@ -68,15 +55,25 @@ export function Anamnesis() {
                     <Card.Root key={`anamnese-${anamnese.id}`}>
                       <Card.Header>
                         <Card.Title className="flex w-full items-center justify-between">
-                          {anamnese.name}{' '}
+                          {anamnese.title}{' '}
                           <div className="flex gap-2 [&>button]:h-8 [&>button]:px-2">
                             <Button>
                               <DownloadIcon />
                             </Button>
-                            <Button>
+                            <Button
+                              onClick={() =>
+                                handleOpenModalEditAnamnesis(anamnese.id)
+                              }
+                            >
                               <ExternalLinkIcon />
                             </Button>
-                            <Button variant={'destructive'} type="button">
+                            <Button
+                              variant={'destructive'}
+                              type="button"
+                              onClick={() =>
+                                handleOpenModalDeleteAnamnesis(anamnese.id)
+                              }
+                            >
                               <TrashIcon />
                             </Button>
                           </div>
@@ -93,8 +90,8 @@ export function Anamnesis() {
                   <p>Ainda não temos nenhuma anamnese para esse paciente</p>
                   <p>
                     Você pode criar a sua anamnese ou usar os modelos propostos
-                    pelo goDiet. A anamnese é importante para se ter um registro
-                    da condição inicial do paciente e ser um importante fator na
+                    pelo goDiet. A anamnese é importante para ter um registro da
+                    condição inicial do paciente e ser um importante fator na
                     hora de elaborar a conduta nutricional.
                   </p>
                   <Button onClick={toggleModalSelectAnamnesis}>
@@ -106,10 +103,26 @@ export function Anamnesis() {
           )}
         </>
       )}
+
+      <ModalEditAnamnesis
+        isOpen={modalEditAnamnesisIsOpen}
+        onClose={() => handleOpenModalEditAnamnesis(null)}
+        anamnesisId={anamnesisToEdit}
+      />
+
       <ModalSelecteCreateAnamnesis
         patientId={patient?.id || ''}
         isOpen={modalSelectAnamnesisIsOpen}
         onClose={toggleModalSelectAnamnesis}
+      />
+
+      <DangerModal
+        isOpen={modalDeleteAnamnesisIsOpen}
+        onClose={() => handleOpenModalDeleteAnamnesis(null)}
+        description="Você tem certeza que deseja deletar essa anamnese?"
+        title="Deletar Anamnese"
+        isLoading={isDeletingAnamnesis}
+        onConfirm={handleDeleteAnamnesis}
       />
     </div>
   );

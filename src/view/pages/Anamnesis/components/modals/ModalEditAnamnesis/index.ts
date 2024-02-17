@@ -1,0 +1,1 @@
+export { ModalEditAnamnesis } from './ModalEditAnamnesis';

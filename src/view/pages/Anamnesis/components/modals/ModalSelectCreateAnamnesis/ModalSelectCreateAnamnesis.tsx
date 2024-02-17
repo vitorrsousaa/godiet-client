@@ -37,7 +37,7 @@ export function ModalSelecteCreateAnamnesis(
         <Modal.Title>Criar nova anamnese</Modal.Title>
         <Modal.Description>
           Você pode selecionar um template criado anteriormente ou iniciar uma
-          nova em branco. Saiba mais acessando Configurações {'->'} Anamnese
+          nova em branco, ou criar novos templates acessando Configurações.
         </Modal.Description>
       </Modal.Header>
 
