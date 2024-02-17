@@ -2,7 +2,6 @@
 import { Suspense } from 'react';
 
 import { ROUTES } from '@godiet-config';
-import { PatientLayout } from '@godiet-layouts/PatientLayout';
 import { NotFound } from '@godiet-pages/NotFound';
 import { Logo } from '@godiet-ui/Logo';
 import { Spinner } from '@godiet-ui/Spinner';
@@ -15,6 +14,10 @@ import { AuthGuard } from './AuthGuard';
 const { Anamnesis } = lazyLoad(() => import('@godiet-pages/Anamnesis'));
 const { CreatePlanningEquivalent } = lazyLoad(
   () => import('@godiet-pages/CreatePlanningEquivalent')
+);
+
+const { CreateAnamnesis } = lazyLoad(
+  () => import('@godiet-pages/CreateAnamnesis')
 );
 
 const { Dashboard } = lazyLoad(() => import('@godiet-pages/Dashboard'));
@@ -44,6 +47,9 @@ const { SettingsRewards } = lazyLoad(
 );
 const { Patients } = lazyLoad(() => import('@godiet-pages/Patients'));
 const { Patient } = lazyLoad(() => import('@godiet-pages/Patient'));
+const { PatientLayout } = lazyLoad(
+  () => import('@godiet-layouts/PatientLayout')
+);
 const { PlanningMeal } = lazyLoad(() => import('@godiet-pages/PlanningMeal'));
 
 export function Router() {
@@ -98,7 +104,14 @@ export function Router() {
 
               <Route element={<PatientLayout />}>
                 <Route path={ROUTES.PATIENTS_BY_ID} element={<Patient />} />
+
                 <Route path={ROUTES.ANAMNESIS} element={<Anamnesis />} />
+
+                <Route
+                  path={ROUTES.CREATE_ANAMNESIS}
+                  element={<CreateAnamnesis />}
+                />
+
                 <Route
                   path={ROUTES.PLANNING_MEAL_BY_PATIENT}
                   element={<PlanningMeal />}

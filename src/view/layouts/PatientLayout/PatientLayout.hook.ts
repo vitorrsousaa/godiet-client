@@ -1,25 +1,23 @@
 import { useCallback, useState } from 'react';
 
-import { useGetByPatientId } from '@godiet-hooks/patient';
+import { usePatient } from '@godiet-hooks/patient';
 import { useNavigate } from '@godiet-hooks/routes';
-
-import { useParams } from 'react-router-dom';
 
 export function usePatientLayoutHook() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const { id } = useParams<{ id: string }>();
-
-  const { isFetchingPatient, patient, isErrorPatient } = useGetByPatientId(id);
+  const { isErrorPatient, isFetchingPatient, patient } = usePatient();
 
   const { navigate } = useNavigate();
 
   const handleNavigateToCreatePlanning = useCallback(() => {
-    navigate('PLANNING_MEAL_BY_PATIENT', { id: patient?.id || '' });
+    navigate('PLANNING_MEAL_BY_PATIENT', {
+      replace: { id: patient?.id || '' },
+    });
   }, [navigate, patient]);
 
   const handleNavigateToAnamnesis = useCallback(() => {
-    navigate('ANAMNESIS', { id: patient?.id || '' });
+    navigate('ANAMNESIS', { replace: { id: patient?.id || '' } });
   }, [navigate, patient]);
 
   const toggleEditModal = useCallback(() => {

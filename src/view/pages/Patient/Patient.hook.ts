@@ -1,11 +1,7 @@
-import { useGetByPatientId } from '@godiet-hooks/patient';
-
-import { useParams } from 'react-router-dom';
+import { usePatient } from '@godiet-hooks/patient';
 
 export function usePatientHook() {
-  const { id } = useParams<{ id: string }>();
-
-  const { isFetchingPatient, patient } = useGetByPatientId(id);
+  const { isFetchingPatient, patient } = usePatient();
 
   return {
     patient,

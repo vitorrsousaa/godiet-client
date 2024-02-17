@@ -1,0 +1,1 @@
+export { ModalSelecteCreateAnamnesis } from './ModalSelectCreateAnamnesis';

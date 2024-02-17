@@ -1,5 +1,6 @@
-import { useMemo } from 'react';
+import { useMemo, useReducer } from 'react';
 
+import { usePatient } from '@godiet-hooks/patient';
 import { Button } from '@godiet-ui/Button';
 import { Card } from '@godiet-ui/Card';
 import { formatDate } from '@godiet-utils/formatDate';
@@ -10,11 +11,14 @@ import {
   TrashIcon,
 } from '@radix-ui/react-icons';
 
+import { ModalSelecteCreateAnamnesis } from './components/modals/ModalSelectCreateAnamnesis';
+
 export function Anamnesis() {
-  const isFetchingPatient = false;
   const isFetchingAnamnesis = false;
 
   const isErrorAnamnesis = false;
+
+  const { patient, isFetchingPatient } = usePatient();
 
   const isFetching = useMemo(
     () => isFetchingPatient || isFetchingAnamnesis,
@@ -34,11 +38,16 @@ export function Anamnesis() {
     },
   ];
 
+  const [modalSelectAnamnesisIsOpen, toggleModalSelectAnamnesis] = useReducer(
+    (state) => !state,
+    false
+  );
+
   return (
     <div className="flex flex-col gap-6">
       <section className="flex flex-row items-center justify-between">
         <h1 className="text-lg font-semibold ">Anamnesis</h1>
-        <Button>Criar novo</Button>
+        <Button onClick={toggleModalSelectAnamnesis}>Criar novo</Button>
       </section>
       {isFetching ? (
         <div>Carregando...</div>
@@ -82,14 +91,26 @@ export function Anamnesis() {
               ) : (
                 <div className="mt-10 flex w-full flex-col items-center justify-center gap-4 text-center">
                   <p>Ainda não temos nenhuma anamnese para esse paciente</p>
-                  <p>Clique no botão para criar uma nova anamnese</p>
-                  <Button>Criar nova anamnese</Button>
+                  <p>
+                    Você pode criar a sua anamnese ou usar os modelos propostos
+                    pelo goDiet. A anamnese é importante para se ter um registro
+                    da condição inicial do paciente e ser um importante fator na
+                    hora de elaborar a conduta nutricional.
+                  </p>
+                  <Button onClick={toggleModalSelectAnamnesis}>
+                    Criar nova anamnese
+                  </Button>
                 </div>
               )}
             </>
           )}
         </>
       )}
+      <ModalSelecteCreateAnamnesis
+        patientId={patient?.id || ''}
+        isOpen={modalSelectAnamnesisIsOpen}
+        onClose={toggleModalSelectAnamnesis}
+      />
     </div>
   );
 }

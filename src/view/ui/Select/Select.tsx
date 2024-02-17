@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { Spinner } from '@godiet-ui/Spinner';
 import { cn } from '@godiet-utils/cn';
 
 import {
@@ -18,8 +19,10 @@ const SelectValue = SelectPrimitive.Value;
 
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> & {
+    isLoading?: boolean;
+  }
+>(({ className, children, isLoading, ...props }, ref) => (
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
@@ -29,8 +32,13 @@ const SelectTrigger = React.forwardRef<
     {...props}
   >
     {children}
+
     <SelectPrimitive.Icon asChild>
-      <CaretSortIcon className="h-4 w-4 opacity-50" />
+      {isLoading ? (
+        <Spinner className="h-4 w-4 fill-teal-700 text-white" />
+      ) : (
+        <CaretSortIcon className="h-4 w-4 opacity-50" />
+      )}
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
