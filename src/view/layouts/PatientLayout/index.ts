@@ -1,0 +1,1 @@
+export { PatientLayout } from './PatientLayout';

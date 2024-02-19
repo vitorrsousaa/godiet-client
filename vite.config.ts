@@ -11,7 +11,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@godiet-assets': path.resolve(__dirname, './src/view/assets'),
-      '@godiet-components': path.resolve(__dirname, './src/view/ui'),
+      '@godiet-components': path.resolve(__dirname, './src/view/components'),
+      '@godiet-ui': path.resolve(__dirname, './src/view/ui'),
       '@godiet-hooks': path.resolve(__dirname, './src/app/hooks'),
       '@godiet-storage': path.resolve(__dirname, './src/app/storage'),
       '@godiet-utils': path.resolve(__dirname, './src/app/utils'),

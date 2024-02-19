@@ -1,5 +1,5 @@
-import { Button } from '@godiet-components/Button';
 import { ROUTES } from '@godiet-config';
+import { Button } from '@godiet-ui/Button';
 import { cn } from '@godiet-utils/cn';
 
 import {
@@ -7,6 +7,7 @@ import {
   DashboardIcon,
   IdCardIcon,
   PersonIcon,
+  ReaderIcon,
   StarFilledIcon,
 } from '@radix-ui/react-icons';
 import { Link, useLocation } from 'react-router-dom';
@@ -29,6 +30,16 @@ const sideBarItens = [
         icon: <StarFilledIcon />,
         title: 'Recompensas',
         href: ROUTES.SETTINGS_REWARDS,
+      },
+    ],
+  },
+  {
+    main: 'Preferências',
+    items: [
+      {
+        icon: <ReaderIcon />,
+        title: 'Anamneses',
+        href: ROUTES.SETTINGS_ANAMNESIS,
       },
     ],
   },

@@ -1,9 +1,9 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
 
-import { PageLoader } from '@godiet-components/PageLoader';
 import { LOCAL_STORAGE_KEYS } from '@godiet-config';
 import { useQuery, useQueryClient } from '@godiet-query';
 import { userService } from '@godiet-services/user';
+import { PageLoader } from '@godiet-ui/PageLoader';
 
 import toast from 'react-hot-toast';
 

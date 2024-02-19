@@ -1,5 +1,5 @@
-import { Logo } from '@godiet-components/Logo';
-import { Spinner } from '@godiet-components/Spinner';
+import { Logo } from '@godiet-ui/Logo';
+import { Spinner } from '@godiet-ui/Spinner';
 
 interface PageLoaderProps {
   isLoading: boolean;

@@ -1,4 +1,4 @@
-import { buttonVariants } from '@godiet-components/Button';
+import { buttonVariants } from '@godiet-ui/Button';
 import { cn } from '@godiet-utils/cn';
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';

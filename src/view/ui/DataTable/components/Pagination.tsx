@@ -3,7 +3,7 @@ import {
   PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-} from '@godiet-components/Pagination';
+} from '@godiet-ui/Pagination';
 
 import { usePagination } from '../hooks/usePagination';
 

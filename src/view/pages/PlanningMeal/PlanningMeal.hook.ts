@@ -18,14 +18,16 @@ export function usePlanningMealHook() {
   });
 
   const handleNavigateToCreatePlanning = useCallback(() => {
-    navigate('CREATE_PLANNING_GODIET', { id: patient?.id || '' });
+    navigate('CREATE_PLANNING_GODIET', { replace: { id: patient?.id || '' } });
   }, [navigate, patient]);
 
   const handleNavigateToShowPlanning = useCallback(
     (planningId: string) => {
       navigate('PLANNING_MEAL_BY_PATIENT_SHOW', {
-        id: patient?.id || '',
-        planningId: planningId,
+        replace: {
+          id: patient?.id || '',
+          planningId: planningId,
+        },
       });
     },
     [navigate, patient?.id]

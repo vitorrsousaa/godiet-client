@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { toggleVariants } from '@godiet-components/Toggle';
+import { toggleVariants } from '@godiet-ui/Toggle';
 import { cn } from '@godiet-utils/cn';
 
 import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';

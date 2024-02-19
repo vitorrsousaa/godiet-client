@@ -1,18 +1,23 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Suspense } from 'react';
 
-import { Logo } from '@godiet-components/Logo';
-import { Spinner } from '@godiet-components/Spinner';
 import { ROUTES } from '@godiet-config';
 import { NotFound } from '@godiet-pages/NotFound';
+import { Logo } from '@godiet-ui/Logo';
+import { Spinner } from '@godiet-ui/Spinner';
 import { lazyLoad } from '@godiet-utils/lazyLoad';
 
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { AuthGuard } from './AuthGuard';
 
+const { Anamnesis } = lazyLoad(() => import('@godiet-pages/Anamnesis'));
 const { CreatePlanningEquivalent } = lazyLoad(
   () => import('@godiet-pages/CreatePlanningEquivalent')
+);
+
+const { CreateAnamnesis } = lazyLoad(
+  () => import('@godiet-pages/CreateAnamnesis')
 );
 
 const { Dashboard } = lazyLoad(() => import('@godiet-pages/Dashboard'));
@@ -27,6 +32,10 @@ const { Login } = lazyLoad(() => import('@godiet-pages/Login'));
 const { LandingPage } = lazyLoad(() => import('@godiet-pages/LandingPage'));
 const { Register } = lazyLoad(() => import('@godiet-pages/Register'));
 const { Settings } = lazyLoad(() => import('@godiet-pages/Settings'));
+const { SettingsAnamnesis } = lazyLoad(
+  () => import('@godiet-pages/SettingsAnamnesis')
+);
+
 const { SettingsLayout } = lazyLoad(
   () => import('@godiet-layouts/SettingsLayout')
 );
@@ -38,6 +47,9 @@ const { SettingsRewards } = lazyLoad(
 );
 const { Patients } = lazyLoad(() => import('@godiet-pages/Patients'));
 const { Patient } = lazyLoad(() => import('@godiet-pages/Patient'));
+const { PatientLayout } = lazyLoad(
+  () => import('@godiet-layouts/PatientLayout')
+);
 const { PlanningMeal } = lazyLoad(() => import('@godiet-pages/PlanningMeal'));
 
 export function Router() {
@@ -75,6 +87,10 @@ export function Router() {
                   element={<SettingsRewards />}
                 />
                 <Route
+                  path={ROUTES.SETTINGS_ANAMNESIS}
+                  element={<SettingsAnamnesis />}
+                />
+                <Route
                   path={ROUTES.SETTINGS_PAYMENTS}
                   element={<div>Pagamentos</div>}
                 />
@@ -83,20 +99,32 @@ export function Router() {
                   element={<div>Meu plano</div>}
                 />
               </Route>
+
               <Route path={ROUTES.PATIENTS} element={<Patients />} />
-              <Route path={ROUTES.PATIENTS_BY_ID} element={<Patient />} />
-              <Route
-                path={ROUTES.CREATE_PLANNING_GODIET}
-                element={<CreatePlanningEquivalent />}
-              />
-              <Route
-                path={ROUTES.PLANNING_MEAL_BY_PATIENT}
-                element={<PlanningMeal />}
-              />
-              <Route
-                path={ROUTES.PLANNING_MEAL_BY_PATIENT_SHOW}
-                element={<DetailsPlanningMeal />}
-              />
+
+              <Route element={<PatientLayout />}>
+                <Route path={ROUTES.PATIENTS_BY_ID} element={<Patient />} />
+
+                <Route path={ROUTES.ANAMNESIS} element={<Anamnesis />} />
+
+                <Route
+                  path={ROUTES.CREATE_ANAMNESIS}
+                  element={<CreateAnamnesis />}
+                />
+
+                <Route
+                  path={ROUTES.PLANNING_MEAL_BY_PATIENT}
+                  element={<PlanningMeal />}
+                />
+                <Route
+                  path={ROUTES.PLANNING_MEAL_BY_PATIENT_SHOW}
+                  element={<DetailsPlanningMeal />}
+                />
+                <Route
+                  path={ROUTES.CREATE_PLANNING_GODIET}
+                  element={<CreatePlanningEquivalent />}
+                />
+              </Route>
             </Route>
           </Route>
         </Routes>

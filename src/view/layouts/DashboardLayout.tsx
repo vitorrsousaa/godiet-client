@@ -1,4 +1,6 @@
-import { Avatar } from '@godiet-components/Avatar';
+import { ROUTES } from '@godiet-config';
+import { useAuth } from '@godiet-hooks/auth';
+import { Avatar } from '@godiet-ui/Avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,14 +9,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@godiet-components/DropdownMenu';
-import { Logo } from '@godiet-components/Logo';
+} from '@godiet-ui/DropdownMenu';
+import { Logo } from '@godiet-ui/Logo';
 import {
   NavigationMenu,
   navigationMenuTriggerStyle,
-} from '@godiet-components/NavigationMenu';
-import { ROUTES } from '@godiet-config';
-import { useAuth } from '@godiet-hooks/auth';
+} from '@godiet-ui/NavigationMenu';
 
 import {
   BellIcon,

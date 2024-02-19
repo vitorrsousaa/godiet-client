@@ -1,5 +1,5 @@
-import { Button } from '@godiet-components/Button';
-import { Logo } from '@godiet-components/Logo';
+import { Button } from '@godiet-ui/Button';
+import { Logo } from '@godiet-ui/Logo';
 
 import { Link } from 'react-router-dom';
 

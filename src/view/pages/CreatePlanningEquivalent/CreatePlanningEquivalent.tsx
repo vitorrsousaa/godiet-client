@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Button } from '@godiet-components/Button';
-import { Card } from '@godiet-components/Card';
-import { Input } from '@godiet-components/Input';
-import { Spinner } from '@godiet-components/Spinner';
+import { Button } from '@godiet-ui/Button';
+import { Card } from '@godiet-ui/Card';
+import { Input } from '@godiet-ui/Input';
+import { Spinner } from '@godiet-ui/Spinner';
 
 import { DevTool } from '@hookform/devtools';
 import { TrashIcon } from '@radix-ui/react-icons';

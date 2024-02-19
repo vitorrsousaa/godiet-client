@@ -1,10 +1,7 @@
 import { useCallback, useState } from 'react';
 
-import { ROUTES } from '@godiet-config';
 import { useGetAllPatients } from '@godiet-hooks/patient';
-import { replaceRouteParams } from '@godiet-utils/replaceRouteParams';
-
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@godiet-hooks/routes';
 
 export function usePatientsHook() {
   const [isCreatePatientModalOpen, setIsCreatePatientModalOpen] =
@@ -19,7 +16,7 @@ export function usePatientsHook() {
 
   const { isFetchingPatients, patients } = useGetAllPatients();
 
-  const navigate = useNavigate();
+  const { navigate } = useNavigate();
 
   const toggleModalCreatePatient = useCallback(
     () => setIsCreatePatientModalOpen((prevState) => !prevState),
@@ -39,7 +36,9 @@ export function usePatientsHook() {
 
   const handleNavigateToPatientPage = useCallback(
     (patientId: string) => {
-      navigate(replaceRouteParams(ROUTES.PATIENTS_BY_ID, { id: patientId }));
+      navigate('PATIENTS_BY_ID', {
+        replace: { id: patientId },
+      });
     },
     [navigate]
   );
