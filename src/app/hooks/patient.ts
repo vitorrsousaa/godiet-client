@@ -2,6 +2,20 @@ import { QUERY_CACHE_KEYS } from '@godiet-config';
 import { useMutation, useQuery, useQueryClient } from '@godiet-query';
 import { patientServices } from '@godiet-services/patient';
 
+import { useParams } from 'react-router-dom';
+
+export function usePatient() {
+  const { id } = useParams<{ id: string }>();
+
+  const { isFetchingPatient, patient, isErrorPatient } = useGetByPatientId(id);
+
+  return {
+    patient,
+    isFetchingPatient,
+    isErrorPatient,
+  };
+}
+
 export function useCreatePatient() {
   const queryClient = useQueryClient();
 

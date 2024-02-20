@@ -1,0 +1,1 @@
+export { Anamnesis } from './Anamnesis';

@@ -31,7 +31,7 @@ export function Settings() {
           Gerencie e atualize suas informações pessoais aqui, como nome, foto e
           outras informações.
         </HeaderSettings>
-        <Separator />
+
         <Section
           title="Foto"
           description="Atualize a sua foto de perfil e escolha onde deseja exibi-la."
@@ -73,7 +73,6 @@ export function Settings() {
           você está realizando.
         </HeaderSettings>
 
-        <Separator />
         <Section
           title="Senha"
           description="Recupere ou atualize sua senha, se necessário."

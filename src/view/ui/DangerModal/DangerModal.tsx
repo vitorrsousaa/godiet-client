@@ -7,6 +7,7 @@ interface DangerModalProps {
   title: string;
   description: string;
   onConfirm: () => void;
+  isLoading?: boolean;
 }
 
 export function DangerModal(props: DangerModalProps) {
@@ -21,10 +22,15 @@ export function DangerModal(props: DangerModalProps) {
           variant={'ghost'}
           onClick={props.onClose}
           className="mt-2 sm:mt-0"
+          disabled={props.isLoading}
         >
           Cancelar
         </Button>
-        <Button variant={'destructive'} onClick={props.onConfirm}>
+        <Button
+          variant={'destructive'}
+          onClick={props.onConfirm}
+          isLoading={props.isLoading}
+        >
           Confirmar
         </Button>
       </Modal.Footer>

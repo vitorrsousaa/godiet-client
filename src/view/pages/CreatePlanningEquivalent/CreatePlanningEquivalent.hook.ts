@@ -116,7 +116,9 @@ export function useCreatePlanningEquivalenteHook() {
 
       toast.success('Plano alimentar criado com sucesso');
 
-      navigate('PLANNING_MEAL_BY_PATIENT', { id: patient?.id || '' });
+      navigate('PLANNING_MEAL_BY_PATIENT', {
+        replace: { id: patient?.id || '' },
+      });
     } catch {
       toast.error('Erro ao criar o plano alimentar');
     }
