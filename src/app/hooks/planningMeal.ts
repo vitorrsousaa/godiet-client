@@ -1,11 +1,18 @@
 import { QUERY_CACHE_KEYS } from '@godiet-config';
 import { planningMealServices } from '@godiet-services/planningMeal';
 
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-export function useCreatePlanningMeal() {
+export function useCreatePlanningMeal(patientId: string) {
+  const queryClient = useQueryClient();
+
   const { isPending, mutateAsync: createPlanningMeal } = useMutation({
     mutationFn: planningMealServices.create,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_CACHE_KEYS.PLANNING_MEAL, patientId],
+      });
+    },
   });
 
   return {
@@ -25,8 +32,9 @@ export function useGetAllByPatient(params: queryGetAllByPatientParams) {
   const { data, isFetching, isPending } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.PLANNING_MEAL, patientId],
     queryFn: () =>
-      planningMealServices.getAllByPatient<false>({
+      planningMealServices.getAllByPatient({
         patientId: patientId || '',
+        planningId: undefined,
       }),
     enabled: !!patientId,
   });
@@ -47,7 +55,7 @@ export function useGetByPlanningId(params: queryGetAllByPatientParams) {
       planningId && planningId,
     ],
     queryFn: () =>
-      planningMealServices.getAllByPatient<true>({
+      planningMealServices.getAllByPatient({
         patientId: patientId || '',
         planningId,
       }),
