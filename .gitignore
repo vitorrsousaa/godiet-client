@@ -13,8 +13,8 @@ dist-ssr
 *.local
 
 # Environment
-.env
 .env.prod
+.env
 dist
 coverage
 
