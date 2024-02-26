@@ -1,10 +1,6 @@
-import { Button } from '@godiet-components/Button';
-import { Calendar } from '@godiet-components/Calendar';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@godiet-components/Popover';
+import { Button } from '@godiet-ui/Button';
+import { Calendar } from '@godiet-ui/Calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@godiet-ui/Popover';
 import { cn } from '@godiet-utils/cn';
 
 import { CalendarIcon, CrossCircledIcon } from '@radix-ui/react-icons';

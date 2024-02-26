@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
-import { CategoryIcon } from '@godiet-components/icons/CategoryIcon';
-import { Tooltip } from '@godiet-components/Tooltip';
+import { CategoryIcon } from '@godiet-ui/icons/CategoryIcon';
+import { Tooltip } from '@godiet-ui/Tooltip';
 
 import { TCategoryName } from 'src/app/entities/CategoryName';
 

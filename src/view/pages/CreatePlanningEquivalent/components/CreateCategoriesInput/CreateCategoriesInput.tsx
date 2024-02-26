@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import { SimpleInput } from '@godiet-components/SimpleInput';
+import { SimpleInput } from '@godiet-ui/SimpleInput';
 
 import { Category, TooltipCategory } from '../TooltipCategory';
 

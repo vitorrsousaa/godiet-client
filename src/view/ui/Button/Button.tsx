@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Spinner } from '@godiet-components/Spinner';
+import { Spinner } from '@godiet-ui/Spinner';
 import { cn } from '@godiet-utils/cn';
 
 import { Slot } from '@radix-ui/react-slot';

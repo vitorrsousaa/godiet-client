@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Button } from '@godiet-components/Button';
-import { Card } from '@godiet-components/Card';
-import { Input } from '@godiet-components/Input';
-import { Spinner } from '@godiet-components/Spinner';
+import { Button } from '@godiet-ui/Button';
+import { Card } from '@godiet-ui/Card';
+import { Input } from '@godiet-ui/Input';
+import { Spinner } from '@godiet-ui/Spinner';
 
 import { DevTool } from '@hookform/devtools';
 import { TrashIcon } from '@radix-ui/react-icons';
@@ -27,6 +27,7 @@ export function CreatePlanningEquivalent() {
     formIsValid,
     isFetchingPatient,
     isErrorPatient,
+    isCreatingPlanningMeal,
     hasCategories,
     toggleIncreaseFoodModal,
     register,
@@ -110,11 +111,16 @@ export function CreatePlanningEquivalent() {
                             <Card.Footer>
                               <Button
                                 onClick={toggleIncreaseFoodModal}
-                                disabled={!hasCategories(index)}
+                                disabled={
+                                  !hasCategories(index) ||
+                                  isCreatingPlanningMeal
+                                }
                               >
                                 Selecionar alimentos
                               </Button>
-                              <Button>Adicionar observações</Button>
+                              <Button disabled={isCreatingPlanningMeal}>
+                                Adicionar observações
+                              </Button>
                             </Card.Footer>
                           </Card.Root>
                           <IncreaseFoodModal
@@ -129,13 +135,18 @@ export function CreatePlanningEquivalent() {
                   </div>
 
                   <div className="mt-8 space-x-4">
-                    <Button type="button" onClick={handleAddNewMeal}>
+                    <Button
+                      type="button"
+                      onClick={handleAddNewMeal}
+                      disabled={isCreatingPlanningMeal}
+                    >
                       Adicionar nova refeição
                     </Button>
                     <Button
                       type="submit"
                       onClick={handleSubmit}
                       disabled={!formIsValid}
+                      isLoading={isCreatingPlanningMeal}
                     >
                       Criar plano alimentar
                     </Button>

@@ -1,3 +1,5 @@
+import { ROUTES } from '@godiet-config';
+
 export function Hero() {
   return (
     <>
@@ -51,7 +53,7 @@ export function Hero() {
           <div className="mb-8 mt-12 flex justify-center gap-3">
             <a
               className="inline-flex items-center justify-center gap-x-3 rounded-md border border-transparent bg-gradient-to-tl from-green-600 to-teal-600 px-4 py-3 text-center  text-sm font-medium text-white transition-all duration-200 hover:from-teal-600 hover:to-green-600 focus:outline-none focus:ring-1 focus:ring-gray-600 dark:focus:ring-offset-gray-800"
-              href="#"
+              href={ROUTES.LOGIN}
             >
               Comece agora
               <svg

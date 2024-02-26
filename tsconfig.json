@@ -27,7 +27,7 @@
       "@godiet-assets/*": ["./src/view/assets/*"],
       "@godiet-pages/*": ["./src/view/pages/*"],
       "@godiet-layouts/*": ["./src/view/layouts/*"],
-      "@godiet-components/*": ["./src/view/ui/*"],
+      "@godiet-ui/*": ["./src/view/ui/*"],
       "@godiet-hooks/*": ["./src/app/hooks/*"],
       "@godiet-storage": ["src/app/storage/index.ts"],
       "@godiet-utils/*": ["./src/app/utils/*"],
@@ -36,11 +36,12 @@
       "@godiet-query": ["./src/app/libs/query.tsx"],
       "@godiet-services/*": ["./src/app/services/*"],
       "@godiet-entities": ["./src/app/entities/index.ts"],
+      "@godiet-components/*": ["./src/view/components/*"]
     },
 
     /* Testing */
-    "types": ["vitest/globals"],
+    "types": ["vitest/globals"]
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

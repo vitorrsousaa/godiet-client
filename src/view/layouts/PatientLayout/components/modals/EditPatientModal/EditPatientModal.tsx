@@ -1,5 +1,5 @@
-import { Modal } from '@godiet-components/Modal';
-import { PatientForm } from '@godiet-components/PatientForm';
+import { Modal } from '@godiet-ui/Modal';
+import { PatientForm } from '@godiet-ui/PatientForm';
 
 import { useEditPatientModalHook } from './EditPatientModal.hook';
 
@@ -30,6 +30,7 @@ export function EditPatientModal(props: EditPatientModalProps) {
               email: patient.email,
               gender: patient.gender,
               name: patient.name,
+              phone: patient.phone,
             }}
           />
         </>

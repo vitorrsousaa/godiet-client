@@ -1,11 +1,11 @@
-import { Button } from '@godiet-components/Button';
+import { Button } from '@godiet-ui/Button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@godiet-components/DropdownMenu';
+} from '@godiet-ui/DropdownMenu';
 import { cn } from '@godiet-utils/cn';
 
 import {

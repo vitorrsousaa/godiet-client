@@ -1,10 +1,7 @@
 import { useCallback } from 'react';
 
-import {
-  FormValues,
-  usePatientFormController,
-} from '@godiet-components/PatientForm';
 import { useCreatePatient } from '@godiet-hooks/patient';
+import { FormValues, usePatientFormController } from '@godiet-ui/PatientForm';
 
 import toast from 'react-hot-toast';
 
@@ -26,6 +23,7 @@ export function useCreatePatientModalHook(props: CreatePatientModalProps) {
             email: data.email,
             gender: data.gender,
             name: data.name,
+            phone: data.phone,
           },
         });
 
@@ -34,7 +32,7 @@ export function useCreatePatientModalHook(props: CreatePatientModalProps) {
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
-        if (error.message === '404 - Email already in use') {
+        if (error.response.status === 409) {
           toast.error('Este e-mail já esta em uso');
           controller.setError('email', { message: 'E-mail já cadastrado' });
 

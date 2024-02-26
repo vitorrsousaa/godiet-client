@@ -2,6 +2,8 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useGetAllCategoryName } from '@godiet-hooks/categoryName';
 import { useGetByPatientId } from '@godiet-hooks/patient';
+import { useCreatePlanningMeal } from '@godiet-hooks/planningMeal';
+import { useNavigate } from '@godiet-hooks/routes';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
@@ -62,7 +64,12 @@ export function useCreatePlanningEquivalenteHook() {
 
   const { id } = useParams<{ id: string }>();
 
-  const { isFetchingPatient, isErrorPatient } = useGetByPatientId(id);
+  const { isFetchingPatient, isErrorPatient, patient } = useGetByPatientId(id);
+
+  const { createPlanningMeal, isCreatingPlanningMeal } =
+    useCreatePlanningMeal();
+
+  const { navigate } = useNavigate();
 
   const methods = useForm<TCreatePlanningMealDTO>({
     resolver: zodResolver(CreatePlanningMealSchema),
@@ -99,9 +106,22 @@ export function useCreatePlanningEquivalenteHook() {
   const { categoriesName, isFetchingCategories, isErrorCategories } =
     useGetAllCategoryName();
 
-  const handleSubmit = hookFormSubmit((data) => {
+  const handleSubmit = hookFormSubmit(async (data) => {
     // Remover o local storage
-    console.log('submit', data);
+    try {
+      await createPlanningMeal({
+        planningMeal: data,
+        patientId: patient?.id || '',
+      });
+
+      toast.success('Plano alimentar criado com sucesso');
+
+      navigate('PLANNING_MEAL_BY_PATIENT', {
+        replace: { id: patient?.id || '' },
+      });
+    } catch {
+      toast.error('Erro ao criar o plano alimentar');
+    }
   });
 
   const handleAddNewMeal = useCallback(() => {
@@ -204,6 +224,7 @@ export function useCreatePlanningEquivalenteHook() {
     formIsValid,
     isFetchingPatient,
     isErrorPatient,
+    isCreatingPlanningMeal,
     hasCategories,
     handleSubmit,
     toggleIncreaseFoodModal,

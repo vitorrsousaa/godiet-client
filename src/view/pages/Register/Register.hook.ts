@@ -29,6 +29,7 @@ const schema = z
           })
           .join(' ');
       }),
+    phone: z.string().min(8),
     confirmPassword: z
       .string()
       .nonempty('A senha é obrigatória')

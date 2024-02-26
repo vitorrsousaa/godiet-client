@@ -1,6 +1,6 @@
-import { Checkbox } from '@godiet-components/Checkbox';
-import type { DataTableSearchableColumn } from '@godiet-components/DataTable';
-import { DataTableColumnHeader } from '@godiet-components/DataTable';
+import { Checkbox } from '@godiet-ui/Checkbox';
+import type { DataTableSearchableColumn } from '@godiet-ui/DataTable';
+import { DataTableColumnHeader } from '@godiet-ui/DataTable';
 
 import { ColumnDef } from '@tanstack/react-table';
 
