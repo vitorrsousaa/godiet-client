@@ -25,6 +25,12 @@ httpClient.interceptors.request.use((config) => {
   return config;
 });
 
+httpClient.interceptors.request.use((config) => {
+  config.headers.set('Access-Control-Allow-Origin', 'godiet');
+
+  return config;
+});
+
 httpClient.interceptors.response.use(async (data) => {
   if (IS_DEVELOPMENT && VITE_API_RESPONSE_SLEEP_MS) {
     await delay(VITE_API_RESPONSE_SLEEP_MS);
