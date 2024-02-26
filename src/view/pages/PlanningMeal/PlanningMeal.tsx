@@ -2,11 +2,7 @@ import { Button } from '@godiet-ui/Button';
 import { Card } from '@godiet-ui/Card';
 import { formatDate } from '@godiet-utils/formatDate';
 
-import {
-  DownloadIcon,
-  ExternalLinkIcon,
-  TrashIcon,
-} from '@radix-ui/react-icons';
+import { ExternalLinkIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { usePlanningMealHook } from './PlanningMeal.hook';
 
@@ -19,7 +15,7 @@ export function PlanningMeal() {
   } = usePlanningMealHook();
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="mb-8 flex flex-col gap-6">
       <section className="flex flex-row items-center justify-between">
         <h1 className="text-lg font-semibold ">Planejamento alimentar</h1>
         <Button onClick={handleNavigateToCreatePlanning}>Criar novo</Button>
@@ -35,9 +31,6 @@ export function PlanningMeal() {
                   <Card.Title className="flex w-full items-center justify-between">
                     {planningMeal.name}{' '}
                     <div className="flex gap-2 [&>button]:h-8 [&>button]:px-2">
-                      <Button>
-                        <DownloadIcon />
-                      </Button>
                       <Button
                         onClick={() =>
                           handleNavigateToShowPlanning(planningMeal.id)

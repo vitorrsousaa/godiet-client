@@ -1,37 +1,25 @@
-import { useCallback } from 'react';
-
-import { useGetByPatientId } from '@godiet-hooks/patient';
-import { useGetByPlanningId } from '@godiet-hooks/planningMeal';
-import { useNavigate } from '@godiet-hooks/routes';
-import { Avatar } from '@godiet-ui/Avatar';
+import { CardMeal } from '@godiet-components/CardMeal';
 import { Button } from '@godiet-ui/Button';
-import { Separator } from '@godiet-ui/Separator';
 import { Spinner } from '@godiet-ui/Spinner';
-import { formatDate } from '@godiet-utils/formatDate';
 
-import {
-  CalendarIcon,
-  InfoCircledIcon,
-  PersonIcon,
-} from '@radix-ui/react-icons';
-import { useParams } from 'react-router-dom';
+import { DownloadIcon } from '@radix-ui/react-icons';
+
+import { ExportedPlanning } from './components/ExportedPlanning';
+import { useDetailsPlanningMealHook } from './DetailsPlanningMeal.hook';
 
 export function DetailsPlanningMeal() {
-  const { id, planningId } = useParams<{ id: string; planningId: string }>();
-
-  const { isErrorPatient, isFetchingPatient, patient } = useGetByPatientId(id);
-
-  const { isErrorPlanningMeal, isFetchingPlanningMeal, planningMeal } =
-    useGetByPlanningId({
-      patientId: patient?.id,
-      planningId,
-    });
-
-  const { navigate } = useNavigate();
-
-  const handleNavigateToHomePage = useCallback(() => {
-    navigate('HOME');
-  }, [navigate]);
+  const {
+    isErrorPatient,
+    patient,
+    isFetchingPatient,
+    isFetchingPlanningMeal,
+    planningMeal,
+    isErrorPlanningMeal,
+    isGeneratingPDF,
+    exportElementRef,
+    handleNavigateToHomePage,
+    handleExportPDF,
+  } = useDetailsPlanningMealHook();
 
   return (
     <>
@@ -51,27 +39,6 @@ export function DetailsPlanningMeal() {
             </div>
           ) : (
             <>
-              <div className="flex flex-col gap-3">
-                <div className="flex items-center justify-between">
-                  <h1 className="text-xl font-semibold">Paciente</h1>
-                </div>
-                <div className="flex items-center gap-4 ">
-                  <Avatar name={patient.name} />
-                  <div className="flex flex-col">
-                    <span className="flex items-center gap-1">
-                      <PersonIcon /> {patient.name}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <InfoCircledIcon /> {patient.email}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <CalendarIcon />
-                      {formatDate(patient.birthDate, 'PPP')}
-                    </span>
-                  </div>
-                </div>
-                <Separator />
-              </div>
               <div className="my-8 ">
                 <h2 className="text-md font-semibold">
                   Planejamento alimentar
@@ -98,9 +65,52 @@ export function DetailsPlanningMeal() {
                         </div>
                       </div>
                     ) : (
-                      <div>
-                        <h4>{planningMeal.name}</h4>
-                      </div>
+                      <>
+                        <div className="flex flex-col gap-6">
+                          <div className="flex flex-row items-center justify-between">
+                            <h4>{planningMeal.name}</h4>
+                            <Button
+                              onClick={handleExportPDF}
+                              isLoading={isGeneratingPDF}
+                            >
+                              <DownloadIcon />
+                            </Button>
+                          </div>
+                          <div className="flex flex-col gap-4">
+                            {planningMeal.meals.map((meal) => {
+                              return (
+                                <CardMeal.Root key={meal.id}>
+                                  <CardMeal.Header description={meal.time}>
+                                    {meal.name}
+                                  </CardMeal.Header>
+                                  <CardMeal.Content>
+                                    {meal.foods.length > 0 && (
+                                      <>
+                                        <CardMeal.ListHeader />
+
+                                        {meal.foods
+                                          .filter(
+                                            (food) => food.options.length > 0
+                                          )
+                                          .map((food) => (
+                                            <CardMeal.Options
+                                              foods={food}
+                                              key={food.id}
+                                            />
+                                          ))}
+                                      </>
+                                    )}
+                                  </CardMeal.Content>
+                                </CardMeal.Root>
+                              );
+                            })}
+                          </div>
+                        </div>
+                        <ExportedPlanning
+                          ref={exportElementRef}
+                          planningMeal={planningMeal}
+                        />
+                      </>
                     )}
                   </>
                 )}

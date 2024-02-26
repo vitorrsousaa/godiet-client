@@ -25,6 +25,8 @@ export function useLoginHook() {
     formState,
     handleSubmit: hookFormSubmit,
     register,
+    setError,
+    setValue,
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
   });
@@ -44,6 +46,8 @@ export function useLoginHook() {
       signin(accessToken);
     } catch {
       toast.error('Credenciais inválidas');
+      setError('password', { message: 'E-mail ou senha inválido' });
+      setValue('password', '');
     }
   });
 

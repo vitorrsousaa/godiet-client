@@ -20,6 +20,10 @@ export function usePatientLayoutHook() {
     navigate('ANAMNESIS', { replace: { id: patient?.id || '' } });
   }, [navigate, patient]);
 
+  const handleNavigateToHome = useCallback(() => {
+    navigate('HOME');
+  }, [navigate]);
+
   const toggleEditModal = useCallback(() => {
     setIsEditModalOpen((prevState) => !prevState);
   }, []);
@@ -32,5 +36,6 @@ export function usePatientLayoutHook() {
     toggleEditModal,
     handleNavigateToCreatePlanning,
     handleNavigateToAnamnesis,
+    handleNavigateToHome,
   };
 }

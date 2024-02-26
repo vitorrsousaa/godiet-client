@@ -1,14 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useGetAllCategoryName } from '@godiet-hooks/categoryName';
-import { useGetByPatientId } from '@godiet-hooks/patient';
+import { usePatient } from '@godiet-hooks/patient';
 import { useCreatePlanningMeal } from '@godiet-hooks/planningMeal';
 import { useNavigate } from '@godiet-hooks/routes';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { useParams } from 'react-router-dom';
 import * as z from 'zod';
 
 export const FoodSchema = z.object({
@@ -62,12 +61,11 @@ export type TCreatePlanningMealDTO = z.infer<typeof CreatePlanningMealSchema>;
 export function useCreatePlanningEquivalenteHook() {
   const [increaseFoodModalOpen, setIncreaseFoodModalOpen] = useState(false);
 
-  const { id } = useParams<{ id: string }>();
+  const { isErrorPatient, isFetchingPatient, patient } = usePatient();
 
-  const { isFetchingPatient, isErrorPatient, patient } = useGetByPatientId(id);
-
-  const { createPlanningMeal, isCreatingPlanningMeal } =
-    useCreatePlanningMeal();
+  const { createPlanningMeal, isCreatingPlanningMeal } = useCreatePlanningMeal(
+    patient?.id || ''
+  );
 
   const { navigate } = useNavigate();
 

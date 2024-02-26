@@ -22,6 +22,7 @@ export function PatientLayout() {
     toggleEditModal,
     handleNavigateToCreatePlanning,
     handleNavigateToAnamnesis,
+    handleNavigateToHome,
   } = usePatientLayoutHook();
 
   return (
@@ -29,7 +30,13 @@ export function PatientLayout() {
       {isFetchingPatient ? (
         <div>Carregando...</div>
       ) : !patient || isErrorPatient ? (
-        <div>Paciente não encontrado</div>
+        <div className="mt-10 flex w-full flex-col items-center justify-center gap-4 text-center">
+          <div>
+            <p>Tivemos um erro para encontrar este paciente!</p>
+            <p>Por favor. Tente novamente mais tarde!</p>
+          </div>
+          <Button onClick={handleNavigateToHome}>Página inicial</Button>
+        </div>
       ) : (
         <>
           <div className="flex items-center justify-between">
