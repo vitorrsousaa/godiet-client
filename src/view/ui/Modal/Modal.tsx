@@ -124,7 +124,7 @@ function ModalBase(props: ModalProps) {
         onClose?.();
       }}
     >
-      <ModalContent className={className}>{children}</ModalContent>
+      <ModalContent className={className}> {children}</ModalContent>
     </ModalRoot>
   );
 }

@@ -35,7 +35,7 @@ export function useCreatePatient() {
 }
 
 export function useGetByPatientId(patientId: string | undefined) {
-  const { data, isLoading, isPending, isError } = useQuery({
+  const { data, isLoading, isPending, isError, isFetching } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.PATIENTS, patientId],
     queryFn: () => patientServices.getById(patientId || ''),
     enabled: !!patientId,
@@ -43,7 +43,7 @@ export function useGetByPatientId(patientId: string | undefined) {
 
   return {
     patient: data,
-    isFetchingPatient: isLoading || isPending,
+    isFetchingPatient: isLoading || isPending || isFetching,
     isErrorPatient: isError,
   };
 }
@@ -57,5 +57,23 @@ export function useGetAllPatients() {
   return {
     patients: data ?? [],
     isFetchingPatients: isLoading || isPending,
+  };
+}
+
+export function useUpdatePatient(patientId: string) {
+  const queryClient = useQueryClient();
+
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: patientServices.update,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_CACHE_KEYS.PATIENTS, patientId],
+      });
+    },
+  });
+
+  return {
+    isUpdatingPatient: isPending,
+    updatePatient: mutateAsync,
   };
 }
