@@ -5,3 +5,4 @@ coverage/
 
 **/*.js
 vitest.config.ts
+vite.config.ts
