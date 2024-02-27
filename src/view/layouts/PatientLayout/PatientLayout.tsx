@@ -23,6 +23,8 @@ export function PatientLayout() {
     handleNavigateToCreatePlanning,
     handleNavigateToAnamnesis,
     handleNavigateToHome,
+    prefetchAllAnamnesis,
+    prefetchAllPlanningMeals,
   } = usePatientLayoutHook();
 
   return (
@@ -62,7 +64,13 @@ export function PatientLayout() {
           </div>
           <Separator />
           <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-            <Button variant={'outline'} onClick={handleNavigateToAnamnesis}>
+            <Button
+              variant={'outline'}
+              onClick={handleNavigateToAnamnesis}
+              onMouseEnter={() =>
+                prefetchAllAnamnesis({ patientId: patient.id })
+              }
+            >
               Anamnese
             </Button>
             <Button variant={'outline'} className="cursor-not-allowed">
@@ -71,6 +79,9 @@ export function PatientLayout() {
             <Button
               variant={'outline'}
               onClick={handleNavigateToCreatePlanning}
+              onMouseEnter={() =>
+                prefetchAllPlanningMeals({ patientId: patient.id })
+              }
             >
               Planejamento alimentar
             </Button>

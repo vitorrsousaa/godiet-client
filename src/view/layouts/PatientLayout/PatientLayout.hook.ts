@@ -1,6 +1,8 @@
 import { useCallback, useState } from 'react';
 
+import { usePrefetchAllAnamnesis } from '@godiet-hooks/anamnesis';
 import { usePatient } from '@godiet-hooks/patient';
+import { usePrefetchAllPlanningMeal } from '@godiet-hooks/planningMeal';
 import { useNavigate } from '@godiet-hooks/routes';
 
 export function usePatientLayoutHook() {
@@ -9,6 +11,10 @@ export function usePatientLayoutHook() {
   const { isErrorPatient, isFetchingPatient, patient } = usePatient();
 
   const { navigate } = useNavigate();
+
+  const prefetchAllAnamnesis = usePrefetchAllAnamnesis();
+
+  const prefetchAllPlanningMeals = usePrefetchAllPlanningMeal();
 
   const handleNavigateToCreatePlanning = useCallback(() => {
     navigate('PLANNING_MEAL_BY_PATIENT', {
@@ -37,5 +43,7 @@ export function usePatientLayoutHook() {
     handleNavigateToCreatePlanning,
     handleNavigateToAnamnesis,
     handleNavigateToHome,
+    prefetchAllAnamnesis,
+    prefetchAllPlanningMeals,
   };
 }
