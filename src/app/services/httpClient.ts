@@ -28,7 +28,6 @@ httpClient.interceptors.request.use((config) => {
 httpClient.interceptors.request.use((config) => {
   config.headers.set('Access-Control-Allow-Origin', 'https://godiet.com.br');
   config.headers['Content-Type'] = 'application/json';
-  config.headers.set('Origin', 'https://godiet.com.br');
 
   return config;
 });

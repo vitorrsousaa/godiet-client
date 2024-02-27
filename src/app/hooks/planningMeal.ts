@@ -68,3 +68,21 @@ export function useGetByPlanningId(params: queryGetAllByPatientParams) {
     isErrorPlanningMeal: isError,
   };
 }
+
+interface prefetchGetAllByPatientParams {
+  patientId: string;
+}
+
+export function usePrefetchAllPlanningMeal() {
+  const queryClient = useQueryClient();
+  return ({ patientId }: prefetchGetAllByPatientParams) => {
+    queryClient.prefetchQuery({
+      queryKey: [QUERY_CACHE_KEYS.PLANNING_MEAL, patientId],
+      queryFn: async () =>
+        planningMealServices.getAllByPatient({
+          patientId,
+          planningId: undefined,
+        }),
+    });
+  };
+}

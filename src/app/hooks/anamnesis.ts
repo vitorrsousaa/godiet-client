@@ -58,7 +58,7 @@ export function useUpdateAnamnesis() {
 
 export function useGetAllAnamnesis(patientId: string | undefined) {
   const { data, isLoading, isPending, isError } = useQuery({
-    queryKey: [QUERY_CACHE_KEYS.ANAMNESIS],
+    queryKey: [QUERY_CACHE_KEYS.ANAMNESIS, patientId && patientId],
     queryFn: () => anamnesisServices.getAll({ patientId: patientId || '' }),
     enabled: !!patientId,
   });
@@ -67,5 +67,20 @@ export function useGetAllAnamnesis(patientId: string | undefined) {
     anamnesis: data ?? [],
     isFetchingAnamnesis: isLoading || isPending,
     isErrorAnamnesis: isError,
+  };
+}
+
+interface TPrefetchAllAnamnesisParams {
+  patientId: string;
+}
+
+export function usePrefetchAllAnamnesis() {
+  const queryClient = useQueryClient();
+
+  return ({ patientId }: TPrefetchAllAnamnesisParams) => {
+    queryClient.prefetchQuery({
+      queryKey: [QUERY_CACHE_KEYS.ANAMNESIS, patientId],
+      queryFn: async () => anamnesisServices.getAll({ patientId }),
+    });
   };
 }
