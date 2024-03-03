@@ -1,7 +1,9 @@
 import { useCallback, useState } from 'react';
 
-import { useGetAllPatients } from '@godiet-hooks/patient';
+import { useDeletePatient, useGetAllPatients } from '@godiet-hooks/patient';
 import { useNavigate } from '@godiet-hooks/routes';
+
+import toast from 'react-hot-toast';
 
 export function usePatientsHook() {
   const [isCreatePatientModalOpen, setIsCreatePatientModalOpen] =
@@ -16,6 +18,8 @@ export function usePatientsHook() {
 
   const { isFetchingPatients, patients } = useGetAllPatients();
 
+  const { deletePatient, isDeletingPatient } = useDeletePatient();
+
   const { navigate } = useNavigate();
 
   const toggleModalCreatePatient = useCallback(
@@ -28,11 +32,21 @@ export function usePatientsHook() {
     setSelectedPatientToDelete(patientId);
   }, []);
 
-  const handleDeletePatient = useCallback(() => {
-    console.log(selectedPatientToDelete);
+  const handleDeletePatient = useCallback(async () => {
+    if (!selectedPatientToDelete) {
+      return;
+    }
 
-    toggleModalDeletePatient(null);
-  }, [selectedPatientToDelete, toggleModalDeletePatient]);
+    try {
+      await deletePatient({ patientId: selectedPatientToDelete || '' });
+
+      toast.success('Paciente deletado com sucesso');
+    } catch {
+      toast.error('Erro ao deletar o paciente');
+    } finally {
+      toggleModalDeletePatient(null);
+    }
+  }, [deletePatient, selectedPatientToDelete, toggleModalDeletePatient]);
 
   const handleNavigateToPatientPage = useCallback(
     (patientId: string) => {
@@ -48,6 +62,7 @@ export function usePatientsHook() {
     isCreatePatientModalOpen,
     isDeletePatientModalOpen,
     isFetchingPatients,
+    isDeletingPatient,
     toggleModalCreatePatient,
     toggleModalDeletePatient,
     handleDeletePatient,
