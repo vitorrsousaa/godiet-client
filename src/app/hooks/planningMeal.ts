@@ -29,7 +29,7 @@ interface queryGetAllByPatientParams {
 export function useGetAllByPatient(params: queryGetAllByPatientParams) {
   const { patientId } = params;
 
-  const { data, isFetching, isPending } = useQuery({
+  const { data, isFetching, isPending, isLoading } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.PLANNING_MEAL, patientId],
     queryFn: () =>
       planningMealServices.getAllByPatient({
@@ -39,9 +39,12 @@ export function useGetAllByPatient(params: queryGetAllByPatientParams) {
     enabled: !!patientId,
   });
 
+  console.log({ isFetching, isPending, isLoading });
+
   return {
     planningMeals: data || [],
     isFetchingPlanningMeals: isFetching || isPending,
+    isLoadingPlanningMeals: isLoading,
   };
 }
 
@@ -84,5 +87,32 @@ export function usePrefetchAllPlanningMeal() {
           planningId: undefined,
         }),
     });
+  };
+}
+
+interface IDeletePlanningInput {
+  planningMealId: string;
+  patientId: string;
+}
+
+export function useDeletePlanningMeal(
+  deletePlanningInput: IDeletePlanningInput
+) {
+  const queryClient = useQueryClient();
+
+  const { patientId } = deletePlanningInput;
+
+  const { mutateAsync: deletePlanningMeal, isPending } = useMutation({
+    mutationFn: planningMealServices.delete,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_CACHE_KEYS.PLANNING_MEAL, patientId],
+      });
+    },
+  });
+
+  return {
+    isDeletingPlanningMeal: isPending,
+    deletePlanningMeal,
   };
 }
