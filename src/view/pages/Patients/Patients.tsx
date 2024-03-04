@@ -15,6 +15,7 @@ export function Patients() {
     isCreatePatientModalOpen,
     isDeletePatientModalOpen,
     isFetchingPatients,
+    isLoadingPatients,
     toggleModalCreatePatient,
     toggleModalDeletePatient,
     handleDeletePatient,
@@ -31,14 +32,17 @@ export function Patients() {
           </small>
         </div>
         <div>
-          <Button onClick={toggleModalCreatePatient}>
+          <Button
+            onClick={toggleModalCreatePatient}
+            isLoading={isFetchingPatients}
+          >
             <PlusIcon className="" />
             <span className="hidden sm:block">Adicionar paciente</span>
           </Button>
         </div>
       </div>
       <div className="flex h-full w-full flex-col items-center justify-center gap-4">
-        {isFetchingPatients ? (
+        {isLoadingPatients ? (
           <div>Carregando...</div>
         ) : patients.length > 0 ? (
           <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">

@@ -49,14 +49,15 @@ export function useGetByPatientId(patientId: string | undefined) {
 }
 
 export function useGetAllPatients() {
-  const { data, isLoading, isPending } = useQuery({
+  const { data, isLoading, isPending, isFetching } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.PATIENTS],
     queryFn: patientServices.getAll,
   });
 
   return {
     patients: data ?? [],
-    isFetchingPatients: isLoading || isPending,
+    isFetchingPatients: isFetching || isPending,
+    isLoadingPatients: isLoading,
   };
 }
 
