@@ -1,5 +1,3 @@
-import { forwardRef, useImperativeHandle } from 'react';
-
 import { Button } from '@godiet-ui/Button';
 import { DatePicker } from '@godiet-ui/DatePicker';
 import { Input } from '@godiet-ui/Input';
@@ -23,114 +21,90 @@ export interface PatientFormRef {
   setFormValues: (value: FormValues) => void;
 }
 
-const PatientForm = forwardRef<PatientFormRef, PatientFormProps>(
-  (props, ref) => {
-    const { isLoading } = props;
+function PatientForm(props: PatientFormProps) {
+  const { isLoading } = props;
 
-    const {
-      control,
-      errors,
-      handleSubmit,
-      register,
-      handleCancel,
-      hookFormSetError,
-      setValue,
-    } = usePatientFormHook(props);
+  const { control, errors, handleSubmit, register, handleCancel } =
+    usePatientFormHook(props);
 
-    useImperativeHandle(
-      ref,
-      () => ({
-        setError: (name, { message }) => hookFormSetError(name, { message }),
-        setFormValues: (values) => {
-          setValue('name', values.name);
-          setValue('email', values.email);
-          setValue('birthDate', values.birthDate);
-          setValue('gender', values.gender);
-          setValue('phone', values.phone);
-        },
-      }),
-      [hookFormSetError, setValue]
-    );
+  return (
+    <>
+      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+        <Input
+          type="text"
+          placeholder="Nome do paciente"
+          error={errors.name?.message}
+          {...register('name')}
+        />
+        <Input
+          type="email"
+          placeholder="E-mail do paciente"
+          error={errors.email?.message}
+          {...register('email')}
+        />
+        <Input
+          type="tel"
+          placeholder="Telefone do paciente"
+          error={errors.phone?.message}
+          {...register('phone')}
+        />
+        <Controller
+          control={control}
+          name="birthDate"
+          render={({ field: { onChange, value } }) => (
+            <DatePicker
+              error={errors.birthDate?.message}
+              disabledAfterDays
+              onChange={onChange}
+              value={value}
+              placeholder={'Data de nascimento'}
+            />
+          )}
+        />
 
-    return (
-      <>
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-          <Input
-            type="text"
-            placeholder="Nome do paciente"
-            error={errors.name?.message}
-            {...register('name')}
-          />
-          <Input
-            type="email"
-            placeholder="E-mail do paciente"
-            error={errors.email?.message}
-            {...register('email')}
-          />
-          <Input
-            type="tel"
-            placeholder="Telefone do paciente"
-            error={errors.phone?.message}
-            {...register('phone')}
-          />
+        <div>
+          <small className="text-xs text-muted-foreground sm:text-sm">
+            Selecione o gênero:
+          </small>
           <Controller
             control={control}
-            name="birthDate"
+            name="gender"
             render={({ field: { onChange, value } }) => (
-              <DatePicker
-                error={errors.birthDate?.message}
-                disabledAfterDays
-                onChange={onChange}
+              <ToggleGroup.Root
+                type="single"
+                defaultValue="MASC"
+                onValueChange={onChange}
                 value={value}
-                placeholder={'Data de nascimento'}
-              />
+              >
+                <ToggleGroup.Item value="MASC" variant={'outline'}>
+                  MASC
+                </ToggleGroup.Item>
+                <ToggleGroup.Item value="FEM" variant={'outline'}>
+                  FEM
+                </ToggleGroup.Item>
+              </ToggleGroup.Root>
             )}
           />
+        </div>
 
-          <div>
-            <small className="text-xs text-muted-foreground sm:text-sm">
-              Selecione o gênero:
-            </small>
-            <Controller
-              control={control}
-              name="gender"
-              render={({ field: { onChange, value } }) => (
-                <ToggleGroup.Root
-                  type="single"
-                  defaultValue="MASC"
-                  onValueChange={onChange}
-                  value={value}
-                >
-                  <ToggleGroup.Item value="MASC" variant={'outline'}>
-                    MASC
-                  </ToggleGroup.Item>
-                  <ToggleGroup.Item value="FEM" variant={'outline'}>
-                    FEM
-                  </ToggleGroup.Item>
-                </ToggleGroup.Root>
-              )}
-            />
-          </div>
-
-          <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-            <Button
-              variant={'destructive'}
-              className="mt-2 sm:mt-0"
-              onClick={handleCancel}
-              type="button"
-              disabled={isLoading}
-            >
-              Cancelar
-            </Button>
-            <Button type="submit" isLoading={isLoading}>
-              Salvar
-            </Button>
-          </div>
-        </form>
-      </>
-    );
-  }
-);
+        <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+          <Button
+            variant={'destructive'}
+            className="mt-2 sm:mt-0"
+            onClick={handleCancel}
+            type="button"
+            disabled={isLoading}
+          >
+            Cancelar
+          </Button>
+          <Button type="submit" isLoading={isLoading}>
+            Salvar
+          </Button>
+        </div>
+      </form>
+    </>
+  );
+}
 
 PatientForm.displayName = 'PatientForm';
 

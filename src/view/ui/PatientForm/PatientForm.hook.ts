@@ -29,7 +29,7 @@ const schema = z.object({
     .refine((date) => date <= new Date(), {
       message: 'Data de nascimento não pode ser no futuro',
     }),
-  phone: z.string().min(8),
+  phone: z.string().min(8, 'Telefone inválido'),
   gender: z.enum(['MASC', 'FEM']),
 });
 
@@ -59,7 +59,6 @@ export function usePatientFormHook(props: PatientFormProps) {
   });
 
   const handleCancel = useCallback(() => {
-    // reset();
     onCancel();
   }, [onCancel]);
 
