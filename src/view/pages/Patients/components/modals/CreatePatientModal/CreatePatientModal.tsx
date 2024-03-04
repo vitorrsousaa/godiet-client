@@ -1,5 +1,5 @@
+import { PatientForm } from '@godiet-components/PatientForm';
 import { Modal } from '@godiet-ui/Modal';
-import { PatientForm } from '@godiet-ui/PatientForm';
 
 import { useCreatePatientModalHook } from './CreatePatientModal.hook';
 
