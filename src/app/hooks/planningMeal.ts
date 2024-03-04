@@ -39,8 +39,6 @@ export function useGetAllByPatient(params: queryGetAllByPatientParams) {
     enabled: !!patientId,
   });
 
-  console.log({ isFetching, isPending, isLoading });
-
   return {
     planningMeals: data || [],
     isFetchingPlanningMeals: isFetching || isPending,
