@@ -1,63 +1,61 @@
-import { Button } from '@godiet-ui/Button';
 import { Calendar } from '@godiet-ui/Calendar';
+import { Input } from '@godiet-ui/Input';
 import { Popover, PopoverContent, PopoverTrigger } from '@godiet-ui/Popover';
-import { cn } from '@godiet-utils/cn';
 
-import { CalendarIcon, CrossCircledIcon } from '@radix-ui/react-icons';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { CrossCircledIcon } from '@radix-ui/react-icons';
 
 import { useDatePickerHook } from './DatePicker.hook';
 
 export interface DatePickerProps {
   value?: Date;
-  onChange?: (date: Date) => void;
+  onChange?: (date: Date | undefined) => void;
   error?: string;
   placeholder?: string;
   disabledAfterDays?: boolean;
 }
 
 export function DatePicker(props: DatePickerProps) {
-  const { error, placeholder, value, disabledAfterDays } = props;
+  const { error, placeholder, disabledAfterDays } = props;
 
-  const { popoverIsVisible, togglePopoverIsVisible, handleChangeDate } =
-    useDatePickerHook(props);
+  const {
+    popoverIsVisible,
+    inputValue,
+    date,
+    errorMessage,
+    handleInputChange,
+    handleSelectDate,
+    togglePopoverIsVisible,
+  } = useDatePickerHook(props);
 
   return (
     <div className="w-full">
       <Popover open={popoverIsVisible} onOpenChange={togglePopoverIsVisible}>
         <PopoverTrigger asChild>
-          <Button
-            variant={'outline'}
-            className={cn(
-              'h-8 w-full justify-between text-left text-sm font-normal  sm:h-[3.25rem] sm:text-base',
-              !value && 'text-muted-foreground'
-            )}
-          >
-            {value ? (
-              format(value, 'PPP', { locale: ptBR })
-            ) : (
-              <span className="text-muted-foreground">
-                {placeholder ? placeholder : 'Selecione a data'}
-              </span>
-            )}
-            <CalendarIcon className="mr-2 h-4 w-4" />
-          </Button>
+          <Input
+            name="date"
+            placeholder={placeholder ? placeholder : 'Selecione a data'}
+            type="text"
+            value={inputValue}
+            onChange={handleInputChange}
+          />
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">
           <Calendar
-            onChange={handleChangeDate}
-            value={value}
+            onSelect={handleSelectDate}
+            value={date}
             initialFocus
             disabled={(date) => (disabledAfterDays ? date > new Date() : false)}
           />
         </PopoverContent>
       </Popover>
 
-      {error && (
+      {(error || errorMessage) && (
         <div className="mt-2 flex items-center gap-2 text-red-700">
           <CrossCircledIcon />
-          <span className="text-input-helper">{error}</span>
+          {error && <span className="text-input-helper">{error}</span>}
+          {errorMessage && (
+            <span className="text-input-helper">{errorMessage}</span>
+          )}
         </div>
       )}
     </div>

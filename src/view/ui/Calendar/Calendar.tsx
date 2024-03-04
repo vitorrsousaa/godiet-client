@@ -8,10 +8,10 @@ import { DayPicker, DayPickerSingleProps } from 'react-day-picker';
 export interface CalendarProps
   extends Omit<
     DayPickerSingleProps,
-    'locale' | 'selected' | 'mode' | 'onSelect' | 'formatters'
+    'locale' | 'selected' | 'mode' | 'formatters'
   > {
   value?: Date;
-  onChange: (date: Date) => void;
+  // onChange?: (date: Date) => void;
 }
 
 function Calendar(props: CalendarProps) {
@@ -20,7 +20,7 @@ function Calendar(props: CalendarProps) {
     classNames,
     showOutsideDays = true,
     value,
-    onChange,
+    onSelect,
     ...calendarProps
   } = props;
 
@@ -30,8 +30,10 @@ function Calendar(props: CalendarProps) {
       lang="pt-br"
       mode="single"
       locale={ptBR}
+      defaultMonth={value}
       selected={value}
-      onDayClick={onChange}
+      onSelect={onSelect}
+      // onDayClick={onChange}
       showOutsideDays={showOutsideDays}
       className={cn('p-3', className)}
       classNames={{
