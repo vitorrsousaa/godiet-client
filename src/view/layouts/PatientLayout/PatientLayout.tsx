@@ -1,3 +1,4 @@
+import { MenuOptions } from '@godiet-components/MenuOptions';
 import { Avatar } from '@godiet-ui/Avatar';
 import { Button } from '@godiet-ui/Button';
 import { Separator } from '@godiet-ui/Separator';
@@ -63,35 +64,37 @@ export function PatientLayout() {
             </div>
           </div>
           <Separator />
-          <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-            <Button
-              variant={'outline'}
+          <MenuOptions.Root>
+            <MenuOptions.Button
               onClick={handleNavigateToAnamnesis}
               onMouseEnter={() =>
                 prefetchAllAnamnesis({ patientId: patient.id })
               }
             >
               Anamnese
-            </Button>
-            <Button variant={'outline'} className="cursor-not-allowed">
+            </MenuOptions.Button>
+
+            <MenuOptions.Button className="cursor-not-allowed">
               Antropometria
-            </Button>
-            <Button
-              variant={'outline'}
+            </MenuOptions.Button>
+
+            <MenuOptions.Button
               onClick={handleNavigateToCreatePlanning}
               onMouseEnter={() =>
                 prefetchAllPlanningMeals({ patientId: patient.id })
               }
             >
               Planejamento alimentar
-            </Button>
-            <Button variant={'outline'} className="cursor-not-allowed">
+            </MenuOptions.Button>
+
+            <MenuOptions.Button className="cursor-not-allowed">
               Orientações nutricionais
-            </Button>
-            <Button variant={'outline'} className="cursor-not-allowed">
+            </MenuOptions.Button>
+
+            <MenuOptions.Button className="cursor-not-allowed">
               Cálculo energético
-            </Button>
-          </div>
+            </MenuOptions.Button>
+          </MenuOptions.Root>
           <Separator />
           <Outlet />
 
