@@ -76,6 +76,11 @@ export function Router() {
           <Route element={<AuthGuard isPrivate={true} />}>
             <Route element={<DashboardLayout />}>
               <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+
+              <Route path={ROUTES.PATIENTS} element={<Patients />} />
+
+              <Route path={ROUTES.FAVORITES} element={<div>favoritos</div>} />
+
               <Route element={<SettingsLayout />}>
                 <Route path={ROUTES.SETTINGS} element={<Settings />} />
                 <Route
@@ -99,8 +104,6 @@ export function Router() {
                   element={<div>Meu plano</div>}
                 />
               </Route>
-
-              <Route path={ROUTES.PATIENTS} element={<Patients />} />
 
               <Route element={<PatientLayout />}>
                 <Route path={ROUTES.PATIENTS_BY_ID} element={<Patient />} />
