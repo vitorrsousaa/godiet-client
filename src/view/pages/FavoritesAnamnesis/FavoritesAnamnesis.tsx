@@ -27,7 +27,7 @@ export function FavoritesAnamnesis() {
   return (
     <>
       <HeaderSettings
-        title="Anamnese"
+        title="Anamneses"
         extra={
           <Button onClick={toggleModalCreateAnamnesisTemplate}>Criar</Button>
         }

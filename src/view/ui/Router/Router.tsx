@@ -2,8 +2,6 @@
 import { Suspense } from 'react';
 
 import { ROUTES } from '@godiet-config';
-import { FavoritesLayout } from '@godiet-layouts/FavoritesLayout';
-import { FavoritesAnamnesis } from '@godiet-pages/FavoritesAnamnesis';
 import { NotFound } from '@godiet-pages/NotFound';
 import { Logo } from '@godiet-ui/Logo';
 import { Spinner } from '@godiet-ui/Spinner';
@@ -30,6 +28,12 @@ const { DashboardLayout } = lazyLoad(
   () => import('@godiet-layouts/DashboardLayout')
 );
 
+const { FavoritesLayout } = lazyLoad(
+  () => import('@godiet-layouts/FavoritesLayout')
+);
+const { FavoritesAnamnesis } = lazyLoad(
+  () => import('@godiet-pages/FavoritesAnamnesis')
+);
 const { Login } = lazyLoad(() => import('@godiet-pages/Login'));
 const { LandingPage } = lazyLoad(() => import('@godiet-pages/LandingPage'));
 const { Register } = lazyLoad(() => import('@godiet-pages/Register'));
@@ -82,6 +86,21 @@ export function Router() {
                 <Route
                   path={ROUTES.FAVORITES}
                   element={<FavoritesAnamnesis />}
+                />
+
+                <Route
+                  path={ROUTES.FAVORITES_FOODS}
+                  element={<div>Alimentos</div>}
+                />
+
+                <Route
+                  path={ROUTES.FAVORITES_MEALS}
+                  element={<div>Refeições</div>}
+                />
+
+                <Route
+                  path={ROUTES.FAVORITES_ORIENTATIONS}
+                  element={<div>Orientações</div>}
                 />
               </Route>
 

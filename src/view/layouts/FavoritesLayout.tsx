@@ -1,7 +1,12 @@
 import { Sidebar, SideItem } from '@godiet-components/Sidebar';
 import { ROUTES } from '@godiet-config';
 
-import { ReaderIcon } from '@radix-ui/react-icons';
+import {
+  HobbyKnifeIcon,
+  PieChartIcon,
+  ReaderIcon,
+  RowsIcon,
+} from '@radix-ui/react-icons';
 import { Outlet } from 'react-router-dom';
 
 const sideBarItens: SideItem[] = [
@@ -9,8 +14,23 @@ const sideBarItens: SideItem[] = [
     items: [
       {
         href: ROUTES.FAVORITES,
-        icon: <ReaderIcon />,
+        icon: <ReaderIcon className="h-4 w-4" />,
         title: 'Anemneses',
+      },
+      {
+        href: ROUTES.FAVORITES_FOODS,
+        icon: <HobbyKnifeIcon className="h-4 w-4" />,
+        title: 'Alimentos',
+      },
+      {
+        href: ROUTES.FAVORITES_MEALS,
+        title: 'Refeições',
+        icon: <PieChartIcon className="h-4 w-4" />,
+      },
+      {
+        href: ROUTES.FAVORITES_ORIENTATIONS,
+        title: 'Orientações',
+        icon: <RowsIcon className="h-4 w-4" />,
       },
     ],
   },

@@ -17,4 +17,7 @@ export const ROUTES = {
   SETTINGS_PAYMENTS: '/configuracoes/pagamentos',
   SETTINGS_REWARDS: '/configuracoes/recompensas',
   FAVORITES: '/favoritos/anamneses',
+  FAVORITES_FOODS: '/favoritos/alimentos',
+  FAVORITES_ORIENTATIONS: '/favoritos/orientacoes',
+  FAVORITES_MEALS: '/favoritos/refeicoes',
 } as const;

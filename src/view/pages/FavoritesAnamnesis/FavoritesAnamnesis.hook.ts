@@ -23,13 +23,11 @@ export function useFavoritesAnamnesisHook() {
 
   const [
     modalCreateAnamnesisTemplateIsOpen,
-
     toggleModalCreateAnamnesisTemplate,
   ] = useReducer((state) => !state, false);
 
   const [
     modalDeleteAnamnesisTemplateIsOpen,
-
     toggleModalDeleteAnamnesisTemplate,
   ] = useReducer((state) => !state, false);
 
