@@ -15,7 +15,7 @@ export default defineConfig({
       '**/src/server/**',
       '**/src/factories/**',
     ],
-    reporters: 'html',
+    reporters: ['html', 'basic'],
     coverage: {
       provider: 'v8',
     },

@@ -16,6 +16,9 @@ dist-ssr
 .env.prod
 .env
 dist
+
+# Tests
+html
 coverage
 
 # Editor directories and files

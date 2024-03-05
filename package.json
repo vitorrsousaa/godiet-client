@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "deployment": "bash ./scripts/publish.sh",
     "build": "tsc && vite build",
     "lint:ci": "prettier --check ./src && eslint ./src --ext .ts",
     "lint:fix": "prettier --write ./src && eslint ./src --ext .ts --fix",
