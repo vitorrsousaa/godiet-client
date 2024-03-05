@@ -47,11 +47,11 @@ export function Settings() {
         <Section
           title="Aparência"
           description="Personalize a aparência da sua aplicação."
-          className="w-72  sm:w-40"
+          className="sm:w-40"
         >
           <div>
             <Select onValueChange={(event) => setTheme(event as Theme)}>
-              <SelectTrigger className="sm:w-[180px]">
+              <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Selecione o tema" />
               </SelectTrigger>
               <SelectContent>
@@ -76,7 +76,7 @@ export function Settings() {
         <Section
           title="Senha"
           description="Recupere ou atualize sua senha, se necessário."
-          className="w-72 sm:mb-6 md:mb-0 md:w-40 lg:w-72"
+          className="sm:mb-6 md:mb-0 md:w-40 lg:w-72"
           classContainer="sm:flex-col md:flex-row "
         >
           <div className="space-y-4 text-right sm:min-w-72">
@@ -91,7 +91,7 @@ export function Settings() {
           danger
           title="Excluir minha conta"
           description="Esta ação é irreversível. Ao deletar sua conta, todos os seus dados serão permanentemente removidos."
-          className="w-96 sm:w-40 md:w-72 lg:w-full"
+          className="sm:w-40 md:w-72 lg:w-full"
         >
           <div>
             <Button variant={'destructive'}>
