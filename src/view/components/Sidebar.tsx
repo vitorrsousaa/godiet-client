@@ -1,68 +1,24 @@
-import { ROUTES } from '@godiet-config';
 import { Button } from '@godiet-ui/Button';
 import { cn } from '@godiet-utils/cn';
 
-import {
-  BellIcon,
-  DashboardIcon,
-  IdCardIcon,
-  PersonIcon,
-  ReaderIcon,
-  StarFilledIcon,
-} from '@radix-ui/react-icons';
 import { Link, useLocation } from 'react-router-dom';
 
-const sideBarItens = [
-  {
-    main: 'Conta',
-    items: [
-      {
-        icon: <PersonIcon />,
-        title: 'Meu perfil',
-        href: ROUTES.SETTINGS,
-      },
-      {
-        icon: <BellIcon />,
-        title: 'Notificações',
-        href: ROUTES.SETTINGS_NOTIFICATIONS,
-      },
-      {
-        icon: <StarFilledIcon />,
-        title: 'Recompensas',
-        href: ROUTES.SETTINGS_REWARDS,
-      },
-    ],
-  },
-  {
-    main: 'Preferências',
-    items: [
-      {
-        icon: <ReaderIcon />,
-        title: 'Anamneses',
-        href: ROUTES.SETTINGS_ANAMNESIS,
-      },
-    ],
-  },
-  {
-    main: 'Assinatura',
-    items: [
-      {
-        icon: <DashboardIcon />,
-        title: 'Meu plano',
-        href: ROUTES.SETTINGS_MYPLAN,
-      },
-      {
-        icon: <IdCardIcon />,
-        title: 'Pagamentos',
-        href: ROUTES.SETTINGS_PAYMENTS,
-      },
-    ],
-  },
-];
+interface Item {
+  icon: React.ReactNode;
+  title: string;
+  href: string;
+}
 
-interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface SideItem {
+  main: string;
+  items: Item[];
+}
 
-export function Sidebar({ className }: SidebarProps) {
+interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {
+  sideBarItens: SideItem[];
+}
+
+export function Sidebar({ className, sideBarItens }: SidebarProps) {
   const { pathname } = useLocation();
 
   return (
@@ -73,6 +29,7 @@ export function Sidebar({ className }: SidebarProps) {
             <h2 className="mb-2 hidden px-4 font-semibold tracking-tight sm:block">
               {sidebarItem.main}
             </h2>
+
             <div className="space-y-1">
               {sidebarItem.items.map((item) => (
                 <Link key={`sidebar-item-${item.title}`} to={item.href}>
@@ -80,11 +37,13 @@ export function Sidebar({ className }: SidebarProps) {
                     variant="ghost"
                     className={cn(
                       'w-full justify-center transition-all sm:justify-start',
+
                       pathname === item.href && 'bg-gray-50 text-teal-600'
                     )}
                   >
                     <span className="inline-flex items-center gap-1 ">
                       {item.icon}
+
                       <span className="hidden sm:block">{item.title}</span>
                     </span>
                   </Button>
