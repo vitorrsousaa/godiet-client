@@ -9,8 +9,8 @@ interface Item {
   href: string;
 }
 
-interface SideItem {
-  main: string;
+export interface SideItem {
+  main?: string;
   items: Item[];
 }
 
@@ -25,10 +25,15 @@ export function Sidebar({ className, sideBarItens }: SidebarProps) {
     <nav className={cn('mr-4 h-full border-r-[1px] pb-12', className)}>
       <div className="space-y-4">
         {sideBarItens.map((sidebarItem) => (
-          <div className="px-3 py-2" key={`sidebar-main-${sidebarItem.main}`}>
-            <h2 className="mb-2 hidden px-4 font-semibold tracking-tight sm:block">
-              {sidebarItem.main}
-            </h2>
+          <div
+            className="px-3 py-2"
+            key={`sidebar-main-${sidebarItem.main ? sidebarItem.main : sidebarItem.items[0].href}`}
+          >
+            {sidebarItem.main && (
+              <h2 className="mb-2 hidden px-4 font-semibold tracking-tight sm:block">
+                {sidebarItem.main}
+              </h2>
+            )}
 
             <div className="space-y-1">
               {sidebarItem.items.map((item) => (

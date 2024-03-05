@@ -6,7 +6,6 @@ import {
   DashboardIcon,
   IdCardIcon,
   PersonIcon,
-  ReaderIcon,
   StarFilledIcon,
 } from '@radix-ui/react-icons';
 import { Outlet } from 'react-router-dom';
@@ -29,16 +28,6 @@ const sideBarItens = [
         icon: <StarFilledIcon />,
         title: 'Recompensas',
         href: ROUTES.SETTINGS_REWARDS,
-      },
-    ],
-  },
-  {
-    main: 'Preferências',
-    items: [
-      {
-        icon: <ReaderIcon />,
-        title: 'Anamneses',
-        href: ROUTES.SETTINGS_ANAMNESIS,
       },
     ],
   },

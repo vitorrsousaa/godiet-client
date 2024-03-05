@@ -101,7 +101,7 @@ export function DashboardLayout() {
                       onClick={() => navigate('FAVORITES')}
                     >
                       <StarFilledIcon />
-                      <span>Favoritos</span>
+                      <span>Meus favoritos</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       className="space-x-4 hover:cursor-pointer"
