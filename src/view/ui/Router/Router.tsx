@@ -2,6 +2,8 @@
 import { Suspense } from 'react';
 
 import { ROUTES } from '@godiet-config';
+import { FavoritesLayout } from '@godiet-layouts/FavoritesLayout';
+import { FavoritesAnamnesis } from '@godiet-pages/FavoritesAnamnesis';
 import { NotFound } from '@godiet-pages/NotFound';
 import { Logo } from '@godiet-ui/Logo';
 import { Spinner } from '@godiet-ui/Spinner';
@@ -79,7 +81,12 @@ export function Router() {
 
               <Route path={ROUTES.PATIENTS} element={<Patients />} />
 
-              <Route path={ROUTES.FAVORITES} element={<div>favoritos</div>} />
+              <Route element={<FavoritesLayout />}>
+                <Route
+                  path={ROUTES.FAVORITES}
+                  element={<FavoritesAnamnesis />}
+                />
+              </Route>
 
               <Route element={<SettingsLayout />}>
                 <Route path={ROUTES.SETTINGS} element={<Settings />} />

@@ -17,5 +17,5 @@ export const ROUTES = {
   SETTINGS_NOTIFICATIONS: '/configuracoes/notificacoes',
   SETTINGS_PAYMENTS: '/configuracoes/pagamentos',
   SETTINGS_REWARDS: '/configuracoes/recompensas',
-  FAVORITES: '/favoritos',
+  FAVORITES: '/favoritos/anamnesis',
 } as const;
