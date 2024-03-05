@@ -1,1 +1,0 @@
-export { SettingsAnamnesis } from './SettingsAnamnesis';

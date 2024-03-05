@@ -1,1 +1,0 @@
-export { ModalCreateAnamnesisTemplate } from './ModalCreateAnamnesisTemplate';

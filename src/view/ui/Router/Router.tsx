@@ -34,9 +34,6 @@ const { Login } = lazyLoad(() => import('@godiet-pages/Login'));
 const { LandingPage } = lazyLoad(() => import('@godiet-pages/LandingPage'));
 const { Register } = lazyLoad(() => import('@godiet-pages/Register'));
 const { Settings } = lazyLoad(() => import('@godiet-pages/Settings'));
-const { SettingsAnamnesis } = lazyLoad(
-  () => import('@godiet-pages/SettingsAnamnesis')
-);
 
 const { SettingsLayout } = lazyLoad(
   () => import('@godiet-layouts/SettingsLayout')
@@ -98,10 +95,7 @@ export function Router() {
                   path={ROUTES.SETTINGS_REWARDS}
                   element={<SettingsRewards />}
                 />
-                <Route
-                  path={ROUTES.SETTINGS_ANAMNESIS}
-                  element={<SettingsAnamnesis />}
-                />
+
                 <Route
                   path={ROUTES.SETTINGS_PAYMENTS}
                   element={<div>Pagamentos</div>}
