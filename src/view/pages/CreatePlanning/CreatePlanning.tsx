@@ -1,5 +1,3 @@
-import { useCallback, useState } from 'react';
-
 import { Button } from '@godiet-ui/Button';
 import { Input } from '@godiet-ui/Input';
 
@@ -8,16 +6,9 @@ import { PlusIcon } from '@radix-ui/react-icons';
 import { FormProvider } from 'react-hook-form';
 
 import { CreateMeal } from './components/CreateMeal';
-import { AddFoodModal } from './components/modals/AddFoodModal';
 import { useCreatePlanningHook } from './CreatePlanning.hook';
 
 export function CreatePlanning() {
-  const [addFoodModalOpen, setAddFoodModalOpen] = useState(false);
-
-  const toggleAddFoodModal = useCallback(() => {
-    setAddFoodModalOpen((prevState) => !prevState);
-  }, []);
-
   const {
     control,
     methods,
@@ -59,12 +50,7 @@ export function CreatePlanning() {
                   key={`meal-form-${meal.id}`}
                   mealIndex={index}
                   onRemoveMeal={() => handleRemoveMeal(index)}
-                >
-                  <Button onClick={toggleAddFoodModal}>
-                    Adicionar alimento
-                  </Button>
-                  <Button>Adicionar observações</Button>
-                </CreateMeal>
+                />
               ))}
             </div>
             <Button onClick={handleAddNewMeal}>
@@ -76,11 +62,6 @@ export function CreatePlanning() {
               Criar plano alimentar
             </Button>
           </div>
-
-          <AddFoodModal
-            onClose={toggleAddFoodModal}
-            isOpen={addFoodModalOpen}
-          />
         </div>
       </form>
     </FormProvider>
