@@ -13,7 +13,13 @@ export interface AddFoodModalProps {
 export function AddFoodModal(props: AddFoodModalProps) {
   const { isOpen, onClose } = props;
 
-  const { handleSubmit } = useAddFoodModalHook(props);
+  const { foodOptions, isFetchingFoods, handleSubmit } =
+    useAddFoodModalHook(props);
+
+  // TODO- ADICIONAR ITENS QUANDO ESTIVER PESQUISANDO PELO ALIMENTO
+  // - Medida caseira usual
+  // - Porção (quantas gramas tem)
+  // - Referência (tabela TACO)
 
   return (
     <Modal.Root isOpen={isOpen} onClose={onClose}>
@@ -25,17 +31,9 @@ export function AddFoodModal(props: AddFoodModalProps) {
       </Modal.Header>
 
       <SelectAutoComplete
+        isLoading={isFetchingFoods}
         placeholder="Selecione um alimento"
-        options={[
-          {
-            label: 'Arroz',
-            value: 'Arroz',
-          },
-          {
-            label: 'Feijão',
-            value: 'Feijão',
-          },
-        ]}
+        options={foodOptions}
       />
       <Input name="quantity" placeholder="Quantidade do alimento" />
 

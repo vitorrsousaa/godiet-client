@@ -1,6 +1,6 @@
 import { QUERY_CACHE_KEYS } from '@godiet-config';
 import { TFood } from '@godiet-entities';
-import { useQueries, useQueryClient } from '@godiet-query';
+import { useQueries, useQuery, useQueryClient } from '@godiet-query';
 import { foodServices } from '@godiet-services/foods';
 
 interface TPrefetchFoodParams {
@@ -143,5 +143,17 @@ export function useGetAllFoodByCategories(
           portion: data[index].portion,
         };
       }) || [],
+  };
+}
+
+export function useGetAllFoods() {
+  const { data, isFetching, isPending } = useQuery({
+    queryKey: [QUERY_CACHE_KEYS.FOODS],
+    queryFn: () => foodServices.getAll({}),
+  });
+
+  return {
+    foods: data ?? [],
+    isFetchingFoods: isFetching || isPending,
   };
 }
