@@ -4,11 +4,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import * as z from 'zod';
 
+export const CreateMealFoodSchema = z.object({
+  name: z.string(),
+  id: z.string().uuid(),
+  qty: z.number().min(1),
+  measure: z.string().min(1),
+});
+
 export const CreateMealSchema = z.object({
   name: z.string().min(1, 'O nome da refeição é obrigatório'),
   time: z.string().refine((value) => /^([01]\d|2[0-3]):[0-5]\d$/.test(value), {
     message: 'Insira um formato de hora válido (HH:mm).',
   }),
+  mealFoods: z.array(CreateMealFoodSchema),
 });
 
 export const CreatePlanningMealSchema = z.object({
@@ -28,6 +36,7 @@ export function useCreatePlanningHook() {
         {
           name: '',
           time: '',
+          mealFoods: [],
         },
       ],
     },
@@ -35,7 +44,7 @@ export function useCreatePlanningHook() {
 
   const {
     handleSubmit: hookFormSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
     control,
     register,
   } = methods;
@@ -59,6 +68,7 @@ export function useCreatePlanningHook() {
     appendMeals({
       name: '',
       time: '',
+      mealFoods: [],
     });
   }, [appendMeals]);
 
