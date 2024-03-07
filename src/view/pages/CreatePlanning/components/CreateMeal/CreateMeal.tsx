@@ -1,5 +1,6 @@
 import { Button } from '@godiet-ui/Button';
 import { Card } from '@godiet-ui/Card';
+import { DangerModal } from '@godiet-ui/DangerModal';
 import { Input } from '@godiet-ui/Input';
 import { Separator } from '@godiet-ui/Separator';
 import {
@@ -25,8 +26,16 @@ export interface CreateMealProps {
 export function CreateMeal(props: CreateMealProps) {
   const { mealIndex, onRemoveMeal } = props;
 
-  const { modalAddFoodIsOpen, foodsByMeal, toggleModalAddFoodOpen, register } =
-    useCreateMealHook(props);
+  const {
+    modalAddFoodIsOpen,
+    foodsByMeal,
+    modalRemoveFoodIsOpen,
+    handleRemoveMealFood,
+    handleOpenModalRemoveFood,
+    handleCloseModalRemoveFood,
+    toggleModalAddFoodOpen,
+    register,
+  } = useCreateMealHook(props);
 
   return (
     <Card.Root className="text-left">
@@ -91,11 +100,11 @@ export function CreateMeal(props: CreateMealProps) {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {foodsByMeal.map((foods) => {
+              {foodsByMeal.map((foods, index) => {
                 const { carb, energy, fat, id, name, prot, qty } = foods;
 
                 return (
-                  <TableRow key={id}>
+                  <TableRow key={`mealfood-${id}-${index}`}>
                     <TableCell>{name}</TableCell>
                     <TableCell className="hidden min-[430px]:table-cell">
                       {qty}
@@ -115,6 +124,7 @@ export function CreateMeal(props: CreateMealProps) {
                         <Button
                           variant={'outline'}
                           className="h-6 px-1 transition-colors hover:bg-red-400 "
+                          onClick={() => handleOpenModalRemoveFood(index)}
                         >
                           <TrashIcon />
                         </Button>
@@ -133,6 +143,14 @@ export function CreateMeal(props: CreateMealProps) {
           </div>
         )}
       </Card.Footer>
+
+      <DangerModal
+        isOpen={modalRemoveFoodIsOpen}
+        onClose={handleCloseModalRemoveFood}
+        onConfirm={handleRemoveMealFood}
+        description="Tem certeza que você deseja remover este alimento ?"
+        title="Esta ação não pode ser desfeita"
+      />
 
       <AddFoodModal
         onClose={toggleModalAddFoodOpen}

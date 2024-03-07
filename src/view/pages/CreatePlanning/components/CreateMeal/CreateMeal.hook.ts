@@ -1,4 +1,4 @@
-import { useMemo, useReducer } from 'react';
+import { useCallback, useMemo, useReducer, useState } from 'react';
 
 import { TCreatePlanningMealDTO } from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
 
@@ -24,10 +24,15 @@ export function useCreateMealHook(props: CreateMealProps) {
     (state) => !state,
     false
   );
+  const [modalRemoveFoodIsOpen, setModalRemoveFoodIsOpen] = useState(false);
+
+  const [selectedFoodIndex, setSelectedFoodIndex] = useState<number | null>(
+    null
+  );
 
   const { register, control } = useFormContext<TCreatePlanningMealDTO>();
 
-  const { fields } = useFieldArray({
+  const { fields, remove } = useFieldArray({
     control,
     name: `meals.${mealIndex}.mealFoods`,
   });
@@ -36,6 +41,25 @@ export function useCreateMealHook(props: CreateMealProps) {
     control,
     name: `meals.${mealIndex}`,
   });
+
+  const handleOpenModalRemoveFood = useCallback((foodIndex: number) => {
+    setSelectedFoodIndex(foodIndex);
+    setModalRemoveFoodIsOpen(true);
+  }, []);
+
+  const handleCloseModalRemoveFood = useCallback(() => {
+    setSelectedFoodIndex(null);
+    setModalRemoveFoodIsOpen(false);
+  }, []);
+
+  const handleRemoveMealFood = useCallback(() => {
+    if (selectedFoodIndex === null) {
+      return;
+    }
+    remove(selectedFoodIndex);
+
+    handleCloseModalRemoveFood();
+  }, [handleCloseModalRemoveFood, remove, selectedFoodIndex]);
 
   const foodsByMeal = useMemo<FoodsByMeal[]>(() => {
     const initialFoodsByMeal: FoodsByMeal[] = [];
@@ -56,5 +80,14 @@ export function useCreateMealHook(props: CreateMealProps) {
   }, [watchMeal.mealFoods]);
   console.log(fields);
 
-  return { modalAddFoodIsOpen, foodsByMeal, toggleModalAddFoodOpen, register };
+  return {
+    modalAddFoodIsOpen,
+    modalRemoveFoodIsOpen,
+    foodsByMeal,
+    toggleModalAddFoodOpen,
+    handleOpenModalRemoveFood,
+    handleCloseModalRemoveFood,
+    handleRemoveMealFood,
+    register,
+  };
 }
