@@ -55,8 +55,12 @@ export function useAddFoodModalHook(props: AddFoodModalProps) {
   }, [onClose, reset]);
 
   const handleInternalFormSubmit = hookFormSubmit((data) => {
+    const selectedFood = foods.find((food) => food.id === data.id);
+
+    if (!selectedFood) return;
+
     append({
-      name: 'comidinha',
+      name: selectedFood.name,
       measure: data.measure,
       qty: data.qty,
       id: data.id,
