@@ -2,6 +2,14 @@ import { Button } from '@godiet-ui/Button';
 import { Card } from '@godiet-ui/Card';
 import { Input } from '@godiet-ui/Input';
 import { Separator } from '@godiet-ui/Separator';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@godiet-ui/Table';
 
 import { TrashIcon } from '@radix-ui/react-icons';
 
@@ -17,7 +25,7 @@ export interface CreateMealProps {
 export function CreateMeal(props: CreateMealProps) {
   const { mealIndex, onRemoveMeal } = props;
 
-  const { modalAddFoodIsOpen, toggleModalAddFoodOpen, register } =
+  const { modalAddFoodIsOpen, foodsByMeal, toggleModalAddFoodOpen, register } =
     useCreateMealHook(props);
 
   return (
@@ -53,7 +61,7 @@ export function CreateMeal(props: CreateMealProps) {
             />
           </div>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-start gap-4 min-[430px]:flex-row min-[430px]:items-center">
           <Button onClick={toggleModalAddFoodOpen}>Adicionar alimento</Button>
           <Button>Adicionar observações</Button>
         </div>
@@ -61,13 +69,75 @@ export function CreateMeal(props: CreateMealProps) {
         <Separator />
       </Card.Content>
 
-      <Card.Footer>
-        <div>informações sobre os alimentos</div>
+      <Card.Footer className="flex flex-col">
+        <h1 className="text-md mt-4 font-semibold text-muted-foreground">
+          Alimentos selecionados
+        </h1>
+        {foodsByMeal.length > 0 ? (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="">Alimento</TableHead>
+                <TableHead className="hidden min-[430px]:table-cell">
+                  Quantidade
+                </TableHead>
+                <TableHead className="hidden sm:table-cell">Prot</TableHead>
+                <TableHead className="hidden sm:table-cell">Carb</TableHead>
+                <TableHead className="hidden sm:table-cell">Gord</TableHead>
+                <TableHead>Cal</TableHead>
+                <TableHead className="flex  items-center justify-center">
+                  Ações
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {foodsByMeal.map((foods) => {
+                const { carb, energy, fat, id, name, prot, qty } = foods;
+
+                return (
+                  <TableRow key={id}>
+                    <TableCell>{name}</TableCell>
+                    <TableCell className="hidden min-[430px]:table-cell">
+                      {qty}
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell">
+                      {prot} (g)
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell">
+                      {carb} (g)
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell">
+                      {fat} (g)
+                    </TableCell>
+                    <TableCell>{energy} Kcal</TableCell>
+                    <TableCell>
+                      <span className="flex w-full flex-row items-center justify-center">
+                        <Button
+                          variant={'outline'}
+                          className="h-6 px-1 transition-colors hover:bg-red-400 "
+                        >
+                          <TrashIcon />
+                        </Button>
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        ) : (
+          <div>
+            <p className="text-sm">
+              Você não adicionou alimentos para esta refeição.
+            </p>
+          </div>
+        )}
       </Card.Footer>
 
       <AddFoodModal
         onClose={toggleModalAddFoodOpen}
         isOpen={modalAddFoodIsOpen}
+        mealIndex={mealIndex}
       />
     </Card.Root>
   );
