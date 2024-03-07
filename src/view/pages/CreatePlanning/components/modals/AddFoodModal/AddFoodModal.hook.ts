@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { useGetAllFoods } from '@godiet-hooks/foods';
 import { TCreatePlanningMealDTO } from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
@@ -26,6 +26,7 @@ export function useAddFoodModalHook(props: AddFoodModalProps) {
   const {
     handleSubmit: hookFormSubmit,
     register,
+    reset,
     formState: { errors, isValid: internalFormIsValid },
     control: internalControl,
   } = useForm<TCreateMealDTO>({
@@ -48,6 +49,11 @@ export function useAddFoodModalHook(props: AddFoodModalProps) {
   });
   //External form
 
+  const handleOnCloseModal = useCallback(() => {
+    onClose();
+    reset();
+  }, [onClose, reset]);
+
   const handleInternalFormSubmit = hookFormSubmit((data) => {
     append({
       name: 'comidinha',
@@ -56,7 +62,7 @@ export function useAddFoodModalHook(props: AddFoodModalProps) {
       id: data.id,
     });
 
-    onClose();
+    handleOnCloseModal();
   });
 
   const foodOptions = useMemo(
@@ -72,5 +78,6 @@ export function useAddFoodModalHook(props: AddFoodModalProps) {
     internalFormIsValid,
     register,
     handleInternalFormSubmit,
+    handleOnCloseModal,
   };
 }

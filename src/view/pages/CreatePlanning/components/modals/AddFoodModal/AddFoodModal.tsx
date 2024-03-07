@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Button } from '@godiet-ui/Button';
 import { Input } from '@godiet-ui/Input';
 import { Modal } from '@godiet-ui/Modal';
@@ -25,7 +23,7 @@ export interface AddFoodModalProps {
 }
 
 export function AddFoodModal(props: AddFoodModalProps) {
-  const { isOpen, onClose } = props;
+  const { isOpen } = props;
 
   const {
     foodOptions,
@@ -33,6 +31,7 @@ export function AddFoodModal(props: AddFoodModalProps) {
     internalControl,
     internalFormIsValid,
     handleInternalFormSubmit,
+    handleOnCloseModal,
   } = useAddFoodModalHook(props);
 
   // TODO- ADICIONAR ITENS QUANDO ESTIVER PESQUISANDO PELO ALIMENTO
@@ -41,7 +40,11 @@ export function AddFoodModal(props: AddFoodModalProps) {
   // - Referência (tabela TACO)
 
   return (
-    <Modal.Root isOpen={isOpen} onClose={onClose} className="max-w-[740px]">
+    <Modal.Root
+      isOpen={isOpen}
+      onClose={handleOnCloseModal}
+      className="max-w-[740px]"
+    >
       <Modal.Header>
         <Modal.Title>Adicionando um novo alimento</Modal.Title>
         <Modal.Description>
@@ -122,7 +125,7 @@ export function AddFoodModal(props: AddFoodModalProps) {
       )}
 
       <Modal.Footer>
-        <Button onClick={onClose} variant={'destructive'}>
+        <Button onClick={handleOnCloseModal} variant={'destructive'}>
           Cancelar
         </Button>
         <Button
