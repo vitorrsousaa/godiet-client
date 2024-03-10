@@ -20,7 +20,7 @@ export function usePrefetchFoods() {
         categoryId && categoryId,
         portionCacheKey,
       ],
-      queryFn: async () => foodServices.getAll({ categoryId, portion }),
+      queryFn: async () => foodServices.getAll({ categoryId }),
     });
   };
 }
@@ -124,7 +124,6 @@ export function useGetAllFoodByCategories(
       queryFn: async () =>
         foodServices.getAll({
           categoryId: category.categoryId,
-          portion: category.portion,
         }),
     })),
   });
