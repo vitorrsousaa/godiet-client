@@ -12,9 +12,10 @@ import {
   TableRow,
 } from '@godiet-ui/Table';
 
-import { TrashIcon } from '@radix-ui/react-icons';
+import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
 
 import { AddFoodModal } from '../modals/AddFoodModal';
+import { EditFoodModal } from '../modals/EditFoodModal';
 
 import { useCreateMealHook } from './CreateMeal.hook';
 
@@ -30,6 +31,11 @@ export function CreateMeal(props: CreateMealProps) {
     modalAddFoodIsOpen,
     foodsByMeal,
     modalRemoveFoodIsOpen,
+    modalEditFoodIsOpen,
+    selectedFoodToEdit,
+    generateHashKey,
+    handleCloseModalEditFood,
+    handleOpenModalEditFood,
     handleRemoveMealFood,
     handleOpenModalRemoveFood,
     handleCloseModalRemoveFood,
@@ -120,13 +126,20 @@ export function CreateMeal(props: CreateMealProps) {
                     </TableCell>
                     <TableCell>{energy} Kcal</TableCell>
                     <TableCell>
-                      <span className="flex w-full flex-row items-center justify-center">
+                      <span className="flex w-full flex-row items-center justify-center gap-1">
                         <Button
                           variant={'outline'}
                           className="h-6 px-1 transition-colors hover:bg-red-400 "
                           onClick={() => handleOpenModalRemoveFood(index)}
                         >
                           <TrashIcon />
+                        </Button>
+                        <Button
+                          variant={'outline'}
+                          className="h-6 px-1 transition-colors hover:bg-gray-300 "
+                          onClick={() => handleOpenModalEditFood(index)}
+                        >
+                          <Pencil1Icon />
                         </Button>
                       </span>
                     </TableCell>
@@ -143,6 +156,14 @@ export function CreateMeal(props: CreateMealProps) {
           </div>
         )}
       </Card.Footer>
+
+      <EditFoodModal
+        key={generateHashKey}
+        isOpen={modalEditFoodIsOpen}
+        onClose={handleCloseModalEditFood}
+        mealIndex={0}
+        initialValues={selectedFoodToEdit!}
+      />
 
       <DangerModal
         isOpen={modalRemoveFoodIsOpen}

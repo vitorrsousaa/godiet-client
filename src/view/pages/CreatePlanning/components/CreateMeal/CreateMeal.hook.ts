@@ -24,15 +24,26 @@ export function useCreateMealHook(props: CreateMealProps) {
     (state) => !state,
     false
   );
+  const [modalEditFoodIsOpen, toggleModalEditFoodOpen] = useReducer(
+    (state) => !state,
+    false
+  );
   const [modalRemoveFoodIsOpen, setModalRemoveFoodIsOpen] = useState(false);
 
   const [selectedFoodIndex, setSelectedFoodIndex] = useState<number | null>(
     null
   );
 
+  const [selectedFoodToEdit, setSelectedFoodToEdit] = useState<{
+    id: string;
+    measure: string;
+    qty: number;
+    mealFoodIndex: number;
+  } | null>(null);
+
   const { register, control } = useFormContext<TCreatePlanningMealDTO>();
 
-  const { fields, remove } = useFieldArray({
+  const { remove } = useFieldArray({
     control,
     name: `meals.${mealIndex}.mealFoods`,
   });
@@ -41,6 +52,52 @@ export function useCreateMealHook(props: CreateMealProps) {
     control,
     name: `meals.${mealIndex}`,
   });
+
+  const foodsByMeal = useMemo<FoodsByMeal[]>(() => {
+    const initialFoodsByMeal: FoodsByMeal[] = [];
+    watchMeal.mealFoods.forEach((food) => {
+      initialFoodsByMeal.push({
+        id: food.id,
+        measure: food.measure,
+        qty: food.qty,
+        prot: 0.6 * 20,
+        fat: 0.1 * 20,
+        carb: 7 * 10,
+        energy: 120,
+        name: food.name,
+      });
+    });
+
+    return initialFoodsByMeal;
+  }, [watchMeal.mealFoods]);
+
+  const generateHashKey = useMemo(() => {
+    if (!selectedFoodToEdit) return 'food-to-edit';
+
+    return `food-to-edit-${selectedFoodToEdit.id}-${selectedFoodToEdit.measure}-${selectedFoodToEdit.qty}-${selectedFoodToEdit.mealFoodIndex}`;
+  }, [selectedFoodToEdit]);
+
+  const handleOpenModalEditFood = useCallback(
+    (foodIndex: number) => {
+      const selectedFood = foodsByMeal[foodIndex];
+
+      if (!selectedFood) return;
+
+      setSelectedFoodToEdit({
+        id: selectedFood.id,
+        measure: selectedFood.measure,
+        qty: selectedFood.qty,
+        mealFoodIndex: foodIndex,
+      });
+      toggleModalEditFoodOpen();
+    },
+    [foodsByMeal]
+  );
+
+  const handleCloseModalEditFood = useCallback(() => {
+    setSelectedFoodToEdit(null);
+    toggleModalEditFoodOpen();
+  }, []);
 
   const handleOpenModalRemoveFood = useCallback((foodIndex: number) => {
     setSelectedFoodIndex(foodIndex);
@@ -61,29 +118,15 @@ export function useCreateMealHook(props: CreateMealProps) {
     handleCloseModalRemoveFood();
   }, [handleCloseModalRemoveFood, remove, selectedFoodIndex]);
 
-  const foodsByMeal = useMemo<FoodsByMeal[]>(() => {
-    const initialFoodsByMeal: FoodsByMeal[] = [];
-    watchMeal.mealFoods.forEach((food) => {
-      initialFoodsByMeal.push({
-        id: food.id,
-        measure: food.measure,
-        qty: food.qty,
-        prot: 0.6 * 20,
-        fat: 0.1 * 20,
-        carb: 7 * 10,
-        energy: 120,
-        name: food.name,
-      });
-    });
-
-    return initialFoodsByMeal;
-  }, [watchMeal.mealFoods]);
-  console.log(fields);
-
   return {
     modalAddFoodIsOpen,
     modalRemoveFoodIsOpen,
     foodsByMeal,
+    modalEditFoodIsOpen,
+    selectedFoodToEdit,
+    generateHashKey,
+    handleCloseModalEditFood,
+    handleOpenModalEditFood,
     toggleModalAddFoodOpen,
     handleOpenModalRemoveFood,
     handleCloseModalRemoveFood,
