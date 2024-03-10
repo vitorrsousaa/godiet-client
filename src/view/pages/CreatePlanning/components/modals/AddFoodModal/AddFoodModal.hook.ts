@@ -4,7 +4,12 @@ import { useGetAllFoods } from '@godiet-hooks/foods';
 import { TCreatePlanningMealDTO } from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFieldArray, useForm, useFormContext } from 'react-hook-form';
+import {
+  useFieldArray,
+  useForm,
+  useFormContext,
+  useWatch,
+} from 'react-hook-form';
 import * as z from 'zod';
 
 import { AddFoodModalProps } from './AddFoodModal';
@@ -37,6 +42,22 @@ export function useAddFoodModalHook(props: AddFoodModalProps) {
       qty: 1,
     },
   });
+
+  const watchFood = useWatch({
+    control: internalControl,
+  });
+
+  const measureOptions = useMemo(() => {
+    if (!watchFood) return [];
+
+    if (!watchFood.id) return [];
+
+    const selectedFood = foods.find((food) => food.id === watchFood.id);
+
+    if (!selectedFood) return [];
+
+    return selectedFood.measures;
+  }, [foods, watchFood]);
 
   // Internal Form
 
@@ -80,6 +101,7 @@ export function useAddFoodModalHook(props: AddFoodModalProps) {
     errors,
     internalControl,
     internalFormIsValid,
+    measureOptions,
     register,
     handleInternalFormSubmit,
     handleOnCloseModal,

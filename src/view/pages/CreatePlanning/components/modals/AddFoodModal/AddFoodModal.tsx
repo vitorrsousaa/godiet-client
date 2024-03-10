@@ -30,6 +30,7 @@ export function AddFoodModal(props: AddFoodModalProps) {
     isFetchingFoods,
     internalControl,
     internalFormIsValid,
+    measureOptions,
     handleInternalFormSubmit,
     handleOnCloseModal,
   } = useAddFoodModalHook(props);
@@ -82,8 +83,14 @@ export function AddFoodModal(props: AddFoodModalProps) {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="colher">Colher</SelectItem>
-                      <SelectItem value="colher2">Colher2</SelectItem>
+                      {measureOptions.map((measure, index) => (
+                        <SelectItem
+                          value={measure.name}
+                          key={`measure-${index}-${measure.name}`}
+                        >
+                          {measure.name}
+                        </SelectItem>
+                      ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>
