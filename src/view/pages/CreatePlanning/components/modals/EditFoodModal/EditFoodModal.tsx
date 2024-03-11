@@ -32,7 +32,7 @@ export function EditFoodModal(props: EditFoodModalProps) {
     foodOptions,
     isFetchingFoods,
     internalControl,
-    internalFormIsValid,
+    formIsValid,
     measureOptions,
     handleInternalFormSubmit,
     handleOnCloseModal,
@@ -136,7 +136,7 @@ export function EditFoodModal(props: EditFoodModalProps) {
         </div>
       </form>
 
-      {internalFormIsValid && (
+      {formIsValid && (
         <>
           <Separator />
           <div>Adicionar informações sobre o alimento selecionado</div>
@@ -147,11 +147,7 @@ export function EditFoodModal(props: EditFoodModalProps) {
         <Button onClick={handleOnCloseModal} variant={'destructive'}>
           Cancelar
         </Button>
-        <Button
-          type="submit"
-          form="form-meal-food"
-          disabled={!internalFormIsValid}
-        >
+        <Button type="submit" form="form-meal-food" disabled={!formIsValid}>
           Adicionar
         </Button>
       </Modal.Footer>

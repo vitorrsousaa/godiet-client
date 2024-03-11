@@ -95,12 +95,16 @@ export function useAddFoodModalHook(props: AddFoodModalProps) {
     [foods]
   );
 
+  const formIsValid = useMemo(() => {
+    return Boolean(internalFormIsValid && watchFood?.measure?.name);
+  }, [internalFormIsValid, watchFood?.measure?.name]);
+
   return {
     foodOptions,
     isFetchingFoods,
     errors,
     internalControl,
-    internalFormIsValid,
+    formIsValid,
     measureOptions,
     register,
     handleInternalFormSubmit,
