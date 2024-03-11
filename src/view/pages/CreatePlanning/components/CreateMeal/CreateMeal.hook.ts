@@ -148,7 +148,6 @@ export function useCreateMealHook(props: CreateMealProps) {
   return {
     modalAddFoodIsOpen,
     modalRemoveFoodIsOpen,
-    foodsByMeal,
     modalEditFoodIsOpen,
     selectedFoodToEdit,
     generateHashKey,

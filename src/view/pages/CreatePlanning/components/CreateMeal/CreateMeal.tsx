@@ -3,19 +3,12 @@ import { Card } from '@godiet-ui/Card';
 import { DangerModal } from '@godiet-ui/DangerModal';
 import { Input } from '@godiet-ui/Input';
 import { Separator } from '@godiet-ui/Separator';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@godiet-ui/Table';
 
-import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
+import { TrashIcon } from '@radix-ui/react-icons';
 
 import { AddFoodModal } from '../modals/AddFoodModal';
 import { EditFoodModal } from '../modals/EditFoodModal';
+import { TableInfo } from '../TableInfo';
 
 import { useCreateMealHook } from './CreateMeal.hook';
 
@@ -29,7 +22,6 @@ export function CreateMeal(props: CreateMealProps) {
 
   const {
     modalAddFoodIsOpen,
-    foodsByMeal,
     modalRemoveFoodIsOpen,
     modalEditFoodIsOpen,
     selectedFoodToEdit,
@@ -89,79 +81,11 @@ export function CreateMeal(props: CreateMealProps) {
         <h1 className="text-md mt-4 font-semibold text-muted-foreground">
           Alimentos selecionados
         </h1>
-        {foodsByMeal.length > 0 ? (
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="">Alimento</TableHead>
-                <TableHead className="hidden min-[430px]:table-cell">
-                  Quantidade
-                </TableHead>
-                <TableHead className="hidden sm:table-cell">Prot</TableHead>
-                <TableHead className="hidden sm:table-cell">Carb</TableHead>
-                <TableHead className="hidden sm:table-cell">Gord</TableHead>
-                <TableHead>Cal</TableHead>
-                <TableHead className="flex  items-center justify-center">
-                  Ações
-                </TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {foodsByMeal.map((foods, index) => {
-                const { carb, energy, fat, id, name, prot, qty, measure } =
-                  foods;
-
-                return (
-                  <TableRow key={`mealfood-${id}-${index}`}>
-                    <TableCell>{name}</TableCell>
-                    <TableCell className="hidden min-[430px]:table-cell">
-                      {qty} {measure.name}
-                    </TableCell>
-                    <TableCell className="hidden sm:table-cell">
-                      {prot} (g)
-                    </TableCell>
-                    <TableCell className="hidden sm:table-cell">
-                      {carb} (g)
-                    </TableCell>
-                    <TableCell className="hidden sm:table-cell">
-                      {fat} (g)
-                    </TableCell>
-                    <TableCell>{energy} Kcal</TableCell>
-                    <TableCell>
-                      <span className="flex w-full flex-row items-center justify-center gap-1">
-                        <Button
-                          variant={'outline'}
-                          className="h-6 px-1 transition-colors hover:bg-red-400 "
-                          onClick={() => handleOpenModalRemoveFood(index)}
-                        >
-                          <TrashIcon />
-                        </Button>
-                        <Button
-                          variant={'outline'}
-                          className="h-6 px-1 transition-colors hover:bg-gray-300 "
-                          onClick={() => {
-                            handleOpenModalEditFood({
-                              mealFoodIndex: index,
-                              mealIndex,
-                            });
-                          }}
-                        >
-                          <Pencil1Icon />
-                        </Button>
-                      </span>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
-        ) : (
-          <div>
-            <p className="text-sm">
-              Você não adicionou alimentos para esta refeição.
-            </p>
-          </div>
-        )}
+        <TableInfo
+          mealIndex={mealIndex}
+          onOpenModalRemove={handleOpenModalRemoveFood}
+          onOpenModalEdit={handleOpenModalEditFood}
+        />
       </Card.Footer>
 
       <EditFoodModal
