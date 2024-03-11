@@ -77,7 +77,16 @@ export function AddFoodModal(props: AddFoodModalProps) {
               control={internalControl}
               name="measure"
               render={({ field: { value, onChange } }) => (
-                <Select value={value} onValueChange={onChange}>
+                <Select
+                  value={value.name}
+                  onValueChange={(value) => {
+                    const selectedMeasure = measureOptions.find(
+                      (measure) => measure.name === value
+                    );
+
+                    onChange(selectedMeasure);
+                  }}
+                >
                   <SelectTrigger className="h-8  data-[placeholder]:text-muted-foreground sm:h-[3.25rem] ">
                     <SelectValue placeholder="Selecione a unidade de medida" />
                   </SelectTrigger>

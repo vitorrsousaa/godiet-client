@@ -4,18 +4,26 @@ import { useGetAllFoods } from '@godiet-hooks/foods';
 import { TCreatePlanningMealDTO } from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useFieldArray, useForm, useFormContext } from 'react-hook-form';
+import {
+  useFieldArray,
+  useForm,
+  useFormContext,
+  useWatch,
+} from 'react-hook-form';
 import * as z from 'zod';
 
 import { EditFoodModalProps } from './EditFoodModal';
 
 const CreateMealFoodSchema = z.object({
   id: z.string().uuid(),
-  measure: z.string().min(1),
+  measure: z.object({
+    name: z.string(),
+    qty: z.number(),
+  }),
   qty: z.number().nonnegative().min(1),
 });
 
-type TCreateMealDTO = z.infer<typeof CreateMealFoodSchema>;
+export type TCreateMealDTO = z.infer<typeof CreateMealFoodSchema>;
 
 export function useEditFoodModalHook(props: EditFoodModalProps) {
   const { mealIndex, initialValues, onClose } = props;
@@ -37,6 +45,22 @@ export function useEditFoodModalHook(props: EditFoodModalProps) {
       qty: initialValues?.qty || 1,
     },
   });
+
+  const watchFood = useWatch({
+    control: internalControl,
+  });
+
+  const measureOptions = useMemo(() => {
+    if (!watchFood) return [];
+
+    if (!watchFood.id) return [];
+
+    const selectedFood = foods.find((food) => food.id === watchFood.id);
+
+    if (!selectedFood) return [];
+
+    return selectedFood.measures;
+  }, [foods, watchFood]);
 
   // Internal Form
 
@@ -80,6 +104,7 @@ export function useEditFoodModalHook(props: EditFoodModalProps) {
     errors,
     internalControl,
     internalFormIsValid,
+    measureOptions,
     register,
     handleInternalFormSubmit,
     handleOnCloseModal,

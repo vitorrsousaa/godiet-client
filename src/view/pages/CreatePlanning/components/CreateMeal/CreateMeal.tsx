@@ -107,13 +107,14 @@ export function CreateMeal(props: CreateMealProps) {
             </TableHeader>
             <TableBody>
               {foodsByMeal.map((foods, index) => {
-                const { carb, energy, fat, id, name, prot, qty } = foods;
+                const { carb, energy, fat, id, name, prot, qty, measure } =
+                  foods;
 
                 return (
                   <TableRow key={`mealfood-${id}-${index}`}>
                     <TableCell>{name}</TableCell>
                     <TableCell className="hidden min-[430px]:table-cell">
-                      {qty}
+                      {qty} {measure.name}
                     </TableCell>
                     <TableCell className="hidden sm:table-cell">
                       {prot} (g)

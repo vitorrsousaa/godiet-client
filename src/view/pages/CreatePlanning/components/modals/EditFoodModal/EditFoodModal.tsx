@@ -14,18 +14,15 @@ import { Separator } from '@godiet-ui/Separator';
 
 import { Controller } from 'react-hook-form';
 
-import { useEditFoodModalHook } from './EditFoodModal.hook';
+import { TCreateMealDTO, useEditFoodModalHook } from './EditFoodModal.hook';
+
+type InitialValues = TCreateMealDTO & { mealFoodIndex: number };
 
 export interface EditFoodModalProps {
   isOpen: boolean;
   onClose: () => void;
   mealIndex: number;
-  initialValues: {
-    id: string;
-    measure: string;
-    qty: number;
-    mealFoodIndex: number;
-  };
+  initialValues: InitialValues;
 }
 
 export function EditFoodModal(props: EditFoodModalProps) {
@@ -36,6 +33,7 @@ export function EditFoodModal(props: EditFoodModalProps) {
     isFetchingFoods,
     internalControl,
     internalFormIsValid,
+    measureOptions,
     handleInternalFormSubmit,
     handleOnCloseModal,
   } = useEditFoodModalHook(props);
@@ -82,14 +80,29 @@ export function EditFoodModal(props: EditFoodModalProps) {
               control={internalControl}
               name="measure"
               render={({ field: { value, onChange } }) => (
-                <Select value={value} onValueChange={onChange}>
+                <Select
+                  value={value.name}
+                  onValueChange={(value) => {
+                    const selectedMeasure = measureOptions.find(
+                      (measure) => measure.name === value
+                    );
+
+                    onChange(selectedMeasure);
+                  }}
+                >
                   <SelectTrigger className="h-8  data-[placeholder]:text-muted-foreground sm:h-[3.25rem] ">
                     <SelectValue placeholder="Selecione a unidade de medida" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      <SelectItem value="colher">Colher</SelectItem>
-                      <SelectItem value="colher2">Colher2</SelectItem>
+                      {measureOptions.map((measure, index) => (
+                        <SelectItem
+                          value={measure.name}
+                          key={`measure-${index}-${measure.name}`}
+                        >
+                          {measure.name}
+                        </SelectItem>
+                      ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>

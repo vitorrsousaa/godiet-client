@@ -8,7 +8,7 @@ import { CreateMealProps } from './CreateMeal';
 
 interface FoodsByMeal {
   id: string;
-  measure: string;
+  measure: { name: string; qty: number };
   qty: number;
   prot: number;
   fat: number;
@@ -36,7 +36,7 @@ export function useCreateMealHook(props: CreateMealProps) {
 
   const [selectedFoodToEdit, setSelectedFoodToEdit] = useState<{
     id: string;
-    measure: string;
+    measure: { name: string; qty: number };
     qty: number;
     mealFoodIndex: number;
   } | null>(null);

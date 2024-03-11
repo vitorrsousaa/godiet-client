@@ -8,7 +8,10 @@ export const CreateMealFoodSchema = z.object({
   name: z.string(),
   id: z.string().uuid(),
   qty: z.number().min(1),
-  measure: z.string().min(1),
+  measure: z.object({
+    name: z.string(),
+    qty: z.number(),
+  }),
 });
 
 export const CreateMealSchema = z.object({

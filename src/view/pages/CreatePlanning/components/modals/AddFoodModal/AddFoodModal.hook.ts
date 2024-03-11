@@ -16,7 +16,7 @@ import { AddFoodModalProps } from './AddFoodModal';
 
 const CreateMealFoodSchema = z.object({
   id: z.string().uuid(),
-  measure: z.string().min(1),
+  measure: z.object({ name: z.string(), qty: z.number() }),
   qty: z.number().nonnegative().min(1),
 });
 
@@ -38,7 +38,7 @@ export function useAddFoodModalHook(props: AddFoodModalProps) {
     resolver: zodResolver(CreateMealFoodSchema),
     defaultValues: {
       id: '',
-      measure: '',
+      measure: { name: '', qty: 0 },
       qty: 1,
     },
   });
