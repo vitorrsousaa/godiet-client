@@ -53,20 +53,20 @@ export function TableInfo(props: TableInfoProps) {
 
               return (
                 <TableRow key={`mealfood-${id}-${index}`}>
-                  <TableCell>{name}</TableCell>
-                  <TableCell className="hidden min-[430px]:table-cell">
+                  <TableCell className="text-[12px]">{name}</TableCell>
+                  <TableCell className="hidden text-[12px] min-[430px]:table-cell">
                     {qty} {measure.name}
                   </TableCell>
-                  <TableCell className="hidden sm:table-cell">
+                  <TableCell className="hidden text-[12px] sm:table-cell">
                     {prot} (g)
                   </TableCell>
-                  <TableCell className="hidden sm:table-cell">
+                  <TableCell className="hidden text-[12px] sm:table-cell">
                     {carb} (g)
                   </TableCell>
-                  <TableCell className="hidden sm:table-cell">
+                  <TableCell className="hidden text-[12px] sm:table-cell">
                     {fat} (g)
                   </TableCell>
-                  <TableCell>{energy} Kcal</TableCell>
+                  <TableCell className="text-[12px]">{energy} Kcal</TableCell>
                   <TableCell>
                     <span className="flex w-full flex-row items-center justify-center gap-1">
                       <Button
