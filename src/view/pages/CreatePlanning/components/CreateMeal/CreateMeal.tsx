@@ -34,6 +34,7 @@ export function CreateMeal(props: CreateMealProps) {
     modalEditFoodIsOpen,
     selectedFoodToEdit,
     generateHashKey,
+    selectedMealIndex,
     handleCloseModalEditFood,
     handleOpenModalEditFood,
     handleRemoveMealFood,
@@ -138,7 +139,12 @@ export function CreateMeal(props: CreateMealProps) {
                         <Button
                           variant={'outline'}
                           className="h-6 px-1 transition-colors hover:bg-gray-300 "
-                          onClick={() => handleOpenModalEditFood(index)}
+                          onClick={() => {
+                            handleOpenModalEditFood({
+                              mealFoodIndex: index,
+                              mealIndex,
+                            });
+                          }}
                         >
                           <Pencil1Icon />
                         </Button>
@@ -162,7 +168,7 @@ export function CreateMeal(props: CreateMealProps) {
         key={generateHashKey}
         isOpen={modalEditFoodIsOpen}
         onClose={handleCloseModalEditFood}
-        mealIndex={0}
+        mealIndex={selectedMealIndex}
         initialValues={selectedFoodToEdit!}
       />
 

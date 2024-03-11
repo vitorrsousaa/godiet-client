@@ -28,6 +28,18 @@ export function useCreateMealHook(props: CreateMealProps) {
     (state) => !state,
     false
   );
+
+  const [selectedMealIndex, toggleSelectedMealIndex] = useReducer(
+    (state: number, index: number) => {
+      if (index > 0) {
+        return index;
+      }
+
+      return state;
+    },
+    0
+  );
+
   const [modalRemoveFoodIsOpen, setModalRemoveFoodIsOpen] = useState(false);
 
   const [selectedFoodIndex, setSelectedFoodIndex] = useState<number | null>(
@@ -74,20 +86,28 @@ export function useCreateMealHook(props: CreateMealProps) {
   const generateHashKey = useMemo(() => {
     if (!selectedFoodToEdit) return 'food-to-edit';
 
-    return `food-to-edit-${selectedFoodToEdit.id}-${selectedFoodToEdit.measure}-${selectedFoodToEdit.qty}-${selectedFoodToEdit.mealFoodIndex}`;
+    return `food-to-edit-${selectedFoodToEdit.id}-${selectedFoodToEdit.measure.name}-${selectedFoodToEdit.qty}-${selectedFoodToEdit.mealFoodIndex}`;
   }, [selectedFoodToEdit]);
 
   const handleOpenModalEditFood = useCallback(
-    (foodIndex: number) => {
-      const selectedFood = foodsByMeal[foodIndex];
+    ({
+      mealFoodIndex,
+      mealIndex,
+    }: {
+      mealFoodIndex: number;
+      mealIndex: number;
+    }) => {
+      const selectedFood = foodsByMeal[mealFoodIndex];
 
       if (!selectedFood) return;
+
+      toggleSelectedMealIndex(mealIndex);
 
       setSelectedFoodToEdit({
         id: selectedFood.id,
         measure: selectedFood.measure,
         qty: selectedFood.qty,
-        mealFoodIndex: foodIndex,
+        mealFoodIndex: mealFoodIndex,
       });
       toggleModalEditFoodOpen();
     },
@@ -125,6 +145,8 @@ export function useCreateMealHook(props: CreateMealProps) {
     modalEditFoodIsOpen,
     selectedFoodToEdit,
     generateHashKey,
+    selectedMealIndex,
+    toggleSelectedMealIndex,
     handleCloseModalEditFood,
     handleOpenModalEditFood,
     toggleModalAddFoodOpen,
