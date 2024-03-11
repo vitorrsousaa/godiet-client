@@ -86,7 +86,14 @@ export function useCreateMealHook(props: CreateMealProps) {
   const generateHashKey = useMemo(() => {
     if (!selectedFoodToEdit) return 'food-to-edit';
 
-    return `food-to-edit-${selectedFoodToEdit.id}-${selectedFoodToEdit.measure.name}-${selectedFoodToEdit.qty}-${selectedFoodToEdit.mealFoodIndex}`;
+    const hashId = selectedFoodToEdit.id;
+    const hashMeasureName = selectedFoodToEdit.measure.name
+      .trim()
+      .replace(' ', '-');
+    const hashQty = selectedFoodToEdit.qty;
+    const hashMealFoodIndex = selectedFoodToEdit.mealFoodIndex;
+
+    return `food-to-edit-${hashId}-${hashMeasureName}-${hashQty}-${hashMealFoodIndex}`;
   }, [selectedFoodToEdit]);
 
   const handleOpenModalEditFood = useCallback(
