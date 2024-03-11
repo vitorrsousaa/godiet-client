@@ -55,19 +55,21 @@ export function useTableInfoHook(props: TableInfoProps) {
       );
 
       const proteinAttribute = proteinAttributeOriginal
-        ? (proteinAttributeOriginal.qty * food.measure.qty) / baseQty
+        ? ((proteinAttributeOriginal.qty * food.measure.qty) / baseQty) *
+          food.qty
         : 0;
 
       const carbAttribute = carbAttributeOriginal
-        ? (carbAttributeOriginal.qty * food.measure.qty) / baseQty
+        ? ((carbAttributeOriginal.qty * food.measure.qty) / baseQty) * food.qty
         : 0;
 
       const fatAttribute = fatAttributeOriginal
-        ? (fatAttributeOriginal.qty * food.measure.qty) / baseQty
+        ? ((fatAttributeOriginal.qty * food.measure.qty) / baseQty) * food.qty
         : 0;
 
       const energyAttribute = energyAttributeOriginal
-        ? (energyAttributeOriginal.qty * food.measure.qty) / baseQty
+        ? ((energyAttributeOriginal.qty * food.measure.qty) / baseQty) *
+          food.qty
         : 0;
 
       initialFoodsByMeal.push({
