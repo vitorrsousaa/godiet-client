@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@godiet-query';
 import { anamnesisTemplateServices } from '@godiet-services/anamnesisTemplate';
 
 export function useGetAllAnamnesisTemplate() {
-  const { data, isLoading, isPending, isError } = useQuery({
+  const { data, isLoading, isPending, isFetching, isError } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.ANAMNESIS_TEMPLATE],
     queryFn: anamnesisTemplateServices.getAll,
   });
@@ -11,7 +11,8 @@ export function useGetAllAnamnesisTemplate() {
   return {
     anamnesisTemplate: data ?? [],
     isErrorAnamnesisTemplate: isError,
-    isFetchingAnamnesisTemplate: isLoading || isPending,
+    isFetchingAnamnesisTemplate: isFetching || isPending,
+    isLoadingAnamnesisTemplate: isLoading,
   };
 }
 

@@ -17,6 +17,7 @@ export function FavoritesAnamnesis() {
     isErrorAnamnesisTemplate,
     isFetchingAnamnesisTemplate,
     modalDeleteAnamnesisTemplateIsOpen,
+    isLoadingAnamnesisTemplate,
     isDeletingAnamnesisTemplate,
     handleOpenModalDeleteAnamnesisTemplate,
     toggleModalDeleteAnamnesisTemplate,
@@ -29,7 +30,12 @@ export function FavoritesAnamnesis() {
       <HeaderSettings
         title="Anamneses"
         extra={
-          <Button onClick={toggleModalCreateAnamnesisTemplate}>Criar</Button>
+          <Button
+            onClick={toggleModalCreateAnamnesisTemplate}
+            isLoading={isFetchingAnamnesisTemplate}
+          >
+            Criar
+          </Button>
         }
       >
         Aqui você pode criar/editar os templates de anamnese que vai utilizar
@@ -38,7 +44,7 @@ export function FavoritesAnamnesis() {
         novos templates ou editar os existentes.
       </HeaderSettings>
       <div className="h-full w-full">
-        {isFetchingAnamnesisTemplate ? (
+        {isLoadingAnamnesisTemplate ? (
           <div className="flex h-full w-full items-center justify-center">
             <Spinner />
           </div>

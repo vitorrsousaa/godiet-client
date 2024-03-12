@@ -14,7 +14,7 @@ export function useFavoritesAnamnesisHook() {
     anamnesisTemplate,
 
     isErrorAnamnesisTemplate,
-
+    isLoadingAnamnesisTemplate,
     isFetchingAnamnesisTemplate,
   } = useGetAllAnamnesisTemplate();
 
@@ -58,7 +58,7 @@ export function useFavoritesAnamnesisHook() {
     anamnesisTemplate,
 
     isErrorAnamnesisTemplate,
-
+    isLoadingAnamnesisTemplate,
     isFetchingAnamnesisTemplate,
 
     modalDeleteAnamnesisTemplateIsOpen,
