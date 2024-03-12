@@ -15,6 +15,7 @@ export function Patients() {
     isCreatePatientModalOpen,
     isDeletePatientModalOpen,
     isFetchingPatients,
+    isDeletingPatient,
     isLoadingPatients,
     toggleModalCreatePatient,
     toggleModalDeletePatient,
@@ -96,6 +97,7 @@ export function Patients() {
         onClose={() => toggleModalDeletePatient(null)}
         title="Deletar um paciente"
         onConfirm={handleDeletePatient}
+        isLoading={isDeletingPatient}
       />
     </div>
   );

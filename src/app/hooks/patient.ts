@@ -78,3 +78,21 @@ export function useUpdatePatient(patientId: string) {
     updatePatient: mutateAsync,
   };
 }
+
+export function useDeletePatient() {
+  const queryClient = useQueryClient();
+
+  const { isPending, mutateAsync: deletePatient } = useMutation({
+    mutationFn: patientServices.delete,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_CACHE_KEYS.PATIENTS],
+      });
+    },
+  });
+
+  return {
+    isDeletingPatient: isPending,
+    deletePatient,
+  };
+}
