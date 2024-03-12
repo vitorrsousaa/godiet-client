@@ -15,7 +15,7 @@ const sideBarItens: SideItem[] = [
       {
         href: ROUTES.FAVORITES,
         icon: <ReaderIcon className="h-4 w-4" />,
-        title: 'Anemneses',
+        title: 'Anamneses',
       },
       {
         href: ROUTES.FAVORITES_FOODS,
