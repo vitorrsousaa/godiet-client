@@ -1,5 +1,6 @@
 import { Button } from '@godiet-ui/Button';
 import { Card } from '@godiet-ui/Card';
+import { DangerModal } from '@godiet-ui/DangerModal';
 import { formatDate } from '@godiet-utils/formatDate';
 
 import { ExternalLinkIcon, TrashIcon } from '@radix-ui/react-icons';
@@ -10,6 +11,11 @@ export function PlanningMeal() {
   const {
     isFetching,
     planningMeals,
+    isDeletingPlanningMeal,
+    isDeletePlanningModalOpen,
+    isFetchingPlanningMeals,
+    toggleModalDeletePlanning,
+    handleDeletePlanningMeal,
     handleNavigateToCreatePlanning,
     handleNavigateToShowPlanning,
   } = usePlanningMealHook();
@@ -18,7 +24,12 @@ export function PlanningMeal() {
     <div className="mb-8 flex flex-col gap-6">
       <section className="flex flex-row items-center justify-between">
         <h1 className="text-lg font-semibold ">Planejamento alimentar</h1>
-        <Button onClick={handleNavigateToCreatePlanning}>Criar novo</Button>
+        <Button
+          onClick={handleNavigateToCreatePlanning}
+          isLoading={isFetchingPlanningMeals}
+        >
+          Criar novo
+        </Button>
       </section>
       {isFetching ? (
         <div>Carregando...</div>
@@ -38,7 +49,13 @@ export function PlanningMeal() {
                       >
                         <ExternalLinkIcon />
                       </Button>
-                      <Button variant={'destructive'} type="button">
+                      <Button
+                        variant={'destructive'}
+                        type="button"
+                        onClick={() =>
+                          toggleModalDeletePlanning(planningMeal.id)
+                        }
+                      >
                         <TrashIcon />
                       </Button>
                     </div>
@@ -65,6 +82,15 @@ export function PlanningMeal() {
           </div>
         </>
       )}
+
+      <DangerModal
+        isOpen={isDeletePlanningModalOpen}
+        description="Atenção, esta ação não pode ser desfeita."
+        onClose={() => toggleModalDeletePlanning(null)}
+        onConfirm={handleDeletePlanningMeal}
+        title="Deletar plano alimentar"
+        isLoading={isDeletingPlanningMeal}
+      />
     </div>
   );
 }
