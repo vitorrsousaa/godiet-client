@@ -11,7 +11,7 @@ export function HeaderSettings(props: HeaderSettingsProps) {
 
   return (
     <>
-      <header className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center lg:gap-12">
+      <header className="flex flex-row items-start justify-between gap-2 sm:flex-row sm:items-center lg:gap-12">
         <div className="flex flex-col">
           <h1 className="text-lg font-medium">{title}</h1>
 

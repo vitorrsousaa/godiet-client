@@ -28,13 +28,16 @@ const { DashboardLayout } = lazyLoad(
   () => import('@godiet-layouts/DashboardLayout')
 );
 
+const { FavoritesLayout } = lazyLoad(
+  () => import('@godiet-layouts/FavoritesLayout')
+);
+const { FavoritesAnamnesis } = lazyLoad(
+  () => import('@godiet-pages/FavoritesAnamnesis')
+);
 const { Login } = lazyLoad(() => import('@godiet-pages/Login'));
 const { LandingPage } = lazyLoad(() => import('@godiet-pages/LandingPage'));
 const { Register } = lazyLoad(() => import('@godiet-pages/Register'));
 const { Settings } = lazyLoad(() => import('@godiet-pages/Settings'));
-const { SettingsAnamnesis } = lazyLoad(
-  () => import('@godiet-pages/SettingsAnamnesis')
-);
 
 const { SettingsLayout } = lazyLoad(
   () => import('@godiet-layouts/SettingsLayout')
@@ -76,6 +79,31 @@ export function Router() {
           <Route element={<AuthGuard isPrivate={true} />}>
             <Route element={<DashboardLayout />}>
               <Route path={ROUTES.DASHBOARD} element={<Dashboard />} />
+
+              <Route path={ROUTES.PATIENTS} element={<Patients />} />
+
+              <Route element={<FavoritesLayout />}>
+                <Route
+                  path={ROUTES.FAVORITES}
+                  element={<FavoritesAnamnesis />}
+                />
+
+                <Route
+                  path={ROUTES.FAVORITES_FOODS}
+                  element={<div>Alimentos</div>}
+                />
+
+                <Route
+                  path={ROUTES.FAVORITES_MEALS}
+                  element={<div>Refeições</div>}
+                />
+
+                <Route
+                  path={ROUTES.FAVORITES_ORIENTATIONS}
+                  element={<div>Orientações</div>}
+                />
+              </Route>
+
               <Route element={<SettingsLayout />}>
                 <Route path={ROUTES.SETTINGS} element={<Settings />} />
                 <Route
@@ -86,10 +114,7 @@ export function Router() {
                   path={ROUTES.SETTINGS_REWARDS}
                   element={<SettingsRewards />}
                 />
-                <Route
-                  path={ROUTES.SETTINGS_ANAMNESIS}
-                  element={<SettingsAnamnesis />}
-                />
+
                 <Route
                   path={ROUTES.SETTINGS_PAYMENTS}
                   element={<div>Pagamentos</div>}
@@ -99,8 +124,6 @@ export function Router() {
                   element={<div>Meu plano</div>}
                 />
               </Route>
-
-              <Route path={ROUTES.PATIENTS} element={<Patients />} />
 
               <Route element={<PatientLayout />}>
                 <Route path={ROUTES.PATIENTS_BY_ID} element={<Patient />} />

@@ -12,9 +12,12 @@ export const ROUTES = {
   PLANNING_MEAL_BY_PATIENT_SHOW: '/pacientes/:id/plano/:planningId',
   REGISTER: '/register',
   SETTINGS: '/configuracoes',
-  SETTINGS_ANAMNESIS: '/configuracoes/anamnesis',
   SETTINGS_MYPLAN: '/configuracoes/meu-plano',
   SETTINGS_NOTIFICATIONS: '/configuracoes/notificacoes',
   SETTINGS_PAYMENTS: '/configuracoes/pagamentos',
   SETTINGS_REWARDS: '/configuracoes/recompensas',
+  FAVORITES: '/favoritos/anamneses',
+  FAVORITES_FOODS: '/favoritos/alimentos',
+  FAVORITES_ORIENTATIONS: '/favoritos/orientacoes',
+  FAVORITES_MEALS: '/favoritos/refeicoes',
 } as const;

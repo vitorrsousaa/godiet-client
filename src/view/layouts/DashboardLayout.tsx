@@ -1,5 +1,6 @@
 import { ROUTES } from '@godiet-config';
 import { useAuth } from '@godiet-hooks/auth';
+import { useNavigate } from '@godiet-hooks/routes';
 import { Avatar } from '@godiet-ui/Avatar';
 import {
   DropdownMenu,
@@ -21,11 +22,13 @@ import {
   ExclamationTriangleIcon,
   ExitIcon,
   GearIcon,
+  StarFilledIcon,
 } from '@radix-ui/react-icons';
 import { Link, Outlet } from 'react-router-dom';
 
 export function DashboardLayout() {
   const { signout, email, name } = useAuth();
+  const { navigate } = useNavigate();
 
   return (
     <section className="h-full">
@@ -89,9 +92,16 @@ export function DashboardLayout() {
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuGroup>
-                    <DropdownMenuItem className="space-x-4 hover:cursor-pointer">
+                    <DropdownMenuItem className="space-x-4 hover:cursor-pointer ">
                       <ExclamationTriangleIcon />
                       <span>Ajuda</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      className="space-x-4 hover:cursor-pointer"
+                      onClick={() => navigate('FAVORITES')}
+                    >
+                      <StarFilledIcon />
+                      <span>Meus favoritos</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       className="space-x-4 hover:cursor-pointer"

@@ -7,12 +7,14 @@ import {
 
 import toast from 'react-hot-toast';
 
-export function useSettingsAnamnesisHook() {
+export function useFavoritesAnamnesisHook() {
   const [anamnesisToDelete, setAnamnesisToDelete] = useState('');
 
   const {
     anamnesisTemplate,
+
     isErrorAnamnesisTemplate,
+
     isFetchingAnamnesisTemplate,
   } = useGetAllAnamnesisTemplate();
 
@@ -31,6 +33,7 @@ export function useSettingsAnamnesisHook() {
 
   const handleOpenModalDeleteAnamnesisTemplate = useCallback((id: string) => {
     setAnamnesisToDelete(id);
+
     toggleModalDeleteAnamnesisTemplate();
   }, []);
 
@@ -40,7 +43,9 @@ export function useSettingsAnamnesisHook() {
 
     try {
       await deleteAnamnesisTemplate(anamnesisToDelete);
+
       toggleModalDeleteAnamnesisTemplate();
+
       toast.success('Anamnese deletada com sucesso');
     } catch {
       toast.error('Erro ao deletar anamnese');
@@ -49,14 +54,23 @@ export function useSettingsAnamnesisHook() {
 
   return {
     modalCreateAnamnesisTemplateIsOpen,
+
     anamnesisTemplate,
+
     isErrorAnamnesisTemplate,
+
     isFetchingAnamnesisTemplate,
+
     modalDeleteAnamnesisTemplateIsOpen,
+
     isDeletingAnamnesisTemplate,
+
     toggleModalDeleteAnamnesisTemplate,
+
     toggleModalCreateAnamnesisTemplate,
+
     handleOpenModalDeleteAnamnesisTemplate,
+
     handleDeleteAnamnesisTemplate,
   };
 }
