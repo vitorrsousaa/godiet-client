@@ -1,11 +1,11 @@
 import { forwardRef } from 'react';
 
 import { CardMeal } from '@godiet-components/CardMeal';
-import { TPlanningMealDetails } from '@godiet-entities';
+import { TPlanningMeal } from '@godiet-entities';
 import { usePatient } from '@godiet-hooks/patient';
 
 interface ExportedPlanningProps {
-  planningMeal: TPlanningMealDetails;
+  planningMeal: TPlanningMeal;
 }
 
 export const ExportedPlanning = forwardRef<
@@ -40,19 +40,16 @@ export const ExportedPlanning = forwardRef<
                         {meal.name}
                       </CardMeal.Header>
                       <CardMeal.Content>
-                        {meal.foods.length > 0 && (
+                        {meal.mealFoods.length > 0 && (
                           <>
-                            <CardMeal.ListHeader className="dark:bg-teal-800" />
+                            <CardMeal.ListHeader />
 
-                            {meal.foods
-                              .filter((food) => food.options.length > 0)
-                              .map((food) => (
-                                <CardMeal.Options
-                                  foods={food}
-                                  key={food.id}
-                                  className="dark:bg-teal-600"
-                                />
-                              ))}
+                            {meal.mealFoods.map((mealFood) => (
+                              <CardMeal.Options
+                                mealFood={mealFood}
+                                key={mealFood.id}
+                              />
+                            ))}
                           </>
                         )}
                       </CardMeal.Content>
