@@ -14,6 +14,7 @@ export function CreatePlanning() {
     methods,
     errors,
     meals,
+    isCreatingPlanningMeal,
     register,
     handleSubmit,
     handleAddNewMeal,
@@ -53,12 +54,19 @@ export function CreatePlanning() {
                 />
               ))}
             </div>
-            <Button onClick={handleAddNewMeal}>
+            <Button
+              onClick={handleAddNewMeal}
+              disabled={isCreatingPlanningMeal}
+            >
               <PlusIcon className="h-6 w-6" />
               Adicionar refeição
             </Button>
             <div>Analise de macronutrientes</div>
-            <Button type="submit" onClick={handleSubmit}>
+            <Button
+              type="submit"
+              onClick={handleSubmit}
+              isLoading={isCreatingPlanningMeal}
+            >
               Criar plano alimentar
             </Button>
           </div>

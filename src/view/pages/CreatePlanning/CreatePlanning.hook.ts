@@ -1,7 +1,12 @@
 import { useCallback } from 'react';
 
+import { usePatient } from '@godiet-hooks/patient';
+import { useCreatePlanningMeal } from '@godiet-hooks/planningMeal';
+import { useNavigate } from '@godiet-hooks/routes';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import * as z from 'zod';
 
 export const CreateMealFoodSchema = z.object({
@@ -32,6 +37,14 @@ export const CreatePlanningMealSchema = z.object({
 export type TCreatePlanningMealDTO = z.infer<typeof CreatePlanningMealSchema>;
 
 export function useCreatePlanningHook() {
+  const { patient } = usePatient();
+
+  const { createPlanningMeal, isCreatingPlanningMeal } = useCreatePlanningMeal(
+    patient?.id || ''
+  );
+
+  const { navigate } = useNavigate();
+
   const methods = useForm<TCreatePlanningMealDTO>({
     resolver: zodResolver(CreatePlanningMealSchema),
     defaultValues: {
@@ -64,7 +77,22 @@ export function useCreatePlanningHook() {
   const watchMeals = useWatch({ control, name: 'meals' });
 
   const handleSubmit = hookFormSubmit(async (data) => {
-    console.log(data);
+    try {
+      await createPlanningMeal({
+        patientId: patient?.id || '',
+        planningMeal: data,
+      });
+
+      toast.success('Plano alimentar criado com sucesso!');
+    } catch (error) {
+      toast.error('Erro ao criar o plano alimentar');
+    } finally {
+      navigate('PLANNING_MEAL_BY_PATIENT', {
+        replace: {
+          id: patient?.id || '',
+        },
+      });
+    }
   });
 
   const handleAddNewMeal = useCallback(() => {
@@ -89,6 +117,7 @@ export function useCreatePlanningHook() {
     methods,
     errors,
     meals,
+    isCreatingPlanningMeal,
     register,
     handleSubmit,
     handleRemoveMeal,
