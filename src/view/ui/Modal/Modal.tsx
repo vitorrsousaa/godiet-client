@@ -107,7 +107,7 @@ const ModalDescription = React.forwardRef<
 ));
 ModalDescription.displayName = ModalPrimitive.Description.displayName;
 
-interface ModalProps {
+export interface ModalProps {
   isOpen: boolean;
   children: React.ReactNode;
   onClose?: () => void;

@@ -1,0 +1,1 @@
+export { EditFoodModal } from './EditFoodModal';

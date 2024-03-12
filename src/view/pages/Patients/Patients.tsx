@@ -4,7 +4,7 @@ import { Card } from '@godiet-ui/Card';
 import { DangerModal } from '@godiet-ui/DangerModal';
 import { formatDate } from '@godiet-utils/formatDate';
 
-import { PlusIcon, TrashIcon } from '@radix-ui/react-icons';
+import { CalendarIcon, PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { CreatePatientModal } from './components/modals/CreatePatientModal';
 import { usePatientsHook } from './Patients.hook';
@@ -52,7 +52,10 @@ export function Patients() {
                 <Card.Header>
                   <Card.Title>{patient.name}</Card.Title>
                   <Card.Description>
-                    {formatDate(patient.birthDate, 'P')}
+                    <span className="flex items-center gap-1">
+                      <CalendarIcon />
+                      {formatDate(patient.birthDate, 'P')}
+                    </span>
                   </Card.Description>
                 </Card.Header>
                 <Card.Footer>

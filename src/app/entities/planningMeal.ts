@@ -1,25 +1,28 @@
 import { TFood } from './Food';
+interface TMeasure {
+  name: string;
+  qty: number;
+}
 
-export interface TPlanningMealDetails {
+export interface TMealFood {
+  id: string;
+  measure: TMeasure;
+  qty: number;
+  options: [];
+  food: TFood;
+}
+
+export interface TMeal {
+  id: string;
+  name: string;
+  time: string;
+  mealFoods: TMealFood[];
+}
+
+export interface TPlanningMeal {
   id: string;
   patientId: string;
-  date: string;
-  meals: TMealsDetails[];
   name: string;
   createdAt: string;
-}
-
-interface TMealsDetails {
-  id: string;
-  name: string;
-  planningMealId: string;
-  time: string;
-  foods: TFoodDetails[];
-}
-
-interface TFoodDetails {
-  id: string;
-  categoryNameId: string;
-  portion: number;
-  options: TFood[];
+  meals: TMeal[];
 }

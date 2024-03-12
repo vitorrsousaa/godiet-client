@@ -12,18 +12,21 @@ import {
 } from 'react-hook-form';
 import * as z from 'zod';
 
-import { AddFoodModalProps } from './AddFoodModal';
+import { EditFoodModalProps } from './EditFoodModal';
 
 const CreateMealFoodSchema = z.object({
   id: z.string().uuid(),
-  measure: z.object({ name: z.string(), qty: z.number() }),
+  measure: z.object({
+    name: z.string(),
+    qty: z.number(),
+  }),
   qty: z.number().nonnegative().min(1),
 });
 
-type TCreateMealDTO = z.infer<typeof CreateMealFoodSchema>;
+export type TCreateMealDTO = z.infer<typeof CreateMealFoodSchema>;
 
-export function useAddFoodModalHook(props: AddFoodModalProps) {
-  const { mealIndex, onClose } = props;
+export function useEditFoodModalHook(props: EditFoodModalProps) {
+  const { mealIndex, initialValues, onClose } = props;
 
   const { foods, isFetchingFoods } = useGetAllFoods();
 
@@ -37,9 +40,9 @@ export function useAddFoodModalHook(props: AddFoodModalProps) {
   } = useForm<TCreateMealDTO>({
     resolver: zodResolver(CreateMealFoodSchema),
     defaultValues: {
-      id: '',
-      measure: { name: '', qty: 0 },
-      qty: 1,
+      id: initialValues?.id || '',
+      measure: initialValues?.measure || '',
+      qty: initialValues?.qty || 1,
     },
   });
 
@@ -64,7 +67,7 @@ export function useAddFoodModalHook(props: AddFoodModalProps) {
   //External form
   const { control } = useFormContext<TCreatePlanningMealDTO>();
 
-  const { append } = useFieldArray({
+  const { update } = useFieldArray({
     name: `meals.${mealIndex}.mealFoods`,
     control,
   });
@@ -80,7 +83,7 @@ export function useAddFoodModalHook(props: AddFoodModalProps) {
 
     if (!selectedFood) return;
 
-    append({
+    update(initialValues.mealFoodIndex, {
       name: selectedFood.name,
       measure: data.measure,
       qty: data.qty,

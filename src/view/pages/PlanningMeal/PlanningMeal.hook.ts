@@ -35,7 +35,9 @@ export function usePlanningMealHook() {
   });
 
   const handleNavigateToCreatePlanning = useCallback(() => {
-    navigate('CREATE_PLANNING_GODIET', { replace: { id: patient?.id || '' } });
+    navigate('CREATE_PLANNING_CONVENTIONAL', {
+      replace: { id: patient?.id || '' },
+    });
   }, [navigate, patient]);
 
   const handleNavigateToShowPlanning = useCallback(

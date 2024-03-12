@@ -14,15 +14,18 @@ import { Separator } from '@godiet-ui/Separator';
 
 import { Controller } from 'react-hook-form';
 
-import { useAddFoodModalHook } from './AddFoodModal.hook';
+import { TCreateMealDTO, useEditFoodModalHook } from './EditFoodModal.hook';
 
-export interface AddFoodModalProps {
+type InitialValues = TCreateMealDTO & { mealFoodIndex: number };
+
+export interface EditFoodModalProps {
   isOpen: boolean;
   onClose: () => void;
   mealIndex: number;
+  initialValues: InitialValues;
 }
 
-export function AddFoodModal(props: AddFoodModalProps) {
+export function EditFoodModal(props: EditFoodModalProps) {
   const { isOpen } = props;
 
   const {
@@ -33,7 +36,7 @@ export function AddFoodModal(props: AddFoodModalProps) {
     measureOptions,
     handleInternalFormSubmit,
     handleOnCloseModal,
-  } = useAddFoodModalHook(props);
+  } = useEditFoodModalHook(props);
 
   // TODO- ADICIONAR ITENS QUANDO ESTIVER PESQUISANDO PELO ALIMENTO
   // - Medida caseira usual
@@ -47,7 +50,7 @@ export function AddFoodModal(props: AddFoodModalProps) {
       className="max-w-[740px]"
     >
       <Modal.Header>
-        <Modal.Title>Adicionando um novo alimento</Modal.Title>
+        <Modal.Title>Editando o alimento</Modal.Title>
         <Modal.Description>
           Selecione os alimentos para a refeição
         </Modal.Description>

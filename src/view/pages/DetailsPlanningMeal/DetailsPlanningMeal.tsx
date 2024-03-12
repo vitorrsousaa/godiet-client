@@ -83,21 +83,18 @@ export function DetailsPlanningMeal() {
                                   <CardMeal.Header description={meal.time}>
                                     {meal.name}
                                   </CardMeal.Header>
+
                                   <CardMeal.Content>
-                                    {meal.foods.length > 0 && (
+                                    {meal.mealFoods.length > 0 && (
                                       <>
                                         <CardMeal.ListHeader />
 
-                                        {meal.foods
-                                          .filter(
-                                            (food) => food.options.length > 0
-                                          )
-                                          .map((food) => (
-                                            <CardMeal.Options
-                                              foods={food}
-                                              key={food.id}
-                                            />
-                                          ))}
+                                        {meal.mealFoods.map((mealFood) => (
+                                          <CardMeal.Options
+                                            mealFood={mealFood}
+                                            key={mealFood.id}
+                                          />
+                                        ))}
                                       </>
                                     )}
                                   </CardMeal.Content>

@@ -2,6 +2,7 @@
 import { Suspense } from 'react';
 
 import { ROUTES } from '@godiet-config';
+import { CreatePlanning } from '@godiet-pages/CreatePlanning';
 import { NotFound } from '@godiet-pages/NotFound';
 import { Logo } from '@godiet-ui/Logo';
 import { Spinner } from '@godiet-ui/Spinner';
@@ -142,6 +143,10 @@ export function Router() {
                 <Route
                   path={ROUTES.PLANNING_MEAL_BY_PATIENT_SHOW}
                   element={<DetailsPlanningMeal />}
+                />
+                <Route
+                  path={ROUTES.CREATE_PLANNING_CONVENTIONAL}
+                  element={<CreatePlanning />}
                 />
                 <Route
                   path={ROUTES.CREATE_PLANNING_GODIET}

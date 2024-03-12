@@ -1,5 +1,14 @@
 import { TCategoryName } from './CategoryName';
 
+export type TAttribute = {
+  qty: number;
+  name: string;
+  unit: string;
+};
+export type TMeasure = {
+  qty: number;
+  name: string;
+};
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type TFood = {
   id: string;
@@ -7,6 +16,7 @@ export type TFood = {
   baseQty: number;
   baseUnit: string;
   categoryNameId: string;
-  attributes?: Record<string, any>[] | undefined;
+  attributes: TAttribute[];
+  measures: TMeasure[];
   categoryName?: TCategoryName;
 };
