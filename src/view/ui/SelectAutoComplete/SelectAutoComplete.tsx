@@ -1,5 +1,6 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
+import { useControllableState } from '@godiet-hooks/controllable-state';
 import { cn } from '@godiet-utils/cn';
 
 import { ChevronDownIcon, Cross2Icon } from '@radix-ui/react-icons';
@@ -29,9 +30,10 @@ export function SelectAutoComplete(props: SelectAutoCompleteProps) {
     onChange,
   } = props;
 
-  const [optionValue, setOptionValue] = useState<SelectOptionsType | null>(
-    () => options.find((option) => option.value === value) || null
-  );
+  const [optionValue, setOptionValue] = useControllableState({
+    defaultValue: null,
+    value: options.find((option) => option.value === value) || value,
+  });
 
   const filteredOptions = useMemo(
     () => options.filter((option) => option.value !== ''),
@@ -50,7 +52,7 @@ export function SelectAutoComplete(props: SelectAutoCompleteProps) {
 
       onChange && onChange(newEvent as React.ChangeEvent<HTMLSelectElement>);
     },
-    [onChange]
+    [onChange, setOptionValue]
   );
 
   const controlStyles = {
@@ -76,7 +78,9 @@ export function SelectAutoComplete(props: SelectAutoCompleteProps) {
     <Select
       value={optionValue}
       className="h-8 hover:cursor-pointer "
-      onChange={handleInputChange}
+      onChange={(event) =>
+        handleInputChange(event as SingleValue<SelectOptionsType>)
+      }
       options={filteredOptions}
       maxMenuHeight={400}
       noOptionsMessage={() => noOptionsMessage || 'Nenhuma opção encontrada'}
