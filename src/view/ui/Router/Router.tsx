@@ -2,7 +2,6 @@
 import { Suspense } from 'react';
 
 import { ROUTES } from '@godiet-config';
-import { CreatePlanning } from '@godiet-pages/CreatePlanning';
 import { NotFound } from '@godiet-pages/NotFound';
 import { Logo } from '@godiet-ui/Logo';
 import { Spinner } from '@godiet-ui/Spinner';
@@ -20,6 +19,9 @@ const { CreatePlanningEquivalent } = lazyLoad(
 const { CreateAnamnesis } = lazyLoad(
   () => import('@godiet-pages/CreateAnamnesis')
 );
+const { CreatePlanning } = lazyLoad(
+  () => import('@godiet-pages/CreatePlanning')
+);
 
 const { Dashboard } = lazyLoad(() => import('@godiet-pages/Dashboard'));
 const { DetailsPlanningMeal } = lazyLoad(
@@ -31,6 +33,9 @@ const { DashboardLayout } = lazyLoad(
 
 const { FavoritesLayout } = lazyLoad(
   () => import('@godiet-layouts/FavoritesLayout')
+);
+const { FavoritesMeals } = lazyLoad(
+  () => import('@godiet-pages/FavoritesMeals')
 );
 const { FavoritesAnamnesis } = lazyLoad(
   () => import('@godiet-pages/FavoritesAnamnesis')
@@ -91,17 +96,27 @@ export function Router() {
 
                 <Route
                   path={ROUTES.FAVORITES_FOODS}
-                  element={<div>Alimentos</div>}
+                  element={
+                    <div className="flex flex-col">
+                      Alimentos
+                      <small>Esta página ainda esta em construção!</small>
+                    </div>
+                  }
                 />
 
                 <Route
                   path={ROUTES.FAVORITES_MEALS}
-                  element={<div>Refeições</div>}
+                  element={<FavoritesMeals />}
                 />
 
                 <Route
                   path={ROUTES.FAVORITES_ORIENTATIONS}
-                  element={<div>Orientações</div>}
+                  element={
+                    <div className="flex flex-col">
+                      Orientações
+                      <small>Esta página ainda esta em construção!</small>
+                    </div>
+                  }
                 />
               </Route>
 
