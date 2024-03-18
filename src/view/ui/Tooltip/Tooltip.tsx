@@ -36,7 +36,7 @@ function Tooltip(props: TooltipProps) {
   return (
     <TooltipProvider>
       <TooltipBase>
-        <TooltipTrigger>{children}</TooltipTrigger>
+        <TooltipTrigger asChild>{children}</TooltipTrigger>
         <TooltipContent>{content}</TooltipContent>
       </TooltipBase>
     </TooltipProvider>
