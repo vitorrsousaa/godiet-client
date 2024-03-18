@@ -81,23 +81,16 @@ export function useFavoritesMealsHook() {
     [favorites]
   );
 
-  const isCreatingFavoritesMeals = false;
   const isUpdatingFavoritesMeals = false;
 
   const isFetchingFavoritesMeals = useMemo(
     () =>
       Boolean(
         isDeletingFavoriteMeal ||
-          isCreatingFavoritesMeals ||
           isUpdatingFavoritesMeals ||
           isFetchingFavoriteMeal
       ),
-    [
-      isCreatingFavoritesMeals,
-      isDeletingFavoriteMeal,
-      isFetchingFavoriteMeal,
-      isUpdatingFavoritesMeals,
-    ]
+    [isDeletingFavoriteMeal, isFetchingFavoriteMeal, isUpdatingFavoritesMeals]
   );
 
   return {

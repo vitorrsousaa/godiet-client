@@ -52,9 +52,7 @@ export function useModalCreateFavoriteMealHook(
 
       defaultValues: {
         foodId: '',
-
         measure: '',
-
         qty: 0,
       },
     });
