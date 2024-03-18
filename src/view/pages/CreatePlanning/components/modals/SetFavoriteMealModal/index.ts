@@ -1,0 +1,1 @@
+export { SetFavoriteMealModal } from './SetFavoriteMealModal';
