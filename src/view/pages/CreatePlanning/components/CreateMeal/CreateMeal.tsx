@@ -9,6 +9,7 @@ import { StarIcon, SymbolIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { AddFoodModal } from '../modals/AddFoodModal';
 import { EditFoodModal } from '../modals/EditFoodModal';
+import { SetFavoriteMealModal } from '../modals/SetFavoriteMealModal';
 import { StarMealModal } from '../modals/StarMealModal';
 import { TableFoodsByMeal } from '../TableFoodsByMeal';
 
@@ -30,6 +31,8 @@ export function CreateMeal(props: CreateMealProps) {
     generateHashKey,
     selectedMealIndex,
     modalAddFavoriteMealIsOpen,
+    modalUseFavoriteMealIsOpen,
+    toggleModalUseFavoriteMealOpen,
     toggleModalAddFavoriteMealOpen,
     handleCloseModalEditFood,
     handleOpenModalEditFood,
@@ -47,7 +50,11 @@ export function CreateMeal(props: CreateMealProps) {
           Refeição {mealIndex + 1}
           <div className="space-x-2">
             <Tooltip content={'Selecionar refeição favorita'}>
-              <Button variant={'outline'} className="h-8 px-2">
+              <Button
+                variant={'outline'}
+                className="h-8 px-2"
+                onClick={toggleModalUseFavoriteMealOpen}
+              >
                 <SymbolIcon />
               </Button>
             </Tooltip>
@@ -113,6 +120,12 @@ export function CreateMeal(props: CreateMealProps) {
       <StarMealModal
         isOpen={modalAddFavoriteMealIsOpen}
         onClose={toggleModalAddFavoriteMealOpen}
+        mealIndex={mealIndex}
+      />
+
+      <SetFavoriteMealModal
+        isOpen={modalUseFavoriteMealIsOpen}
+        onClose={toggleModalUseFavoriteMealOpen}
         mealIndex={mealIndex}
       />
 

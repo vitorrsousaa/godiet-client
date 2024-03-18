@@ -30,6 +30,8 @@ export function useCreateMealHook(props: CreateMealProps) {
   );
   const [modalAddFavoriteMealIsOpen, toggleModalAddFavoriteMealOpen] =
     useReducer((state) => !state, false);
+  const [modalUseFavoriteMealIsOpen, toggleModalUseFavoriteMealOpen] =
+    useReducer((state) => !state, false);
 
   const [selectedMealIndex, toggleSelectedMealIndex] = useReducer(
     (state: number, index: number) => {
@@ -155,6 +157,8 @@ export function useCreateMealHook(props: CreateMealProps) {
     generateHashKey,
     selectedMealIndex,
     modalAddFavoriteMealIsOpen,
+    modalUseFavoriteMealIsOpen,
+    toggleModalUseFavoriteMealOpen,
     toggleModalAddFavoriteMealOpen,
     toggleSelectedMealIndex,
     handleCloseModalEditFood,
