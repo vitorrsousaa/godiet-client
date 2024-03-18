@@ -25,6 +25,12 @@ const CreateMealFoodSchema = z.object({
 
 export type TCreateMealDTO = z.infer<typeof CreateMealFoodSchema>;
 
+interface HandleChangeSelectAutoCompleteParams {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onChange: (...event: any[]) => void;
+  event: React.ChangeEvent<HTMLSelectElement>;
+}
+
 export function useEditFoodModalHook(props: EditFoodModalProps) {
   const { mealIndex, initialValues, onClose } = props;
 
@@ -35,6 +41,7 @@ export function useEditFoodModalHook(props: EditFoodModalProps) {
     handleSubmit: hookFormSubmit,
     register,
     reset,
+    setValue,
     formState: { errors, isValid: internalFormIsValid },
     control: internalControl,
   } = useForm<TCreateMealDTO>({
@@ -93,6 +100,27 @@ export function useEditFoodModalHook(props: EditFoodModalProps) {
     handleOnCloseModal();
   });
 
+  const handleChangeSelectAutoComplete = useCallback(
+    (param: HandleChangeSelectAutoCompleteParams) => {
+      const { event, onChange } = param;
+
+      const selectedFood = foods.find(
+        (food) => food.id === event.target.value
+      )!;
+
+      const hasSameMeasure = selectedFood.measures.find(
+        (measure) => measure.name === initialValues?.measure.name
+      );
+
+      if (!hasSameMeasure) {
+        setValue('measure', selectedFood.measures[0]);
+      }
+
+      onChange(event);
+    },
+    [foods, initialValues?.measure, setValue]
+  );
+
   const foodOptions = useMemo(
     () => foods.map((food) => ({ label: food.name, value: food.id })),
     [foods]
@@ -112,5 +140,6 @@ export function useEditFoodModalHook(props: EditFoodModalProps) {
     register,
     handleInternalFormSubmit,
     handleOnCloseModal,
+    handleChangeSelectAutoComplete,
   };
 }

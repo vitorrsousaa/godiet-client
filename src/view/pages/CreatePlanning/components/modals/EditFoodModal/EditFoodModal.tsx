@@ -36,6 +36,7 @@ export function EditFoodModal(props: EditFoodModalProps) {
     measureOptions,
     handleInternalFormSubmit,
     handleOnCloseModal,
+    handleChangeSelectAutoComplete,
   } = useEditFoodModalHook(props);
 
   // TODO- ADICIONAR ITENS QUANDO ESTIVER PESQUISANDO PELO ALIMENTO
@@ -70,7 +71,12 @@ export function EditFoodModal(props: EditFoodModalProps) {
               placeholder="Selecione um alimento"
               options={foodOptions}
               value={value}
-              onChange={onChange}
+              onChange={(event) =>
+                handleChangeSelectAutoComplete({
+                  onChange,
+                  event,
+                })
+              }
             />
           )}
         />
@@ -82,10 +88,14 @@ export function EditFoodModal(props: EditFoodModalProps) {
               render={({ field: { value, onChange } }) => (
                 <Select
                   value={value.name}
-                  onValueChange={(value) => {
+                  onValueChange={(event) => {
                     const selectedMeasure = measureOptions.find(
-                      (measure) => measure.name === value
+                      (measure) => measure.name === event
                     );
+
+                    if (!selectedMeasure) {
+                      onChange(measureOptions[0]);
+                    }
 
                     onChange(selectedMeasure);
                   }}
