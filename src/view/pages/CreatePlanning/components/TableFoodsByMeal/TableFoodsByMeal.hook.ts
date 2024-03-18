@@ -2,21 +2,14 @@ import { useMemo } from 'react';
 
 import { useGetAllFoods } from '@godiet-hooks/foods';
 import { TCreatePlanningMealDTO } from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
+import {
+  calculateMealFoods,
+  FoodsByMeal,
+} from '@godiet-pages/CreatePlanning/utils/calculateMealFoods';
 
 import { useFormContext, useWatch } from 'react-hook-form';
 
 import { TableFoodsByMealProps } from './TableFoodsByMeal';
-
-interface FoodsByMeal {
-  id: string;
-  measure: { name: string; qty: number };
-  qty: number;
-  prot: string;
-  fat: string;
-  carb: string;
-  energy: string;
-  name: string;
-}
 
 export function useTableFoodsByMealHook(props: TableFoodsByMealProps) {
   const { mealIndex } = props;
@@ -39,49 +32,13 @@ export function useTableFoodsByMealHook(props: TableFoodsByMealProps) {
 
       if (!selectedFood) return;
 
-      const { attributes, baseQty } = selectedFood;
-
-      const proteinAttributeOriginal = attributes.find(
-        (attribute) => attribute.name === 'protein'
-      );
-      const carbAttributeOriginal = attributes.find(
-        (attribute) => attribute.name === 'carbohydrate'
-      );
-      const fatAttributeOriginal = attributes.find(
-        (attribute) => attribute.name === 'lipid'
-      );
-      const energyAttributeOriginal = attributes.find(
-        (attribute) => attribute.name === 'energy'
-      );
-
-      const proteinAttribute = proteinAttributeOriginal
-        ? ((proteinAttributeOriginal.qty * food.measure.qty) / baseQty) *
-          food.qty
-        : 0;
-
-      const carbAttribute = carbAttributeOriginal
-        ? ((carbAttributeOriginal.qty * food.measure.qty) / baseQty) * food.qty
-        : 0;
-
-      const fatAttribute = fatAttributeOriginal
-        ? ((fatAttributeOriginal.qty * food.measure.qty) / baseQty) * food.qty
-        : 0;
-
-      const energyAttribute = energyAttributeOriginal
-        ? ((energyAttributeOriginal.qty * food.measure.qty) / baseQty) *
-          food.qty
-        : 0;
-
-      initialFoodsByMeal.push({
-        id: food.id,
+      const mealFoodCalculated = calculateMealFoods({
+        food: selectedFood,
         measure: food.measure,
         qty: food.qty,
-        prot: proteinAttribute.toFixed(2),
-        fat: fatAttribute.toFixed(2),
-        carb: carbAttribute.toFixed(2),
-        energy: energyAttribute.toFixed(2),
-        name: food.name,
       });
+
+      initialFoodsByMeal.push(mealFoodCalculated);
     });
 
     return initialFoodsByMeal;
