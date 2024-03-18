@@ -1,1 +1,0 @@
-export { HeaderContent } from './HeaderContent';
