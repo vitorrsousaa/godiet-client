@@ -3,12 +3,14 @@ import { Card } from '@godiet-ui/Card';
 import { DangerModal } from '@godiet-ui/DangerModal';
 import { Input } from '@godiet-ui/Input';
 import { Separator } from '@godiet-ui/Separator';
+import { Tooltip } from '@godiet-ui/Tooltip';
 
-import { TrashIcon } from '@radix-ui/react-icons';
+import { StarIcon, SymbolIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { AddFoodModal } from '../modals/AddFoodModal';
 import { EditFoodModal } from '../modals/EditFoodModal';
-import { TableInfo } from '../TableInfo';
+import { StarMealModal } from '../modals/StarMealModal';
+import { TableFoodsByMeal } from '../TableFoodsByMeal';
 
 import { useCreateMealHook } from './CreateMeal.hook';
 
@@ -27,6 +29,8 @@ export function CreateMeal(props: CreateMealProps) {
     selectedFoodToEdit,
     generateHashKey,
     selectedMealIndex,
+    modalAddFavoriteMealIsOpen,
+    toggleModalAddFavoriteMealOpen,
     handleCloseModalEditFood,
     handleOpenModalEditFood,
     handleRemoveMealFood,
@@ -41,13 +45,31 @@ export function CreateMeal(props: CreateMealProps) {
       <Card.Header>
         <Card.Title className="flex w-full items-center justify-between">
           Refeição {mealIndex + 1}
-          <Button
-            variant={'destructive'}
-            className="h-8 px-2"
-            onClick={onRemoveMeal}
-          >
-            <TrashIcon />
-          </Button>
+          <div className="space-x-2">
+            <Tooltip content={'Selecionar refeição favorita'}>
+              <Button variant={'outline'} className="h-8 px-2">
+                <SymbolIcon />
+              </Button>
+            </Tooltip>
+            <Tooltip content={'Favoritar refeição'}>
+              <Button
+                variant={'outline'}
+                className="h-8 px-2"
+                onClick={toggleModalAddFavoriteMealOpen}
+              >
+                <StarIcon />
+              </Button>
+            </Tooltip>
+            <Tooltip content={'Remover refeição'}>
+              <Button
+                variant={'destructive'}
+                className="h-8 px-2"
+                onClick={onRemoveMeal}
+              >
+                <TrashIcon />
+              </Button>
+            </Tooltip>
+          </div>
         </Card.Title>
         <Card.Description>Adicione as informações da refeição</Card.Description>
       </Card.Header>
@@ -81,12 +103,18 @@ export function CreateMeal(props: CreateMealProps) {
         <h1 className="text-md mt-4 font-semibold text-muted-foreground">
           Alimentos selecionados
         </h1>
-        <TableInfo
+        <TableFoodsByMeal
           mealIndex={mealIndex}
           onOpenModalRemove={handleOpenModalRemoveFood}
           onOpenModalEdit={handleOpenModalEditFood}
         />
       </Card.Footer>
+
+      <StarMealModal
+        isOpen={modalAddFavoriteMealIsOpen}
+        onClose={toggleModalAddFavoriteMealOpen}
+        mealIndex={mealIndex}
+      />
 
       <EditFoodModal
         key={generateHashKey}
