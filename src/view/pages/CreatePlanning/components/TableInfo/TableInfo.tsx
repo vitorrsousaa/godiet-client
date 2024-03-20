@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 import { Button } from '@godiet-ui/Button';
 import {
   Table,
@@ -43,6 +45,48 @@ export function TableInfo(props: TableInfoProps) {
     onOpenModalRemove,
     onOpenModalEdit,
   } = props;
+
+  const totalFoods = useMemo(() => {
+    if (mealFoods.length === 0) return [];
+
+    const totalQty = mealFoods
+      .reduce((acc, food) => {
+        return acc + Number(food.qty * food.measure.qty);
+      }, 0)
+      .toFixed(2);
+
+    const totalEnergy = mealFoods
+      .reduce((acc, food) => {
+        return acc + Number(food.energy);
+      }, 0)
+      .toFixed(2);
+
+    const totalProt = mealFoods
+      .reduce((acc, food) => {
+        return acc + Number(food.prot);
+      }, 0)
+      .toFixed(2);
+
+    const totalCarb = mealFoods
+      .reduce((acc, food) => {
+        return acc + Number(food.carb);
+      }, 0)
+      .toFixed(2);
+
+    const totalFat = mealFoods
+      .reduce((acc, food) => {
+        return acc + Number(food.fat);
+      }, 0)
+      .toFixed(2);
+
+    return [
+      { attribute: 'qty', value: totalQty },
+      { attribute: 'prot', value: totalProt },
+      { attribute: 'carb', value: totalCarb },
+      { attribute: 'fat', value: totalFat },
+      { attribute: 'energy', value: totalEnergy },
+    ];
+  }, [mealFoods]);
 
   return (
     <>
@@ -115,6 +159,32 @@ export function TableInfo(props: TableInfoProps) {
               </TableRow>
             );
           })}
+          {totalFoods.length > 0 && (
+            <TableRow>
+              <TableHead className="text-[12px]">Total</TableHead>
+              {totalFoods.map((total, index) => {
+                return (
+                  <TableHead
+                    key={`total-${index}`}
+                    className={cn(
+                      'text-[12px]',
+                      // total.attribute !== 'energy' && total.attribute === 'qty'
+                      //   ? 'hidden min-[430px]:table-cell'
+                      //   : 'hidden sm:table-cell'
+                      total.attribute === 'energy'
+                        ? ''
+                        : total.attribute === 'qty'
+                          ? 'hidden text-[12px] min-[430px]:table-cell'
+                          : 'hidden text-[12px] sm:table-cell'
+                    )}
+                  >
+                    {total.value} {total.attribute === 'energy' ? 'Kcal' : 'g'}
+                  </TableHead>
+                );
+              })}
+              <TableCell></TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </>
