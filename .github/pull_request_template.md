@@ -10,12 +10,14 @@ Fixes # (issue)
 
 ## Type of change
 
-Please delete options that are not relevant.
-
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] This change requires a documentation update
+- [ ] ✨ feat -- New feature (non-breaking change which adds functionality)
+- [ ] 🛠️ fix -- Bug fix (non-breaking change which fixes an issue)
+- [ ] ❌ ! -- Breaking change (fix or feature that would cause existing functionality to change)
+- [ ] 📝 docs -- Documentation
+- [ ] 🧹 refactor -- Code refactor
+- [ ] 🧪 test -- Adding missing tests, refactoring tests (no production code change)
+- [ ] ✅ ci -- Build configuration change
+- [ ] 🗑️ chore -- Updating grunt tasks etc (no production code change)
 
 ## Checklist:
 
