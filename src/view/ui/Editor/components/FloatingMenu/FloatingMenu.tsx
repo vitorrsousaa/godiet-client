@@ -32,7 +32,7 @@ export function FloatingMenu() {
 
       <FloatingMenuButton
         onAction={() => handleToggleTextToHeading(1)}
-        title="Texto"
+        title="Título"
         description="Título de seção grande"
         imgUrl="https://www.notion.so/images/blocks/header.57a7576a.png"
       />
@@ -41,7 +41,7 @@ export function FloatingMenu() {
 
       <FloatingMenuButton
         onAction={() => handleToggleTextToHeading(2)}
-        title="Texto"
+        title="Título"
         description="Título de seção médio"
         imgUrl="https://www.notion.so/images/blocks/subheader.9aab4769.png"
       />
