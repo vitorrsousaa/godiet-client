@@ -1,5 +1,6 @@
 import { useCallback, useReducer, useState } from 'react';
 
+import { TAnamnesisTemplate } from '@godiet-entities';
 import {
   useDeleteAnamnesisTemplate,
   useGetAllAnamnesisTemplate,
@@ -9,10 +10,11 @@ import toast from 'react-hot-toast';
 
 export function useFavoritesAnamnesisHook() {
   const [anamnesisToDelete, setAnamnesisToDelete] = useState('');
+  const [anamnesisToEdit, setAnamnesisToEdit] =
+    useState<TAnamnesisTemplate | null>(null);
 
   const {
     anamnesisTemplate,
-
     isErrorAnamnesisTemplate,
     isLoadingAnamnesisTemplate,
     isFetchingAnamnesisTemplate,
@@ -52,19 +54,37 @@ export function useFavoritesAnamnesisHook() {
     }
   }, [anamnesisToDelete, deleteAnamnesisTemplate]);
 
+  const handleOpenModalToEditAnamnesis = useCallback(
+    (anamnesisId: string) => {
+      setAnamnesisToEdit(
+        anamnesisTemplate.find((anamnesis) => anamnesis.id === anamnesisId) ||
+          null
+      );
+
+      toggleModalCreateAnamnesisTemplate();
+    },
+    [anamnesisTemplate]
+  );
+
+  const handleCloseModalToEditAnamnesis = useCallback(() => {
+    setAnamnesisToEdit(null);
+
+    toggleModalCreateAnamnesisTemplate();
+  }, []);
+
   return {
     modalCreateAnamnesisTemplateIsOpen,
 
     anamnesisTemplate,
-
+    anamnesisToEdit,
     isErrorAnamnesisTemplate,
     isLoadingAnamnesisTemplate,
     isFetchingAnamnesisTemplate,
-
+    handleOpenModalToEditAnamnesis,
     modalDeleteAnamnesisTemplateIsOpen,
 
     isDeletingAnamnesisTemplate,
-
+    handleCloseModalToEditAnamnesis,
     toggleModalDeleteAnamnesisTemplate,
 
     toggleModalCreateAnamnesisTemplate,

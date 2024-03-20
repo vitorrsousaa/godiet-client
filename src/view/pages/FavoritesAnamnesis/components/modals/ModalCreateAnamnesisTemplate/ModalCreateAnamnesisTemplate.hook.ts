@@ -19,7 +19,7 @@ type FormValues = z.infer<typeof schema>;
 export function useModalCreateAnamnesisTemplateHook(
   props: ModalCreateAnamnesisTemplateProps
 ) {
-  const { isOpen, onClose } = props;
+  const { isOpen, initialAnamnesis, onClose } = props;
 
   const { createAnamnesisTemplate, isCreatingAnamnesisTemplate } =
     useCreateAnamnesisTemplate();
@@ -29,8 +29,12 @@ export function useModalCreateAnamnesisTemplateHook(
     register,
     setError,
     getValues,
+    reset,
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      title: initialAnamnesis?.title || '',
+    },
   });
 
   const handleSubmit = useCallback(
@@ -62,12 +66,17 @@ export function useModalCreateAnamnesisTemplateHook(
     [createAnamnesisTemplate, getValues, onClose, setError]
   );
 
+  const handleCloseModal = useCallback(() => {
+    reset();
+    onClose();
+  }, [onClose, reset]);
+
   return {
     isOpen,
     errors,
     isCreatingAnamnesisTemplate,
     register,
-    onClose,
+    handleCloseModal,
     handleSubmit,
   };
 }

@@ -1,3 +1,4 @@
+import { TAnamnesisTemplate } from '@godiet-entities';
 import { Editor } from '@godiet-ui/Editor';
 import { Input } from '@godiet-ui/Input';
 import { Modal } from '@godiet-ui/Modal';
@@ -7,16 +8,18 @@ import { useModalCreateAnamnesisTemplateHook } from './ModalCreateAnamnesisTempl
 export interface ModalCreateAnamnesisTemplateProps {
   isOpen: boolean;
   onClose: () => void;
+  initialAnamnesis: TAnamnesisTemplate | null;
 }
 
 export function ModalCreateAnamnesisTemplate(
   props: ModalCreateAnamnesisTemplateProps
 ) {
+  const { initialAnamnesis } = props;
   const {
     isOpen,
     errors,
     isCreatingAnamnesisTemplate,
-    onClose,
+    handleCloseModal,
     register,
     handleSubmit,
   } = useModalCreateAnamnesisTemplateHook(props);
@@ -24,7 +27,7 @@ export function ModalCreateAnamnesisTemplate(
   return (
     <Modal.Root
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={handleCloseModal}
       className="max-h-full max-w-[740px] overflow-y-auto"
     >
       <Modal.Header>
@@ -44,10 +47,11 @@ export function ModalCreateAnamnesisTemplate(
 
         <Editor
           hasFooter
-          onBackButton={onClose}
+          onBackButton={handleCloseModal}
           isValid
           isLoading={isCreatingAnamnesisTemplate}
           onSave={handleSubmit}
+          initialContent={initialAnamnesis?.text || ''}
         />
       </form>
     </Modal.Root>

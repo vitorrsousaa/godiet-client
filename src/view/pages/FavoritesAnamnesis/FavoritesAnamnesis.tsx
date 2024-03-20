@@ -19,10 +19,13 @@ export function FavoritesAnamnesis() {
     modalDeleteAnamnesisTemplateIsOpen,
     isLoadingAnamnesisTemplate,
     isDeletingAnamnesisTemplate,
+    anamnesisToEdit,
     handleOpenModalDeleteAnamnesisTemplate,
     toggleModalDeleteAnamnesisTemplate,
     toggleModalCreateAnamnesisTemplate,
     handleDeleteAnamnesisTemplate,
+    handleOpenModalToEditAnamnesis,
+    handleCloseModalToEditAnamnesis,
   } = useFavoritesAnamnesisHook();
 
   return (
@@ -54,7 +57,7 @@ export function FavoritesAnamnesis() {
             <p>Por favor, reinicie a página e tente novamente.</p>
           </div>
         ) : (
-          <div className="2xl:grid-cols-6s grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 ">
+          <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2  lg:grid-cols-3 2xl:grid-cols-4">
             {anamnesisTemplate.map((anamnesis) => (
               <Card.Root key={`anamnesis-${anamnesis.id}`}>
                 <Card.Header>
@@ -65,7 +68,10 @@ export function FavoritesAnamnesis() {
                   </Card.Description>
                 </Card.Header>
                 <Card.Footer>
-                  <Button variant={'outline'}>
+                  <Button
+                    variant={'outline'}
+                    onClick={() => handleOpenModalToEditAnamnesis(anamnesis.id)}
+                  >
                     <Pencil2Icon />
                   </Button>
                   <Button
@@ -94,7 +100,9 @@ export function FavoritesAnamnesis() {
 
       <ModalCreateAnamnesisTemplate
         isOpen={modalCreateAnamnesisTemplateIsOpen}
-        onClose={toggleModalCreateAnamnesisTemplate}
+        onClose={handleCloseModalToEditAnamnesis}
+        initialAnamnesis={anamnesisToEdit}
+        key={anamnesisToEdit?.id || 'create'}
       />
     </>
   );
