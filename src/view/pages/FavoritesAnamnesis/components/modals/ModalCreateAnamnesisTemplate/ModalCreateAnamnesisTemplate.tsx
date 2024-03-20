@@ -31,10 +31,13 @@ export function ModalCreateAnamnesisTemplate(
       className="max-h-full max-w-[740px] overflow-y-auto"
     >
       <Modal.Header>
-        <Modal.Title>Criar nova anamnese</Modal.Title>
+        <Modal.Title>
+          {initialAnamnesis?.text ? 'Editar a anamnese' : 'Criar nova anamnese'}
+        </Modal.Title>
 
         <Modal.Description>
-          Preencha os dados abaixo para criar um template de anamnese.
+          Preencha os dados abaixo para{' '}
+          {initialAnamnesis?.text ? 'editar' : 'criar'} um template de anamnese.
         </Modal.Description>
       </Modal.Header>
 
