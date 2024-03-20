@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from '@godiet-ui/Table';
+import { Tooltip } from '@godiet-ui/Tooltip';
 
 import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
 
@@ -92,21 +93,25 @@ export function FavoritesMeals() {
                           </TableCell>
                           <TableCell>
                             <span className="flex w-full flex-row items-center justify-center gap-1">
-                              <Button
-                                variant={'outline'}
-                                className="h-6 px-1 transition-colors hover:bg-gray-300 "
-                              >
-                                <Pencil1Icon />
-                              </Button>
-                              <Button
-                                variant={'outline'}
-                                className="h-6 px-1 transition-colors hover:bg-red-400 "
-                                onClick={() =>
-                                  handleOpenModalToDeleteFavoriteMeal(id)
-                                }
-                              >
-                                <TrashIcon />
-                              </Button>
+                              <Tooltip content="Editar refeição favorita">
+                                <Button
+                                  variant={'outline'}
+                                  className="h-6 px-1 transition-colors hover:bg-gray-300 "
+                                >
+                                  <Pencil1Icon />
+                                </Button>
+                              </Tooltip>
+                              <Tooltip content="Deletar refeição favorita">
+                                <Button
+                                  variant={'outline'}
+                                  className="h-6 px-1 transition-colors hover:bg-red-400 "
+                                  onClick={() =>
+                                    handleOpenModalToDeleteFavoriteMeal(id)
+                                  }
+                                >
+                                  <TrashIcon />
+                                </Button>
+                              </Tooltip>
                             </span>
                           </TableCell>
                         </TableRow>

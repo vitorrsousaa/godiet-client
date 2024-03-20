@@ -1,6 +1,7 @@
 import { Button } from '@godiet-ui/Button';
 import { Card } from '@godiet-ui/Card';
 import { DangerModal } from '@godiet-ui/DangerModal';
+import { Tooltip } from '@godiet-ui/Tooltip';
 import { formatDate } from '@godiet-utils/formatDate';
 
 import { ExternalLinkIcon, TrashIcon } from '@radix-ui/react-icons';
@@ -42,22 +43,26 @@ export function PlanningMeal() {
                   <Card.Title className="flex w-full items-center justify-between">
                     {planningMeal.name}{' '}
                     <div className="flex gap-2 [&>button]:h-8 [&>button]:px-2">
-                      <Button
-                        onClick={() =>
-                          handleNavigateToShowPlanning(planningMeal.id)
-                        }
-                      >
-                        <ExternalLinkIcon />
-                      </Button>
-                      <Button
-                        variant={'destructive'}
-                        type="button"
-                        onClick={() =>
-                          toggleModalDeletePlanning(planningMeal.id)
-                        }
-                      >
-                        <TrashIcon />
-                      </Button>
+                      <Tooltip content="Exibir plano">
+                        <Button
+                          onClick={() =>
+                            handleNavigateToShowPlanning(planningMeal.id)
+                          }
+                        >
+                          <ExternalLinkIcon />
+                        </Button>
+                      </Tooltip>
+                      <Tooltip content="Deletar plano">
+                        <Button
+                          variant={'destructive'}
+                          type="button"
+                          onClick={() =>
+                            toggleModalDeletePlanning(planningMeal.id)
+                          }
+                        >
+                          <TrashIcon />
+                        </Button>
+                      </Tooltip>
                     </div>
                   </Card.Title>
                   <Card.Description>

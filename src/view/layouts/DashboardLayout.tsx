@@ -16,6 +16,7 @@ import {
   NavigationMenu,
   navigationMenuTriggerStyle,
 } from '@godiet-ui/NavigationMenu';
+import { Tooltip } from '@godiet-ui/Tooltip';
 
 import {
   BellIcon,
@@ -57,17 +58,21 @@ export function DashboardLayout() {
           <NavigationMenu.Root>
             <NavigationMenu.List className="items-center">
               <NavigationMenu.Item>
-                <Link
-                  to={ROUTES.SETTINGS}
-                  className={navigationMenuTriggerStyle()}
-                >
-                  <GearIcon className="h-4 w-4 text-icon sm:h-5 sm:w-5" />
-                </Link>
+                <Tooltip content={'Configurações'}>
+                  <Link
+                    to={ROUTES.SETTINGS}
+                    className={navigationMenuTriggerStyle()}
+                  >
+                    <GearIcon className="h-4 w-4 text-icon sm:h-5 sm:w-5" />
+                  </Link>
+                </Tooltip>
               </NavigationMenu.Item>
               <NavigationMenu.Item className="hidden sm:block">
-                <Link to="/" className={navigationMenuTriggerStyle()}>
-                  <BellIcon className="h-4 w-4 text-icon sm:h-5 sm:w-5" />
-                </Link>
+                <Tooltip content={'Notificações'}>
+                  <Link to="/" className={navigationMenuTriggerStyle()}>
+                    <BellIcon className="h-4 w-4 text-icon sm:h-5 sm:w-5" />
+                  </Link>
+                </Tooltip>
               </NavigationMenu.Item>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
