@@ -114,6 +114,33 @@ export function Router() {
                     </div>
                   }
                 />
+                <Route
+                  path={ROUTES.FAVORITES_MANIPULATED}
+                  element={
+                    <div className="flex flex-col">
+                      Manipulados
+                      <small>Esta página ainda esta em construção!</small>
+                    </div>
+                  }
+                />
+                <Route
+                  path={ROUTES.FAVORITES_OBSERVATIONS}
+                  element={
+                    <div className="flex flex-col">
+                      Observações
+                      <small>Esta página ainda esta em construção!</small>
+                    </div>
+                  }
+                />
+                <Route
+                  path={ROUTES.FAVORITES_PLANNING}
+                  element={
+                    <div className="flex flex-col">
+                      Plano alimentar
+                      <small>Esta página ainda esta em construção!</small>
+                    </div>
+                  }
+                />
               </Route>
 
               <Route element={<SettingsLayout />}>
