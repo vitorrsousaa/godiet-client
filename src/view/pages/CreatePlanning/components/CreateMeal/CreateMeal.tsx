@@ -5,7 +5,12 @@ import { Input } from '@godiet-ui/Input';
 import { Separator } from '@godiet-ui/Separator';
 import { Tooltip } from '@godiet-ui/Tooltip';
 
-import { StarIcon, SymbolIcon, TrashIcon } from '@radix-ui/react-icons';
+import {
+  ClipboardIcon,
+  StarIcon,
+  SymbolIcon,
+  TrashIcon,
+} from '@radix-ui/react-icons';
 
 import { AddFoodModal } from '../modals/AddFoodModal';
 import { EditFoodModal } from '../modals/EditFoodModal';
@@ -46,9 +51,14 @@ export function CreateMeal(props: CreateMealProps) {
   return (
     <Card.Root className="text-left">
       <Card.Header>
-        <Card.Title className="flex w-full items-center justify-between">
+        <Card.Title className="flex w-full flex-col items-center justify-between gap-2 sm:flex-row">
           Refeição {mealIndex + 1}
           <div className="space-x-2">
+            <Tooltip content="Duplicar refeição">
+              <Button variant={'outline'} className="h-8 px-2">
+                <ClipboardIcon />
+              </Button>
+            </Tooltip>
             <Tooltip content={'Selecionar refeição favorita'}>
               <Button
                 variant={'outline'}
@@ -78,35 +88,38 @@ export function CreateMeal(props: CreateMealProps) {
             </Tooltip>
           </div>
         </Card.Title>
-        <Card.Description>Adicione as informações da refeição</Card.Description>
+        <Card.Description className="text-center sm:text-left">
+          Adicione as informações da refeição
+        </Card.Description>
       </Card.Header>
-      <Card.Content className="flex flex-col gap-4">
-        <div className="flex flex-col justify-between gap-2 sm:flex-row sm:gap-8">
+      <Card.Content className="flex flex-col items-center gap-2 ">
+        <div className="flex flex-col gap-2 min-[400px]:w-full min-[400px]:flex-row">
+          <Input
+            placeholder="Horário"
+            type="time"
+            minVersion
+            className="h-8 w-full min-[400px]:max-w-24 "
+            {...register(`meals.${mealIndex}.time`)}
+          />
           <div className="w-full">
             <Input
               placeholder="Nome da refeição"
-              className="w-full"
+              className="w-full "
+              minVersion
               {...register(`meals.${mealIndex}.name`)}
             />
           </div>
-          <div className="w-full">
-            <Input
-              placeholder="Horário"
-              type="time"
-              className="w-full"
-              {...register(`meals.${mealIndex}.time`)}
-            />
-          </div>
-        </div>
-        <div className="flex flex-col items-start gap-4 min-[430px]:flex-row min-[430px]:items-center">
-          <Button onClick={toggleModalAddFoodOpen}>Adicionar alimento</Button>
-          <Button>Adicionar observações</Button>
         </div>
 
-        <Separator />
+        <div className="flex w-full flex-col gap-2 sm:flex-row">
+          <Button onClick={toggleModalAddFoodOpen}>Adicionar alimento</Button>
+          <Button className="">Adicionar observações</Button>
+        </div>
       </Card.Content>
 
-      <Card.Footer className="flex flex-col">
+      <Separator />
+
+      <Card.Footer className="flex flex-col gap-2">
         <h1 className="text-md mt-4 font-semibold text-muted-foreground">
           Alimentos selecionados
         </h1>

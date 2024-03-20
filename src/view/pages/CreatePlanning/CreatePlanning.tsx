@@ -45,6 +45,7 @@ export function CreatePlanning() {
             <Button
               onClick={handleAddNewMeal}
               disabled={isCreatingPlanningMeal}
+              className="hidden min-[400px]:block"
             >
               Adicionar nova refeição
             </Button>
