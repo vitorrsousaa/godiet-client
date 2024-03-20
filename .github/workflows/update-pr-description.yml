@@ -12,12 +12,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Update PR description with commit list
-        uses: octokit/request-action@v2.x
+        uses: octokit/request-action@v2
         with:
-          route: PATCH /repos/:owner/:repo/pulls/:pull_number
-          owner: ${{ github.repository_owner }}
-          repo: ${{ github.repository }}
-          pull_number: ${{ github.event.pull_request.number }}
+          route: PATCH /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}
+          mediaType: application/vnd.github.v3+json
           body: |
             ${{ github.event.pull_request.body }}
 
