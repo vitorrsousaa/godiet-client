@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Update PR description with commit list
-        uses: octokit/request-action@v2
+        uses: octokit/request-action@v2.x
         with:
           route: PATCH /repos/${{ github.repository }}/pulls/${{ github.event.pull_request.number }}
           mediaType: application/vnd.github.v3+json
