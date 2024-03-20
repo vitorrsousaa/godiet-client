@@ -2,10 +2,13 @@ import { Sidebar, SideItem } from '@godiet-components/Sidebar';
 import { ROUTES } from '@godiet-config';
 
 import {
+  ColorWheelIcon,
+  FileTextIcon,
   HobbyKnifeIcon,
   PieChartIcon,
   ReaderIcon,
   RowsIcon,
+  SewingPinIcon,
 } from '@radix-ui/react-icons';
 import { Outlet } from 'react-router-dom';
 
@@ -23,6 +26,11 @@ const sideBarItens: SideItem[] = [
         title: 'Alimentos',
       },
       {
+        href: ROUTES.FAVORITES_MANIPULATED,
+        icon: <SewingPinIcon className="h-4 w-4" />,
+        title: 'Manipulados',
+      },
+      {
         href: ROUTES.FAVORITES_MEALS,
         title: 'Refeições',
         icon: <PieChartIcon className="h-4 w-4" />,
@@ -31,6 +39,16 @@ const sideBarItens: SideItem[] = [
         href: ROUTES.FAVORITES_ORIENTATIONS,
         title: 'Orientações',
         icon: <RowsIcon className="h-4 w-4" />,
+      },
+      {
+        href: ROUTES.FAVORITES_OBSERVATIONS,
+        title: 'Observações',
+        icon: <FileTextIcon className="h-4 w-4" />,
+      },
+      {
+        href: ROUTES.FAVORITES_PLANNING,
+        title: 'Plano alimentar',
+        icon: <ColorWheelIcon className="h-4 w-4" />,
       },
     ],
   },

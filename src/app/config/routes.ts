@@ -18,5 +18,8 @@ export const ROUTES = {
   FAVORITES: '/favoritos/anamneses',
   FAVORITES_FOODS: '/favoritos/alimentos',
   FAVORITES_ORIENTATIONS: '/favoritos/orientacoes',
+  FAVORITES_OBSERVATIONS: '/favoritos/observacoes',
   FAVORITES_MEALS: '/favoritos/refeicoes',
+  FAVORITES_MANIPULATED: '/favoritos/manipulados',
+  FAVORITES_PLANNING: '/favoritos/plano-alimentar',
 } as const;
