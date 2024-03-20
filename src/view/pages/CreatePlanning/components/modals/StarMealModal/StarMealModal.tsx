@@ -47,8 +47,8 @@ export function StarMealModal(props: StarMealModalProps) {
         />
       ) : (
         <div>
-          <p className="text-center text-muted-foreground">
-            Você precisa adicionar alimentos para favoritar a refeição
+          <p className="text-center text-red-300">
+            Você precisa adicionar alimentos para favoritar a refeição!
           </p>
         </div>
       )}
