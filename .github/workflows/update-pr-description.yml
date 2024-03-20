@@ -1,0 +1,27 @@
+name: Update PR Description
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  update-description:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Update PR description with commit list
+        uses: octokit/request-action@v2.x
+        with:
+          route: PATCH /repos/:owner/:repo/pulls/:pull_number
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.repository }}
+          pull_number: ${{ github.event.pull_request.number }}
+          body: |
+            ${{ github.event.pull_request.body }}
+
+            ## Lista de commits:
+            $(git log --pretty=format:"* %s (%h)" ${{ github.event.before }}..${{ github.sha }})
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
