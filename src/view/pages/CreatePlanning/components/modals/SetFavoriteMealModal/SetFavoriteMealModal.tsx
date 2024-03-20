@@ -47,6 +47,15 @@ export function SetFavoriteMealModal(props: SetFavoriteMealModalProps) {
           <p>Tivemos um erro para encontrar suas refeições favoritas</p>
           <p>Por favor, tente novamente mais tarde!</p>
         </div>
+      ) : favoritesMeals.length === 0 ? (
+        <div className="text-center">
+          <p className="tracking-tigh">Nenhuma refeição favorita cadastrada!</p>
+          <p className="text-muted-foreground">
+            Você pode criar uma nova refeição favorita na página de favoritos ou
+            adicionando os elementos e cadastrando a refeição como favorito
+            nesta própria página.
+          </p>
+        </div>
       ) : (
         <Select
           value={selectedFavoriteMeal}
