@@ -42,7 +42,12 @@ export function CreatePlanning() {
             <h3 className="pb-3 text-lg font-bold text-foreground">
               Refeições
             </h3>
-            <Button>Adicionar nova refeição</Button>
+            <Button
+              onClick={handleAddNewMeal}
+              disabled={isCreatingPlanningMeal}
+            >
+              Adicionar nova refeição
+            </Button>
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-4">
