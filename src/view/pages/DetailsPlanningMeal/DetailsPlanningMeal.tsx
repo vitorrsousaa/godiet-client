@@ -1,6 +1,7 @@
 import { CardMeal } from '@godiet-components/CardMeal';
 import { Button } from '@godiet-ui/Button';
 import { Spinner } from '@godiet-ui/Spinner';
+import { Tooltip } from '@godiet-ui/Tooltip';
 
 import { DownloadIcon } from '@radix-ui/react-icons';
 
@@ -69,12 +70,14 @@ export function DetailsPlanningMeal() {
                         <div className="flex flex-col gap-6">
                           <div className="flex flex-row items-center justify-between">
                             <h4>{planningMeal.name}</h4>
-                            <Button
-                              onClick={handleExportPDF}
-                              isLoading={isGeneratingPDF}
-                            >
-                              <DownloadIcon />
-                            </Button>
+                            <Tooltip content="Baixar PDF">
+                              <Button
+                                onClick={handleExportPDF}
+                                isLoading={isGeneratingPDF}
+                              >
+                                <DownloadIcon />
+                              </Button>
+                            </Tooltip>
                           </div>
                           <div className="flex flex-col gap-4">
                             {planningMeal.meals.map((meal) => {

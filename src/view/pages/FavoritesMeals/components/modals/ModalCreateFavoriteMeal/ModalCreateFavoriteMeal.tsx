@@ -12,6 +12,7 @@ import {
 import { SelectAutoComplete } from '@godiet-ui/SelectAutoComplete';
 import { Separator } from '@godiet-ui/Separator';
 import { SimpleInput } from '@godiet-ui/SimpleInput';
+import { Tooltip } from '@godiet-ui/Tooltip';
 
 import { TrashIcon } from '@radix-ui/react-icons';
 import { Controller } from 'react-hook-form';
@@ -155,13 +156,15 @@ export function ModalCreateFavoriteMeal(props: ModalCreateFavoriteMealProps) {
             </div>
 
             <div>
-              <Button
-                variant={'destructive'}
-                className="h-6 px-1"
-                onClick={() => removeMeal(index)}
-              >
-                <TrashIcon />
-              </Button>
+              <Tooltip content="Remover alimento">
+                <Button
+                  variant={'destructive'}
+                  className="h-6 px-1"
+                  onClick={() => removeMeal(index)}
+                >
+                  <TrashIcon />
+                </Button>
+              </Tooltip>
             </div>
           </div>
         );

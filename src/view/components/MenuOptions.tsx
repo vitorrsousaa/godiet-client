@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Button as ButtonUI } from '@godiet-ui/Button';
+import { Tooltip } from '@godiet-ui/Tooltip';
 
 interface RootProps {
   children: React.ReactNode;
@@ -15,10 +16,22 @@ export function Root(props: RootProps) {
   );
 }
 
-interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {}
+interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+  tooltipContent?: string;
+}
 
-export function Button(props: ButtonProps) {
-  return <ButtonUI variant={'outline'} {...props} />;
+export function Button({ tooltipContent, ...props }: ButtonProps) {
+  return (
+    <>
+      {tooltipContent ? (
+        <Tooltip content={tooltipContent}>
+          <ButtonUI {...props} variant={'outline'} />
+        </Tooltip>
+      ) : (
+        <ButtonUI {...props} variant={'outline'} />
+      )}
+    </>
+  );
 }
 
 const MenuOptions = {
