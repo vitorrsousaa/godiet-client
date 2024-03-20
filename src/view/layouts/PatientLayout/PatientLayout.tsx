@@ -73,12 +73,25 @@ export function PatientLayout() {
             >
               Anamnese
             </MenuOptions.Button>
+            <MenuOptions.Button
+              className="cursor-not-allowed"
+              tooltipContent="Ainda em construção!"
+            >
+              Exames laboratoriais
+            </MenuOptions.Button>
 
             <MenuOptions.Button
               className="cursor-not-allowed"
               tooltipContent="Ainda em construção!"
             >
               Antropometria
+            </MenuOptions.Button>
+
+            <MenuOptions.Button
+              className="cursor-not-allowed"
+              tooltipContent="Ainda em construção!"
+            >
+              Cálculo energético
             </MenuOptions.Button>
 
             <MenuOptions.Button
@@ -94,14 +107,14 @@ export function PatientLayout() {
               className="cursor-not-allowed"
               tooltipContent="Ainda em construção!"
             >
-              Orientações nutricionais
+              Prescrição de manipulados
             </MenuOptions.Button>
 
             <MenuOptions.Button
               className="cursor-not-allowed"
               tooltipContent="Ainda em construção!"
             >
-              Cálculo energético
+              Orientações nutricionais
             </MenuOptions.Button>
           </MenuOptions.Root>
           <Separator />
