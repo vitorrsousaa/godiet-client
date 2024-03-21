@@ -11,8 +11,12 @@ import toast from 'react-hot-toast';
 export function useAnamnesisHook() {
   const { patient, isFetchingPatient } = usePatient();
 
-  const { anamnesis, isFetchingAnamnesis, isErrorAnamnesis } =
-    useGetAllAnamnesis(patient?.id);
+  const {
+    anamnesis,
+    isFetchingAnamnesis,
+    isErrorAnamnesis,
+    isLoadingAnamnesis,
+  } = useGetAllAnamnesis(patient?.id);
 
   const { deleteAnamnesis, isDeletingAnamnesis } = useDeleteAnamnesis();
 
@@ -69,8 +73,8 @@ export function useAnamnesisHook() {
   }, [anamnesisToDelete, deleteAnamnesis, patient?.id]);
 
   const isFetching = useMemo(
-    () => isFetchingPatient || isFetchingAnamnesis,
-    [isFetchingAnamnesis, isFetchingPatient]
+    () => isFetchingPatient || isLoadingAnamnesis,
+    [isLoadingAnamnesis, isFetchingPatient]
   );
 
   return {
@@ -83,6 +87,7 @@ export function useAnamnesisHook() {
     isDeletingAnamnesis,
     anamnesisToEdit,
     modalEditAnamnesisIsOpen,
+    isFetchingAnamnesis,
     handleOpenModalEditAnamnesis,
     toggleModalSelectAnamnesis,
     handleOpenModalDeleteAnamnesis,
