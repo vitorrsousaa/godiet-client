@@ -52,9 +52,9 @@ export function CreatePlanning() {
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-4">
-              {meals.map((meal, index) => (
+              {meals.map((_, index) => (
                 <CreateMeal
-                  key={`meal-form-${meal.id}`}
+                  key={`meal-form-${index}`}
                   mealIndex={index}
                   onRemoveMeal={() => handleRemoveMeal(index)}
                 />

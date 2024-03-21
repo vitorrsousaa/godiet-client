@@ -65,11 +65,7 @@ export function useCreatePlanningHook() {
     register,
   } = methods;
 
-  const {
-    append: appendMeals,
-    remove: removeMeal,
-    fields: meals,
-  } = useFieldArray({
+  const { append: appendMeals, remove: removeMeal } = useFieldArray({
     control,
     name: 'meals',
   });
@@ -116,7 +112,7 @@ export function useCreatePlanningHook() {
     control,
     methods,
     errors,
-    meals,
+    meals: watchMeals,
     isCreatingPlanningMeal,
     register,
     handleSubmit,
