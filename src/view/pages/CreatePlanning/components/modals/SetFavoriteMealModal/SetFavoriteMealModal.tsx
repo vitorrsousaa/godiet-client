@@ -67,8 +67,21 @@ export function SetFavoriteMealModal(props: SetFavoriteMealModalProps) {
           <SelectContent>
             <SelectGroup>
               {favoritesMeals.map((option) => (
-                <SelectItem key={option.id} value={option.id}>
-                  {option.name} - {option.energy} kcal
+                <SelectItem
+                  key={option.id}
+                  value={option.id}
+                  className="flex flex-col items-start"
+                >
+                  <div>
+                    {option.name} - {option.energy} kcal
+                  </div>
+                  <div>
+                    <span>Carb: {option.carb} (g)</span>
+                    {' | '}
+                    <span>Prot: {option.prot} (g)</span>
+                    {' | '}
+                    <span>Lipid: {option.prot} (g)</span>
+                  </div>
                 </SelectItem>
               ))}
             </SelectGroup>
