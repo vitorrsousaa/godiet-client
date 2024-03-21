@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 
 import { ROUTES } from '@godiet-config';
 import { NotFound } from '@godiet-pages/NotFound';
+import { Sample } from '@godiet-pages/Sample';
 import { Logo } from '@godiet-ui/Logo';
 import { Spinner } from '@godiet-ui/Spinner';
 import { lazyLoad } from '@godiet-utils/lazyLoad';
@@ -77,6 +78,7 @@ export function Router() {
             <Route path={ROUTES.LOGIN} element={<Login />} />
             <Route path={ROUTES.REGISTER} element={<Register />} />
             <Route path={ROUTES.HOME} element={<LandingPage />} />
+            <Route path="/sample" element={<Sample />} />
           </Route>
           <Route element={<AuthGuard isPrivate={true} />}>
             <Route element={<DashboardLayout />}>
