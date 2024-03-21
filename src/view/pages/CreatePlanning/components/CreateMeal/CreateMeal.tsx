@@ -45,6 +45,7 @@ export function CreateMeal(props: CreateMealProps) {
     handleOpenModalRemoveFood,
     handleCloseModalRemoveFood,
     toggleModalAddFoodOpen,
+    handleDuplicateMeal,
     register,
   } = useCreateMealHook(props);
 
@@ -55,7 +56,11 @@ export function CreateMeal(props: CreateMealProps) {
           Refeição {mealIndex + 1}
           <div className="space-x-2">
             <Tooltip content="Duplicar refeição">
-              <Button variant={'outline'} className="h-8 px-2">
+              <Button
+                variant={'outline'}
+                className="h-8 px-2"
+                onClick={handleDuplicateMeal}
+              >
                 <ClipboardIcon />
               </Button>
             </Tooltip>

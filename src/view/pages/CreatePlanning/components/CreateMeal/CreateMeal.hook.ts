@@ -64,6 +64,11 @@ export function useCreateMealHook(props: CreateMealProps) {
     name: `meals.${mealIndex}.mealFoods`,
   });
 
+  const { append: appendMeals } = useFieldArray({
+    control,
+    name: 'meals',
+  });
+
   const watchMeal = useWatch({
     control,
     name: `meals.${mealIndex}`,
@@ -149,6 +154,10 @@ export function useCreateMealHook(props: CreateMealProps) {
     handleCloseModalRemoveFood();
   }, [handleCloseModalRemoveFood, remove, selectedFoodIndex]);
 
+  const handleDuplicateMeal = useCallback(() => {
+    appendMeals(watchMeal);
+  }, [appendMeals, watchMeal]);
+
   return {
     modalAddFoodIsOpen,
     modalRemoveFoodIsOpen,
@@ -167,6 +176,7 @@ export function useCreateMealHook(props: CreateMealProps) {
     handleOpenModalRemoveFood,
     handleCloseModalRemoveFood,
     handleRemoveMealFood,
+    handleDuplicateMeal,
     register,
   };
 }
