@@ -1,6 +1,7 @@
 import { Button } from '@godiet-ui/Button';
 import { Card } from '@godiet-ui/Card';
 import { DangerModal } from '@godiet-ui/DangerModal';
+import { Tooltip } from '@godiet-ui/Tooltip';
 import { formatDate } from '@godiet-utils/formatDate';
 
 import {
@@ -24,6 +25,7 @@ export function Anamnesis() {
     isDeletingAnamnesis,
     modalEditAnamnesisIsOpen,
     anamnesisToEdit,
+    isFetchingAnamnesis,
     handleOpenModalEditAnamnesis,
     toggleModalSelectAnamnesis,
     handleOpenModalDeleteAnamnesis,
@@ -34,7 +36,12 @@ export function Anamnesis() {
     <div className="mb-10 flex flex-col gap-6">
       <section className="flex flex-row items-center justify-between">
         <h1 className="text-lg font-semibold ">Anamnesis</h1>
-        <Button onClick={toggleModalSelectAnamnesis}>Criar novo</Button>
+        <Button
+          onClick={toggleModalSelectAnamnesis}
+          isLoading={isFetchingAnamnesis}
+        >
+          Criar novo
+        </Button>
       </section>
       {isFetching ? (
         <div>Carregando...</div>
@@ -57,25 +64,38 @@ export function Anamnesis() {
                         <Card.Title className="flex w-full items-center justify-between">
                           {anamnese.title}{' '}
                           <div className="flex gap-2 [&>button]:h-8 [&>button]:px-2">
-                            <Button>
-                              <DownloadIcon />
-                            </Button>
-                            <Button
-                              onClick={() =>
-                                handleOpenModalEditAnamnesis(anamnese.id)
-                              }
-                            >
-                              <ExternalLinkIcon />
-                            </Button>
-                            <Button
-                              variant={'destructive'}
-                              type="button"
-                              onClick={() =>
-                                handleOpenModalDeleteAnamnesis(anamnese.id)
-                              }
-                            >
-                              <TrashIcon />
-                            </Button>
+                            <Tooltip content="Download anamnese">
+                              <Button
+                                isLoading={isFetchingAnamnesis}
+                                className="[&>svg]:h-4 [&>svg]:w-4"
+                              >
+                                <DownloadIcon />
+                              </Button>
+                            </Tooltip>
+                            <Tooltip content="Editar anamnese">
+                              <Button
+                                onClick={() =>
+                                  handleOpenModalEditAnamnesis(anamnese.id)
+                                }
+                                isLoading={isFetchingAnamnesis}
+                                className="[&>svg]:h-4 [&>svg]:w-4"
+                              >
+                                <ExternalLinkIcon />
+                              </Button>
+                            </Tooltip>
+                            <Tooltip content="Remover anamnese">
+                              <Button
+                                variant={'destructive'}
+                                type="button"
+                                onClick={() =>
+                                  handleOpenModalDeleteAnamnesis(anamnese.id)
+                                }
+                                isLoading={isFetchingAnamnesis}
+                                className="[&>svg]:h-4 [&>svg]:w-4"
+                              >
+                                <TrashIcon />
+                              </Button>
+                            </Tooltip>
                           </div>
                         </Card.Title>
                         <Card.Description>

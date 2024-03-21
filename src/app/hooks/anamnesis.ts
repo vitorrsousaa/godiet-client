@@ -57,7 +57,7 @@ export function useUpdateAnamnesis() {
 }
 
 export function useGetAllAnamnesis(patientId: string | undefined) {
-  const { data, isLoading, isPending, isError } = useQuery({
+  const { data, isLoading, isPending, isError, isFetching } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.ANAMNESIS, patientId && patientId],
     queryFn: () => anamnesisServices.getAll({ patientId: patientId || '' }),
     enabled: !!patientId,
@@ -65,8 +65,9 @@ export function useGetAllAnamnesis(patientId: string | undefined) {
 
   return {
     anamnesis: data ?? [],
-    isFetchingAnamnesis: isLoading || isPending,
+    isFetchingAnamnesis: isFetching || isPending,
     isErrorAnamnesis: isError,
+    isLoadingAnamnesis: isLoading,
   };
 }
 
