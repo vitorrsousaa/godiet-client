@@ -1,4 +1,5 @@
 import noData from '@godiet-assets/no_data.svg';
+import warning from '@godiet-assets/warning.svg';
 import { Button } from '@godiet-ui/Button';
 import { Card } from '@godiet-ui/Card';
 import { DangerModal } from '@godiet-ui/DangerModal';
@@ -17,6 +18,7 @@ export function Patients() {
     isFetchingPatients,
     isDeletingPatient,
     isLoadingPatients,
+    isErrorPatients,
     toggleModalCreatePatient,
     toggleModalDeletePatient,
     handleDeletePatient,
@@ -74,6 +76,12 @@ export function Patients() {
               </Card.Root>
             ))}
           </div>
+        ) : isErrorPatients ? (
+          <>
+            <img src={warning} alt="warning" className="w-24" />
+            <p>Tivemos um erro para buscar seus pacientes.</p>
+            <p>Por favor, tente novamente!</p>
+          </>
         ) : (
           <>
             <img src={noData} alt="no-data" className="w-20" />

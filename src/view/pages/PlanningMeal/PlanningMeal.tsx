@@ -6,6 +6,7 @@ import { formatDate } from '@godiet-utils/formatDate';
 
 import { ExternalLinkIcon, TrashIcon } from '@radix-ui/react-icons';
 
+import { PlanningMealError } from './PlanningMeal.error';
 import { usePlanningMealHook } from './PlanningMeal.hook';
 
 export function PlanningMeal() {
@@ -14,6 +15,7 @@ export function PlanningMeal() {
     planningMeals,
     isDeletingPlanningMeal,
     isDeletePlanningModalOpen,
+    isErrorPlanningMeals,
     isFetchingPlanningMeals,
     toggleModalDeletePlanning,
     handleDeletePlanningMeal,
@@ -34,6 +36,8 @@ export function PlanningMeal() {
       </section>
       {isFetching ? (
         <div>Carregando...</div>
+      ) : isErrorPlanningMeals ? (
+        <PlanningMealError />
       ) : planningMeals.length > 0 ? (
         <>
           {planningMeals.map((planningMeal) => {
