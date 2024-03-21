@@ -17,7 +17,7 @@ export function usePatientsHook() {
   >(null);
 
   const { deletePatient, isDeletingPatient } = useDeletePatient();
-  const { isFetchingPatients, isLoadingPatients, patients } =
+  const { isFetchingPatients, isLoadingPatients, patients, isErrorPatients } =
     useGetAllPatients();
 
   const { navigate } = useNavigate();
@@ -64,6 +64,7 @@ export function usePatientsHook() {
     isFetchingPatients,
     isLoadingPatients,
     isDeletingPatient,
+    isErrorPatients,
     toggleModalCreatePatient,
     toggleModalDeletePatient,
     handleDeletePatient,

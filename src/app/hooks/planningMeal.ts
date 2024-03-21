@@ -29,7 +29,7 @@ interface queryGetAllByPatientParams {
 export function useGetAllByPatient(params: queryGetAllByPatientParams) {
   const { patientId } = params;
 
-  const { data, isFetching, isPending, isLoading } = useQuery({
+  const { data, isFetching, isPending, isLoading, isError } = useQuery({
     queryKey: [QUERY_CACHE_KEYS.PLANNING_MEAL, patientId],
     queryFn: () =>
       planningMealServices.getAllByPatient({
@@ -43,6 +43,7 @@ export function useGetAllByPatient(params: queryGetAllByPatientParams) {
     planningMeals: data || [],
     isFetchingPlanningMeals: isFetching || isPending,
     isLoadingPlanningMeals: isLoading,
+    isErrorPlanningMeals: isError,
   };
 }
 

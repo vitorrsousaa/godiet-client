@@ -24,10 +24,14 @@ export function usePlanningMealHook() {
 
   const { isFetchingPatient, patient } = useGetByPatientId(id);
 
-  const { isFetchingPlanningMeals, isLoadingPlanningMeals, planningMeals } =
-    useGetAllByPatient({
-      patientId: patient?.id,
-    });
+  const {
+    isFetchingPlanningMeals,
+    isLoadingPlanningMeals,
+    planningMeals,
+    isErrorPlanningMeals,
+  } = useGetAllByPatient({
+    patientId: patient?.id,
+  });
 
   const { deletePlanningMeal, isDeletingPlanningMeal } = useDeletePlanningMeal({
     patientId: patient?.id || '',
@@ -89,6 +93,7 @@ export function usePlanningMealHook() {
     isDeletingPlanningMeal,
     isDeletePlanningModalOpen,
     isFetchingPlanningMeals,
+    isErrorPlanningMeals,
     toggleModalDeletePlanning,
     handleDeletePlanningMeal,
     handleNavigateToCreatePlanning,

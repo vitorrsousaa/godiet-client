@@ -1,3 +1,4 @@
+import warning from '@godiet-assets/warning.svg';
 import { MenuOptions } from '@godiet-components/MenuOptions';
 import { Avatar } from '@godiet-ui/Avatar';
 import { Button } from '@godiet-ui/Button';
@@ -34,6 +35,7 @@ export function PatientLayout() {
         <div>Carregando...</div>
       ) : !patient || isErrorPatient ? (
         <div className="mt-10 flex w-full flex-col items-center justify-center gap-4 text-center">
+          <img src={warning} alt="warning" className="w-24" />
           <div>
             <p>Tivemos um erro para encontrar este paciente!</p>
             <p>Por favor. Tente novamente mais tarde!</p>
