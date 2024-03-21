@@ -36,7 +36,9 @@
       "@godiet-query": ["./src/app/libs/query.tsx"],
       "@godiet-services/*": ["./src/app/services/*"],
       "@godiet-entities": ["./src/app/entities/index.ts"],
-      "@godiet-components/*": ["./src/view/components/*"]
+      "@godiet-components/*": ["./src/view/components/*"],
+      "@testing-suit": ["./src/app/libs/testing/suit"],
+      "@testing-react": ["./src/app/libs/testing/react"]
     },
 
     /* Testing */
