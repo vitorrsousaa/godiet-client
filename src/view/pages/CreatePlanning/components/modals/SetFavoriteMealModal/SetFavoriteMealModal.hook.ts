@@ -90,6 +90,19 @@ export function useSetFavoriteMealModalHook(props: SetFavoriteMealModalProps) {
     () => Boolean(selectedFavoriteMeal && selectedFavoriteMeal.length > 0),
     [selectedFavoriteMeal]
   );
+
+  const selectedFavoriteMealToDisplay = useMemo(() => {
+    const toDisplay = favoritesMeals.find(
+      (meal) => meal.id === selectedFavoriteMeal
+    );
+
+    if (toDisplay) {
+      return `${toDisplay.name} - ${toDisplay.energy} kcal`;
+    }
+
+    return null;
+  }, [favoritesMeals, selectedFavoriteMeal]);
+
   //memos
 
   //callbacks
@@ -125,6 +138,7 @@ export function useSetFavoriteMealModalHook(props: SetFavoriteMealModalProps) {
     isFetchingFavoriteMeal,
     favoritesMeals,
     isValid,
+    selectedFavoriteMealToDisplay,
     handleCloseModal,
     setSelectedFavoriteMeal,
     handleSubmit,

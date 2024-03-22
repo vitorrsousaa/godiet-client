@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { Button } from '@godiet-ui/Button';
 import { Modal } from '@godiet-ui/Modal';
 import {
@@ -26,6 +28,7 @@ export function SetFavoriteMealModal(props: SetFavoriteMealModalProps) {
     isFetchingFavoriteMeal,
     favoritesMeals,
     isValid,
+    selectedFavoriteMealToDisplay,
     handleCloseModal,
     setSelectedFavoriteMeal,
     handleSubmit,
@@ -62,7 +65,9 @@ export function SetFavoriteMealModal(props: SetFavoriteMealModalProps) {
           onValueChange={(value) => setSelectedFavoriteMeal(value)}
         >
           <SelectTrigger isLoading={isFetchingFavoriteMeal}>
-            <SelectValue placeholder="Selecione uma refeição favorita" />
+            <SelectValue placeholder="Selecione uma refeição favorita">
+              {selectedFavoriteMealToDisplay}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -71,6 +76,7 @@ export function SetFavoriteMealModal(props: SetFavoriteMealModalProps) {
                   key={option.id}
                   value={option.id}
                   className="flex flex-col items-start"
+                  textValue='option.name + " - " + option.energy + " kcal"'
                 >
                   <div>
                     {option.name} - {option.energy} kcal
