@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Button } from '@godiet-ui/Button';
 import { Modal } from '@godiet-ui/Modal';
 import {
