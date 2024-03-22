@@ -51,10 +51,36 @@ export function useSetFavoriteMealModalHook(props: SetFavoriteMealModalProps) {
           return acc + energyAttribute.qty;
         }, 0);
 
+        const totalProt = mealFoods.reduce((acc, mealFood) => {
+          const protAttribute = mealFood.food.attributes.find(
+            (attribute) => attribute.name === 'protein'
+          );
+
+          if (!protAttribute) {
+            return acc;
+          }
+
+          return acc + protAttribute.qty;
+        }, 0);
+
+        const totalCarb = mealFoods.reduce((acc, mealFood) => {
+          const carbAttribute = mealFood.food.attributes.find(
+            (attribute) => attribute.name === 'carbohydrate'
+          );
+
+          if (!carbAttribute) {
+            return acc;
+          }
+
+          return acc + carbAttribute.qty;
+        }, 0);
+
         return {
           name: favorite.name,
           id: favorite.id,
           energy: Math.floor(totalEnergy),
+          prot: Math.floor(totalProt),
+          carb: Math.floor(totalCarb),
         };
       }),
     [favorites]
