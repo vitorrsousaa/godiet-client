@@ -33,9 +33,14 @@ export { ${toPascalCase(inputs.name)}Controller };
           {
             type: 'file',
             name: (inputs) => `${toCamelCase(inputs.name)}.error.tsx`,
-            content: (
-              inputs
-            ) => `export function ${toPascalCase(inputs.name)}Error() {
+            content: (inputs) => `/**
+* Componente de indicador de erro.
+*
+* Este componente é exibido quando ocorre um erro durante o carregamento dos dados na página.
+*
+* @returns Retorna o componente de indicador de erro.
+*/
+export function ${toPascalCase(inputs.name)}Error() {
   return (
     <div>
       <h1>${toPascalCase(inputs.name)}Error</h1>
@@ -46,10 +51,90 @@ export { ${toPascalCase(inputs.name)}Controller };
           },
           {
             type: 'file',
-            name: (inputs) => `${toCamelCase(inputs.name)}.loading.tsx`,
+            name: (inputs) => `${toCamelCase(inputs.name)}.controller.tsx`,
             content: (
               inputs
-            ) => `export function ${toPascalCase(inputs.name)}Loading() {
+            ) => `import { ${toPascalCase(inputs.name)}Empty } from './${toCamelCase(inputs.name)}.empty';
+import { ${toPascalCase(inputs.name)}Error } from './${toCamelCase(inputs.name)}.error';
+import { use${toPascalCase(inputs.name)}Hook } from './${toCamelCase(inputs.name)}.hook';
+import { ${toPascalCase(inputs.name)}Loading } from './${toCamelCase(inputs.name)}.loading';
+import { ${toPascalCase(inputs.name)}View } from './${toCamelCase(inputs.name)}.view';
+
+/**
+ * Componente que controla a lógica da página de exemplo.
+ *
+ * Este componente gerencia o estado da página de exemplo, lidando com casos de carregamento, erro e dados vazios.
+ * Ele utiliza o hook use${toPascalCase(inputs.name)}Hook para obter os dados e o estado da página.
+ *
+ * As propriedades necessárias para renderizar a view são encaminhadas no controller. E devem ser definidas
+ * dentro do componente de view.
+ *
+ * @returns Retorna o componente da página de exemplo.
+ */
+export function ${toPascalCase(inputs.name)}Controller() {
+  const { pageStatus, state } = use${toPascalCase(inputs.name)}Hook();
+
+  const { isError, isLoading, noData } = pageStatus;
+
+  if (isLoading) {
+    return <${toPascalCase(inputs.name)}Loading />;
+  }
+
+  if (isError) {
+    return <${toPascalCase(inputs.name)}Error />;
+  }
+
+  if (noData) {
+    return <${toPascalCase(inputs.name)}Empty />;
+  }
+
+  return <${toPascalCase(inputs.name)}View data={state} />;
+}
+
+`,
+          },
+          {
+            type: 'file',
+            name: (inputs) => `${toCamelCase(inputs.name)}.layout.tsx`,
+            content: (inputs) => `import React from 'react';
+
+interface ${toPascalCase(inputs.name)}LayoutProps {
+  children: React.ReactNode;
+}
+
+/**
+ * Componente de layout para a página inteira.
+ *
+ * Este componente é responsável por fornecer um layout consistente para toda a página.
+ * Qualquer conteúdo definido dentro deste componente será carregado para a página inteira,
+ * independente do estado de carregamento, erro ou dados vazios da página.
+ *
+ * @returns Retorna o componente de layout para a página inteira.
+ */
+export function ${toPascalCase(inputs.name)}Layout(props: ${toPascalCase(inputs.name)}LayoutProps) {
+  const { children } = props;
+
+  return (
+    <div>
+      ${toPascalCase(inputs.name)} layout
+      {children}
+    </div>
+  );
+}
+
+`,
+          },
+          {
+            type: 'file',
+            name: (inputs) => `${toCamelCase(inputs.name)}.loading.tsx`,
+            content: (inputs) => `/**
+ * Componente de indicador de carregamento.
+ *
+ * Este componente é exibido enquanto os dados estão sendo carregados na página.
+ *
+ * @returns Retorna o componente de indicador de carregamento.
+ */
+export function ${toPascalCase(inputs.name)}Loading() {
   return (
     <div>
       <h1>${toPascalCase(inputs.name)}Loading</h1>
@@ -60,10 +145,32 @@ export { ${toPascalCase(inputs.name)}Controller };
           },
           {
             type: 'file',
-            name: (inputs) => `${toCamelCase(inputs.name)}.empty.tsx`,
+            name: (inputs) => `${toCamelCase(inputs.name)}.tsx`,
             content: (
               inputs
-            ) => `export function ${toPascalCase(inputs.name)}Empty() {
+            ) => `import { ${toPascalCase(inputs.name)}Controller } from './${toCamelCase(inputs.name)}.controller';
+import { ${toPascalCase(inputs.name)}Layout } from './${toCamelCase(inputs.name)}.layout';
+
+export function ${toPascalCase(inputs.name)}() {
+  return (
+    <${toPascalCase(inputs.name)}Layout>
+      <${toPascalCase(inputs.name)}Controller />
+    </${toPascalCase(inputs.name)}Layout>
+  );
+}
+`,
+          },
+          {
+            type: 'file',
+            name: (inputs) => `${toCamelCase(inputs.name)}.empty.tsx`,
+            content: (inputs) => `/**
+* Componente de indicador de dados vazios.
+*
+* Este componente é exibido quando não há dados disponíveis para serem mostrados na página.
+*
+* @returns Retorna o componente de indicador de dados vazios.
+*/
+export function ${toPascalCase(inputs.name)}Empty() {
   return (
     <div>
       <h1>${toPascalCase(inputs.name)}Empty</h1>
@@ -77,135 +184,138 @@ export { ${toPascalCase(inputs.name)}Controller };
             name: (inputs) => `${toCamelCase(inputs.name)}.hook.ts`,
             content: (inputs) => `import { useState } from 'react';
 
-export function use${toPascalCase(inputs.name)}Hook() {
-  const [state] = useState();
+import { ReturnHookPage } from '@godiet-utils/types';
+
+/**
+ * Define o formato de saída do hook \`use${toPascalCase(inputs.name)}Hook\`.
+ *
+ * Este tipo descreve a estrutura dos dados de saída retornados pelo hook \`use${toPascalCase(inputs.name)}Hook\`.
+ *
+ * @interface ${toPascalCase(inputs.name)}HookOutput
+ */
+interface ${toPascalCase(inputs.name)}HookOutput {
+  state: number;
+}
+
+/**
+ * Hook customizado que gerencia a lógica da página de exemplo.
+ *
+ * Este hook é responsável por gerenciar o estado da página de exemplo, incluindo o estado interno e o status da página.
+ *
+ * @returns Retorna um objeto contendo o estado interno e o status da página.
+ */
+export function use${toPascalCase(inputs.name)}Hook(): ReturnHookPage<${toPascalCase(inputs.name)}HookOutput> {
+  const [state] = useState(0);
 
   return {
     state,
-    isLoading: false,
-    isError: false,
-  }
+    pageStatus: {
+      isLoading: false,
+      isError: false,
+      noData: true,
+    },
+  };
 }
 `,
           },
+          {
+            type: 'file',
+            name: (inputs) => `${toCamelCase(inputs.name)}.view.tsx`,
+            content: (inputs) => `
+/**
+ * Interface que define as propriedades aceitas pelo componente \`${toPascalCase(inputs.name)}View\`.
+ *
+ * Este tipo de dados descreve as propriedades que podem ser passadas para o componente \`${toPascalCase(inputs.name)}View\`.
+ *
+ * @interface ${toPascalCase(inputs.name)}ViewProps
+ */
+export interface ${toPascalCase(inputs.name)}ViewProps {
+  data: number;
+}
 
+/**
+ * Esse componente representa a view da página de exemplo.
+ * @param props - As propriedades são definidas dentro do ${toPascalCase(inputs.name)}ViewProps. E são encaminhadas para o componente dentro do ${toPascalCase(inputs.name)}Controller.
+ * @returns Retorna o componente da view.
+ */
+export function ${toPascalCase(inputs.name)}View(props: ${toPascalCase(inputs.name)}ViewProps) {
+  const { data } = props;
+
+  return (
+    <div>
+      <h1>${toPascalCase(inputs.name)} view</h1>
+      {data}
+    </div>
+  );
+}
+
+
+`,
+          },
           {
             type: 'file',
             name: (inputs) => `${toCamelCase(inputs.name)}.spec.tsx`,
             content: (inputs) =>
-              `import { AppError } from '@/errors'
-import { IRequest } from '@/interfaces/http';
-import { clearAllMocks, fn, SpyInstance, spyOn } from '@/tests';
+              `import {
+  render,
+  renderHook,
+  ReturnRenderHookType,
+  ReturnRenderType,
+} from '@testing-react';
+import { clearAllMocks } from '@testing-suit';
 
-import { ${toPascalCase(inputs.name)}Controller } from './controller';
+import { use${toPascalCase(inputs.name)}Hook } from './${toCamelCase(inputs.name)}.hook';
+import { ${toPascalCase(inputs.name)}View } from './${toCamelCase(inputs.name)}.view';
 
-describe('${toPascalCase(inputs.name)}Controller', () => {
-  let mockRequest: IRequest
-  let controller: ${toPascalCase(inputs.name)}Controller;
-
-  let spy = {
-    'service.execute': {} as SpyInstance<any>,
-  }
-
-  beforeEach(() => {
-    mockRequest = {
-      body: {},
-      params: {},
-      accountId: '',
-    } as IRequest;
-
-    const service = {
-      execute: fn(),
-    } as unknown;
-
-    spy = {
-      'service.execute': spyOn(service, 'execute'),
-    }
-
-    controller = new ${toPascalCase(inputs.name)}Controller(service);
-  });
-
+describe('${toPascalCase(inputs.name)}Page' ,() => {
   afterEach(() => {
     clearAllMocks();
-    mockRequest.body = {};
+  });
+
+  describe('View', () => {
+    let rendered: ReturnRenderType;
+
+    beforeEach(() => {
+      clearAllMocks();
+    });
+
+    afterEach(() => {
+      rendered.unmount();
+    });
+
+    it('Should render the view with default props', () => {
+      // Arrange
+
+      // Act
+      rendered = render(<${toPascalCase(inputs.name)}View data={0} />);
+
+      // Assert
+      expect(rendered.getByText('${toPascalCase(inputs.name)} view'));
+    });
   })
 
-  it('Should throw error when account id is not provided', async () => {
-    // Arrange
+  describe('Hook', () => {
+    let rendered: ReturnRenderHookType<typeof use${toPascalCase(inputs.name)}Hook>;
 
-    // Act
-    const response = await controller.handle(mockRequest);
-
-    // Assert
-    expect(response).toEqual({
-      statusCode: 400,
-      body: {
-        error: 'User not found',
-      },
+    beforeEach(() => {
+      clearAllMocks();
     });
-  });
 
-  it('Should throw error when is called with incorrect schema ', async () => {
-    // Arrange
-    mockRequest.accountId = 'account_id';
-    // Includes all fields that are required
-    mockRequest.patientId = 'cc4c275f-923b-4b6c-b3e1-952b30f88f42';
-
-    // Act
-    const response = await controller.handle(mockRequest);
-
-    // Assert
-    expect(response).toEqual({
-      statusCode: 422,
-      body: [
-        {
-          field: 'userId',
-          message: 'Invalid uuid',
-        },
-      ],
+    afterEach(() => {
+      rendered.unmount();
     });
-  });
 
-  it('Should throw error when service throw unknown error', async () => {
-    // Arrange
-    mockRequest.accountId = '4b429c9e-7562-421a-9aa9-669e1b380b7a';
-    spy['service.execute'].mockRejectedValue('Incorrect Error');
-    // Includes all fields that are required
-    mockRequest.patientId = 'cc4c275f-923b-4b6c-b3e1-952b30f88f42';
+    it('Should render the hook with default props', () => {
+      // Arrange
 
-    // Act
-    const response = await controller.handle(mockRequest);
+      // Act
+      rendered = renderHook(() => use${toPascalCase(inputs.name)}Hook());
 
-    // Assert
-    expect(response).toEqual({
-      statusCode: 500,
-      body: {
-        error: 'Internal server error',
-      },
+      // Assert
+      expect(rendered.result.current.state).toEqual(0);
     });
-  });
-
-  it('Should throw error when service throw app error', async () => {
-    // Arrange
-    mockRequest.accountId = '4b429c9e-7562-421a-9aa9-669e1b380b7a';
-    spy['service.execute'].mockRejectedValue(
-      new AppError('Incorrect Error', 400)
-    );
-    // Includes all fields that are required
-    mockRequest.patientId = 'cc4c275f-923b-4b6c-b3e1-952b30f88f42';
-
-    // Act
-    const response = await controller.handle(mockRequest);
-
-    // Assert
-    expect(response).toEqual({
-      statusCode: 400,
-      body: {
-        error: 'Incorrect Error',
-      },
-    });
-  });
-});
+  })
+})
 `,
           },
         ],
