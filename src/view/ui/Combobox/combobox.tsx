@@ -14,11 +14,7 @@ import { ScrollArea } from '@godiet-ui/ScrollArea';
 import { Spinner } from '@godiet-ui/Spinner';
 import { cn } from '@godiet-utils/cn';
 
-import {
-  CheckIcon,
-  ChevronDownIcon,
-  ChevronUpIcon,
-} from '@radix-ui/react-icons';
+import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
 
 interface OptionType {
   label: string;
@@ -99,10 +95,8 @@ export function Combobox(props: ComboboxProps) {
 
           {isLoading ? (
             <Spinner className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-          ) : open ? (
-            <ChevronUpIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           ) : (
-            <ChevronDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+            <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           )}
         </Button>
       </PopoverTrigger>
