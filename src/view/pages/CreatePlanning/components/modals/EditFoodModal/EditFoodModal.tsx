@@ -1,4 +1,5 @@
 import { Button } from '@godiet-ui/Button';
+import { Combobox } from '@godiet-ui/Combobox';
 import { Input } from '@godiet-ui/Input';
 import { Modal } from '@godiet-ui/Modal';
 import {
@@ -9,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@godiet-ui/Select';
-import { SelectAutoComplete } from '@godiet-ui/SelectAutoComplete';
 import { Separator } from '@godiet-ui/Separator';
 
 import { Controller } from 'react-hook-form';
@@ -66,15 +66,15 @@ export function EditFoodModal(props: EditFoodModalProps) {
           control={internalControl}
           name="id"
           render={({ field: { value, onChange } }) => (
-            <SelectAutoComplete
+            <Combobox
               isLoading={isFetchingFoods}
               placeholder="Selecione um alimento"
               options={foodOptions}
               value={value}
-              onChange={(event) =>
+              onChange={(newValue) =>
                 handleChangeSelectAutoComplete({
                   onChange,
-                  event,
+                  newValue,
                 })
               }
             />

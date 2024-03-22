@@ -28,7 +28,7 @@ export type TCreateMealDTO = z.infer<typeof CreateMealFoodSchema>;
 interface HandleChangeSelectAutoCompleteParams {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange: (...event: any[]) => void;
-  event: React.ChangeEvent<HTMLSelectElement>;
+  newValue: string;
 }
 
 export function useEditFoodModalHook(props: EditFoodModalProps) {
@@ -102,11 +102,9 @@ export function useEditFoodModalHook(props: EditFoodModalProps) {
 
   const handleChangeSelectAutoComplete = useCallback(
     (param: HandleChangeSelectAutoCompleteParams) => {
-      const { event, onChange } = param;
+      const { newValue, onChange } = param;
 
-      const selectedFood = foods.find(
-        (food) => food.id === event.target.value
-      )!;
+      const selectedFood = foods.find((food) => food.id === newValue)!;
 
       const hasSameMeasure = selectedFood.measures.find(
         (measure) => measure.name === initialValues?.measure.name
@@ -116,7 +114,7 @@ export function useEditFoodModalHook(props: EditFoodModalProps) {
         setValue('measure', selectedFood.measures[0]);
       }
 
-      onChange(event);
+      onChange(newValue);
     },
     [foods, initialValues?.measure, setValue]
   );
