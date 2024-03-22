@@ -26,6 +26,8 @@ export default defineConfig({
         __dirname,
         './src/app/entities/index.ts'
       ),
+      '@testing-suit': path.resolve(__dirname, './src/app/libs/testing/suit'),
+      '@testing-react': path.resolve(__dirname, './src/app/libs/testing/react'),
     },
   },
 });

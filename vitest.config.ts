@@ -3,19 +3,17 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
+    environment: 'happy-dom',
     exclude: [
       '**/node_modules/**',
       '**/dist/**',
       '**/cypress/**',
       '**/.{idea,git,cache,output,temp}/**',
       '**/{karma,rollup,webpack,vite,vitest,jest,ava,babel,nyc,cypress,tsup,build}.config.*',
-      '**/src/app/tests/**/index.ts',
       '**/html/**',
       '**/coverage/**',
-      '**/src/server/**',
-      '**/src/factories/**',
     ],
-    reporters: ['html', 'basic'],
+    reporters: ['basic'],
     coverage: {
       provider: 'v8',
     },
@@ -37,6 +35,8 @@ export default defineConfig({
         __dirname,
         './src/app/entities/index.ts'
       ),
+      '@testing-suit': path.resolve(__dirname, './src/app/libs/testing/suit'),
+      '@testing-react': path.resolve(__dirname, './src/app/libs/testing/react'),
     },
   },
 });
