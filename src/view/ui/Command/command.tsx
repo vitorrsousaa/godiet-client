@@ -1,5 +1,3 @@
-'use client';
-
 import * as React from 'react';
 
 import { ModalContent, ModalRoot } from '@godiet-ui/Modal';
@@ -17,7 +15,6 @@ const Command = React.forwardRef<
     ref={ref}
     className={cn(
       'flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground',
-
       className
     )}
     {...props}
