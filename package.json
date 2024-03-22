@@ -45,7 +45,7 @@
     "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
-    "cmdk": "^1.0.0",
+    "cmdk": "0.2.1",
     "date-fns": "^3.3.1",
     "jspdf": "^2.5.1",
     "lodash": "^4.17.21",
@@ -61,6 +61,7 @@
     "tailwind-merge": "^2.2.2",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7",
+    "use-debounce": "^10.0.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
