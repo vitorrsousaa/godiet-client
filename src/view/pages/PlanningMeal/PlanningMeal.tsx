@@ -39,14 +39,14 @@ export function PlanningMeal() {
       ) : isErrorPlanningMeals ? (
         <PlanningMealError />
       ) : planningMeals.length > 0 ? (
-        <>
+        <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 ">
           {planningMeals.map((planningMeal) => {
             return (
               <Card.Root key={`planning-meal-${planningMeal.id}`}>
                 <Card.Header>
                   <Card.Title className="flex w-full items-center justify-between">
-                    {planningMeal.name}{' '}
-                    <div className="flex gap-2 [&>button]:h-8 [&>button]:px-2">
+                    {planningMeal.name}
+                    <div className="flex gap-1 [&>button]:h-8 [&>button]:px-2">
                       <Tooltip content="Exibir plano">
                         <Button
                           onClick={() =>
@@ -76,7 +76,7 @@ export function PlanningMeal() {
               </Card.Root>
             );
           })}
-        </>
+        </div>
       ) : (
         <>
           <div className="mt-10 flex flex-col items-center justify-center gap-8 text-center">
