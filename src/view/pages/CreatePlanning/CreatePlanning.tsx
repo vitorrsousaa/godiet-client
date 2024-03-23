@@ -6,6 +6,7 @@ import { PlusIcon } from '@radix-ui/react-icons';
 import { FormProvider } from 'react-hook-form';
 
 import { CreateMeal } from './components/CreateMeal';
+import { FooterBanner } from './components/FooterBanner';
 import { useCreatePlanningHook } from './CreatePlanning.hook';
 
 export function CreatePlanning() {
@@ -24,7 +25,7 @@ export function CreatePlanning() {
   return (
     <FormProvider {...methods}>
       <DevTool control={control} />
-      <form>
+      <form className="sm:md-20 mb-32">
         <div className="flex flex-col gap-4">
           <h3 className="pb-2 text-lg font-bold text-foreground">
             Plano alimentar
@@ -78,6 +79,7 @@ export function CreatePlanning() {
           </div>
         </div>
       </form>
+      <FooterBanner />
     </FormProvider>
   );
 }
