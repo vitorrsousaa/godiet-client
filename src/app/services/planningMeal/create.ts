@@ -43,7 +43,7 @@ function mapper(planningMeal: TCreatePlanningMealDTO): TCreatePlanningMeal {
       time: meal.time,
       name: meal.name,
       mealFoods: meal.mealFoods.map((mealFood) => ({
-        foodId: mealFood.id,
+        foodId: mealFood.foodId,
         qty: mealFood.qty,
         measure: mealFood.measure,
         options: [],

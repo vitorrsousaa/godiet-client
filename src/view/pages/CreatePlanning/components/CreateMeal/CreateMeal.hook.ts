@@ -1,8 +1,12 @@
 import { useCallback, useMemo, useReducer, useState } from 'react';
 
-import { TCreatePlanningMealDTO } from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
+import {
+  CreateMealFoodSchema,
+  TCreatePlanningMealDTO,
+} from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
 
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import * as z from 'zod';
 
 import { CreateMealProps } from './CreateMeal';
 
@@ -16,6 +20,10 @@ interface FoodsByMeal {
   energy: number;
   name: string;
 }
+
+type TSelectedFoodToEdit = z.infer<typeof CreateMealFoodSchema> & {
+  mealFoodIndex: number;
+};
 
 export function useCreateMealHook(props: CreateMealProps) {
   const { mealIndex } = props;
@@ -50,12 +58,8 @@ export function useCreateMealHook(props: CreateMealProps) {
     null
   );
 
-  const [selectedFoodToEdit, setSelectedFoodToEdit] = useState<{
-    id: string;
-    measure: { name: string; qty: number };
-    qty: number;
-    mealFoodIndex: number;
-  } | null>(null);
+  const [selectedFoodToEdit, setSelectedFoodToEdit] =
+    useState<TSelectedFoodToEdit | null>(null);
 
   const { register, control } = useFormContext<TCreatePlanningMealDTO>();
 
@@ -78,7 +82,7 @@ export function useCreateMealHook(props: CreateMealProps) {
     const initialFoodsByMeal: FoodsByMeal[] = [];
     watchMeal.mealFoods.forEach((food) => {
       initialFoodsByMeal.push({
-        id: food.id,
+        id: food.foodId,
         measure: food.measure,
         qty: food.qty,
         prot: 0.6 * 20,
@@ -95,7 +99,7 @@ export function useCreateMealHook(props: CreateMealProps) {
   const generateHashKey = useMemo(() => {
     if (!selectedFoodToEdit) return 'food-to-edit';
 
-    const hashId = selectedFoodToEdit.id;
+    const hashId = selectedFoodToEdit.foodId;
     const hashMeasureName = selectedFoodToEdit.measure.name
       .trim()
       .replace(' ', '-');
@@ -120,10 +124,11 @@ export function useCreateMealHook(props: CreateMealProps) {
       toggleSelectedMealIndex(mealIndex);
 
       setSelectedFoodToEdit({
-        id: selectedFood.id,
+        foodId: selectedFood.id,
         measure: selectedFood.measure,
         qty: selectedFood.qty,
         mealFoodIndex: mealFoodIndex,
+        name: selectedFood.name,
       });
       toggleModalEditFoodOpen();
     },

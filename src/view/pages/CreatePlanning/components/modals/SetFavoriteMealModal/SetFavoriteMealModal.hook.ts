@@ -119,14 +119,14 @@ export function useSetFavoriteMealModalHook(props: SetFavoriteMealModalProps) {
     if (!selectedFavorite) return;
 
     const mealFoodsReadyToAdd = selectedFavorite.mealFoods.map((mealFood) => ({
-      id: mealFood.food.id,
+      foodId: mealFood.food.id,
       measure: mealFood.measure,
       name: mealFood.food.name,
       qty: mealFood.qty,
     }));
 
     append(mealFoodsReadyToAdd);
-    toast.success('Alimentos adicionados com sucesso');
+    toast.success('Alimentos adicionados!');
     handleCloseModal();
   }, [append, favorites, handleCloseModal, selectedFavoriteMeal]);
 

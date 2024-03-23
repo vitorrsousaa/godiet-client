@@ -11,7 +11,7 @@ import * as z from 'zod';
 
 export const CreateMealFoodSchema = z.object({
   name: z.string(),
-  id: z.string().uuid(),
+  foodId: z.string().uuid(),
   qty: z.number().min(1),
   measure: z.object({
     name: z.string(),
@@ -109,7 +109,6 @@ export function useCreatePlanningHook() {
   );
 
   return {
-    control,
     methods,
     errors,
     meals: watchMeals,

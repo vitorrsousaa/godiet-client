@@ -1,7 +1,6 @@
 import { Button } from '@godiet-ui/Button';
 import { Input } from '@godiet-ui/Input';
 
-import { DevTool } from '@hookform/devtools';
 import { PlusIcon } from '@radix-ui/react-icons';
 import { FormProvider } from 'react-hook-form';
 
@@ -10,7 +9,6 @@ import { useCreatePlanningHook } from './CreatePlanning.hook';
 
 export function CreatePlanning() {
   const {
-    control,
     methods,
     errors,
     meals,
@@ -23,7 +21,6 @@ export function CreatePlanning() {
 
   return (
     <FormProvider {...methods}>
-      <DevTool control={control} />
       <form>
         <div className="flex flex-col gap-4">
           <h3 className="pb-2 text-lg font-bold text-foreground">

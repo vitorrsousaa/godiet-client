@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@godiet-ui/Select';
+import { Spinner } from '@godiet-ui/Spinner';
 
 import { useSetFavoriteMealModalHook } from './SetFavoriteMealModal.hook';
 
@@ -43,7 +44,11 @@ export function SetFavoriteMealModal(props: SetFavoriteMealModalProps) {
         </Modal.Description>
       </Modal.Header>
 
-      {isErrorFavoriteMeal ? (
+      {isFetchingFavoriteMeal ? (
+        <div className="mb-4 mt-4 grid w-full place-items-center">
+          <Spinner />
+        </div>
+      ) : isErrorFavoriteMeal ? (
         <div className="text-center text-muted-foreground">
           <p>Tivemos um erro para encontrar suas refeições favoritas</p>
           <p>Por favor, tente novamente mais tarde!</p>

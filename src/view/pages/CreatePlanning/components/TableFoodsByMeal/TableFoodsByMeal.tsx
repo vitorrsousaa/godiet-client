@@ -27,6 +27,7 @@ export function TableFoodsByMeal(props: TableFoodsByMealProps) {
           mealIndex={mealIndex}
           onOpenModalEdit={onOpenModalEdit}
           onOpenModalRemove={onOpenModalRemove}
+          editable
         />
       ) : (
         <div>
