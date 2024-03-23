@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@godiet-ui/Select';
+import { Spinner } from '@godiet-ui/Spinner';
 
 import { useSetFavoriteMealModalHook } from './SetFavoriteMealModal.hook';
 
@@ -26,6 +27,7 @@ export function SetFavoriteMealModal(props: SetFavoriteMealModalProps) {
     isFetchingFavoriteMeal,
     favoritesMeals,
     isValid,
+    selectedFavoriteMealToDisplay,
     handleCloseModal,
     setSelectedFavoriteMeal,
     handleSubmit,
@@ -42,7 +44,11 @@ export function SetFavoriteMealModal(props: SetFavoriteMealModalProps) {
         </Modal.Description>
       </Modal.Header>
 
-      {isErrorFavoriteMeal ? (
+      {isFetchingFavoriteMeal ? (
+        <div className="mb-4 mt-4 grid w-full place-items-center">
+          <Spinner />
+        </div>
+      ) : isErrorFavoriteMeal ? (
         <div className="text-center text-muted-foreground">
           <p>Tivemos um erro para encontrar suas refeições favoritas</p>
           <p>Por favor, tente novamente mais tarde!</p>
@@ -62,7 +68,9 @@ export function SetFavoriteMealModal(props: SetFavoriteMealModalProps) {
           onValueChange={(value) => setSelectedFavoriteMeal(value)}
         >
           <SelectTrigger isLoading={isFetchingFavoriteMeal}>
-            <SelectValue placeholder="Selecione uma refeição favorita" />
+            <SelectValue placeholder="Selecione uma refeição favorita">
+              {selectedFavoriteMealToDisplay}
+            </SelectValue>
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
@@ -71,6 +79,7 @@ export function SetFavoriteMealModal(props: SetFavoriteMealModalProps) {
                   key={option.id}
                   value={option.id}
                   className="flex flex-col items-start"
+                  textValue='option.name + " - " + option.energy + " kcal"'
                 >
                   <div>
                     {option.name} - {option.energy} kcal

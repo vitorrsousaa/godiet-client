@@ -90,6 +90,19 @@ export function useSetFavoriteMealModalHook(props: SetFavoriteMealModalProps) {
     () => Boolean(selectedFavoriteMeal && selectedFavoriteMeal.length > 0),
     [selectedFavoriteMeal]
   );
+
+  const selectedFavoriteMealToDisplay = useMemo(() => {
+    const toDisplay = favoritesMeals.find(
+      (meal) => meal.id === selectedFavoriteMeal
+    );
+
+    if (toDisplay) {
+      return `${toDisplay.name} - ${toDisplay.energy} kcal`;
+    }
+
+    return null;
+  }, [favoritesMeals, selectedFavoriteMeal]);
+
   //memos
 
   //callbacks
@@ -106,14 +119,14 @@ export function useSetFavoriteMealModalHook(props: SetFavoriteMealModalProps) {
     if (!selectedFavorite) return;
 
     const mealFoodsReadyToAdd = selectedFavorite.mealFoods.map((mealFood) => ({
-      id: mealFood.food.id,
+      foodId: mealFood.food.id,
       measure: mealFood.measure,
       name: mealFood.food.name,
       qty: mealFood.qty,
     }));
 
     append(mealFoodsReadyToAdd);
-    toast.success('Alimentos adicionados com sucesso');
+    toast.success('Alimentos adicionados!');
     handleCloseModal();
   }, [append, favorites, handleCloseModal, selectedFavoriteMeal]);
 
@@ -125,6 +138,7 @@ export function useSetFavoriteMealModalHook(props: SetFavoriteMealModalProps) {
     isFetchingFavoriteMeal,
     favoritesMeals,
     isValid,
+    selectedFavoriteMealToDisplay,
     handleCloseModal,
     setSelectedFavoriteMeal,
     handleSubmit,

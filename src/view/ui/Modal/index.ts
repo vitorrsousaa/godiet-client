@@ -14,4 +14,6 @@ export const Modal = {
   Description: ModalDescription,
 };
 
+export { ModalContent, ModalRoot } from './Modal';
+
 export type { ModalProps } from './Modal';

@@ -1,4 +1,5 @@
 import { Button } from '@godiet-ui/Button';
+import { Combobox } from '@godiet-ui/Combobox';
 import { Input } from '@godiet-ui/Input';
 import { Modal } from '@godiet-ui/Modal';
 import {
@@ -9,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@godiet-ui/Select';
-import { SelectAutoComplete } from '@godiet-ui/SelectAutoComplete';
 import { Separator } from '@godiet-ui/Separator';
 
 import { Controller } from 'react-hook-form';
@@ -64,17 +64,17 @@ export function EditFoodModal(props: EditFoodModalProps) {
       >
         <Controller
           control={internalControl}
-          name="id"
+          name="foodId"
           render={({ field: { value, onChange } }) => (
-            <SelectAutoComplete
+            <Combobox
               isLoading={isFetchingFoods}
               placeholder="Selecione um alimento"
               options={foodOptions}
               value={value}
-              onChange={(event) =>
+              onChange={(newValue) =>
                 handleChangeSelectAutoComplete({
                   onChange,
-                  event,
+                  newValue,
                 })
               }
             />
@@ -85,38 +85,40 @@ export function EditFoodModal(props: EditFoodModalProps) {
             <Controller
               control={internalControl}
               name="measure"
-              render={({ field: { value, onChange } }) => (
-                <Select
-                  value={value.name}
-                  onValueChange={(event) => {
-                    const selectedMeasure = measureOptions.find(
-                      (measure) => measure.name === event
-                    );
+              render={({ field: { value, onChange } }) => {
+                return (
+                  <Select
+                    value={value.name}
+                    onValueChange={(event) => {
+                      const selectedMeasure = measureOptions.find(
+                        (measure) => measure.name === event
+                      );
 
-                    if (!selectedMeasure) {
-                      onChange(measureOptions[0]);
-                    }
+                      if (!selectedMeasure) {
+                        onChange(measureOptions[0]);
+                      }
 
-                    onChange(selectedMeasure);
-                  }}
-                >
-                  <SelectTrigger className="h-8  data-[placeholder]:text-muted-foreground sm:h-[3.25rem] ">
-                    <SelectValue placeholder="Selecione a unidade de medida" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {measureOptions.map((measure, index) => (
-                        <SelectItem
-                          value={measure.name}
-                          key={`measure-${index}-${measure.name}`}
-                        >
-                          {measure.name}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              )}
+                      onChange(selectedMeasure);
+                    }}
+                  >
+                    <SelectTrigger className="h-8 data-[placeholder]:text-muted-foreground sm:h-[3.25rem] ">
+                      <SelectValue placeholder="Selecione a unidade de medida" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {measureOptions.map((measure, index) => (
+                          <SelectItem
+                            value={measure.name}
+                            key={`measure-${index}-${measure.name}`}
+                          >
+                            {measure.name}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                );
+              }}
             />
           </span>
           <span className="w-full">
