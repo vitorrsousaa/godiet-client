@@ -13,6 +13,7 @@ interface TCreatePlanningMeal {
     time: string;
     mealFoods: {
       foodId: string;
+      name: string;
       qty: number;
       measure: {
         name: string;
@@ -44,6 +45,7 @@ function mapper(planningMeal: TCreatePlanningMealDTO): TCreatePlanningMeal {
       name: meal.name,
       mealFoods: meal.mealFoods.map((mealFood) => ({
         foodId: mealFood.foodId,
+        name: mealFood.name,
         qty: mealFood.qty,
         measure: mealFood.measure,
         options: [],
