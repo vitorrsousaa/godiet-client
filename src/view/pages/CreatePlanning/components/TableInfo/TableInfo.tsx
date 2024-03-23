@@ -14,7 +14,7 @@ import {
 import { cn } from '@godiet-utils/cn';
 
 import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
-import { useFieldArray, useFormContext } from 'react-hook-form';
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
 interface openModalEditParams {
   mealFoodIndex: number;
@@ -61,9 +61,14 @@ export function TableInfo(props: TableInfoProps) {
 
   const { control } = useFormContext<TCreatePlanningMealDTO>();
 
-  const { update, fields } = useFieldArray({
+  const { update } = useFieldArray({
     name: `meals.${mealIndex}.mealFoods`,
     control,
+  });
+
+  const watchMealFoods = useWatch({
+    control,
+    name: `meals.${mealIndex}.mealFoods`,
   });
 
   const totalFoods = useMemo(() => {
@@ -113,7 +118,7 @@ export function TableInfo(props: TableInfoProps) {
       (params) => {
         const { value, mealFoodIndex } = params;
 
-        const mealFood = fields[mealFoodIndex];
+        const mealFood = watchMealFoods[mealFoodIndex];
 
         const mealFoodToUpdate = {
           ...mealFood,
@@ -122,7 +127,7 @@ export function TableInfo(props: TableInfoProps) {
 
         update(mealFoodIndex, mealFoodToUpdate);
       },
-      [fields, update]
+      [watchMealFoods, update]
     );
 
   return (

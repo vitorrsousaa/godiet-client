@@ -124,10 +124,16 @@ export function CreateMeal(props: CreateMealProps) {
 
       <Separator />
 
-      <Card.Footer className="flex flex-col gap-2">
-        <h1 className="text-md mt-4 font-semibold text-muted-foreground">
-          Alimentos selecionados
-        </h1>
+      <Card.Footer className="flex flex-col gap-4">
+        <div className="text-center">
+          <h1 className="text-md mt-4 font-semibold text-muted-foreground">
+            Alimentos selecionados
+          </h1>
+          <small className="text-muted-foreground">
+            Você pode editar o título dos alimentos selecionados na tabela
+            abaixo.
+          </small>
+        </div>
         <TableFoodsByMeal
           mealIndex={mealIndex}
           onOpenModalRemove={handleOpenModalRemoveFood}

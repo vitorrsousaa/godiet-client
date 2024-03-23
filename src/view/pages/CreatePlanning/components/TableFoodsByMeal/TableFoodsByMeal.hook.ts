@@ -33,7 +33,10 @@ export function useTableFoodsByMealHook(props: TableFoodsByMealProps) {
       if (!selectedFood) return;
 
       const mealFoodCalculated = calculateMealFoods({
-        food: selectedFood,
+        food: {
+          ...selectedFood,
+          name: food.name,
+        },
         measure: food.measure,
         qty: food.qty,
       });
