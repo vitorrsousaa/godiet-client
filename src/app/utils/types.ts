@@ -19,7 +19,7 @@ export interface PageStatus {
 /**
  * Interface que define o retorno inicial de um hook.
  */
-interface DefaultReturnHookPage {
+interface IBaseReturnHook {
   /**
    * O status da página, incluindo isLoading, isError e noData.
    */
@@ -33,4 +33,4 @@ interface DefaultReturnHookPage {
  *
  * @template T - Tipo dos outros itens específicos do usuário.
  */
-export type ReturnHookPage<T> = DefaultReturnHookPage & T;
+export type ReturnHookPage<T> = IBaseReturnHook & T;

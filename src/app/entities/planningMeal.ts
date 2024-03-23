@@ -10,6 +10,7 @@ export interface TMealFood {
   qty: number;
   options: [];
   food: TFood;
+  name: string;
 }
 
 export interface TMeal {

@@ -27,13 +27,16 @@ export function useTableFoodsByMealHook(props: TableFoodsByMealProps) {
     const initialFoodsByMeal: FoodsByMeal[] = [];
     watchMeal.mealFoods.forEach((food) => {
       const selectedFood = foods.find(
-        (foodDatabase) => foodDatabase.id === food.id
+        (foodDatabase) => foodDatabase.id === food.foodId
       );
 
       if (!selectedFood) return;
 
       const mealFoodCalculated = calculateMealFoods({
-        food: selectedFood,
+        food: {
+          ...selectedFood,
+          name: food.name,
+        },
         measure: food.measure,
         qty: food.qty,
       });

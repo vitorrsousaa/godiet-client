@@ -25,9 +25,9 @@
             name: 'index.ts',
             content: (inputs) => `import { ${toPascalCase(
               inputs.name
-            )}Controller } from './controller';
+            )} } from './${toCamelCase(inputs.name)}';
 
-export { ${toPascalCase(inputs.name)}Controller };
+export { ${toPascalCase(inputs.name)} };
 `,
           },
           {

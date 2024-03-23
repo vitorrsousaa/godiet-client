@@ -84,7 +84,7 @@ export function useAddFoodModalHook(props: AddFoodModalProps) {
       name: selectedFood.name,
       measure: data.measure,
       qty: data.qty,
-      id: data.id,
+      foodId: data.id,
     });
 
     handleOnCloseModal();

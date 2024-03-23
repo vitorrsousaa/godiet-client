@@ -1,7 +1,10 @@
 import { useCallback, useMemo } from 'react';
 
 import { useGetAllFoods } from '@godiet-hooks/foods';
-import { TCreatePlanningMealDTO } from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
+import {
+  CreateMealFoodSchema,
+  TCreatePlanningMealDTO,
+} from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
@@ -14,21 +17,12 @@ import * as z from 'zod';
 
 import { EditFoodModalProps } from './EditFoodModal';
 
-const CreateMealFoodSchema = z.object({
-  id: z.string().uuid(),
-  measure: z.object({
-    name: z.string(),
-    qty: z.number(),
-  }),
-  qty: z.number().nonnegative().min(1),
-});
-
 export type TCreateMealDTO = z.infer<typeof CreateMealFoodSchema>;
 
 interface HandleChangeSelectAutoCompleteParams {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange: (...event: any[]) => void;
-  event: React.ChangeEvent<HTMLSelectElement>;
+  newValue: string;
 }
 
 export function useEditFoodModalHook(props: EditFoodModalProps) {
@@ -42,32 +36,22 @@ export function useEditFoodModalHook(props: EditFoodModalProps) {
     register,
     reset,
     setValue,
+    getValues,
     formState: { errors, isValid: internalFormIsValid },
     control: internalControl,
   } = useForm<TCreateMealDTO>({
     resolver: zodResolver(CreateMealFoodSchema),
     defaultValues: {
-      id: initialValues?.id || '',
-      measure: initialValues?.measure || '',
+      foodId: initialValues?.foodId || '',
+      measure: initialValues?.measure || { name: '' },
       qty: initialValues?.qty || 1,
+      name: initialValues?.name || '',
     },
   });
 
   const watchFood = useWatch({
     control: internalControl,
   });
-
-  const measureOptions = useMemo(() => {
-    if (!watchFood) return [];
-
-    if (!watchFood.id) return [];
-
-    const selectedFood = foods.find((food) => food.id === watchFood.id);
-
-    if (!selectedFood) return [];
-
-    return selectedFood.measures;
-  }, [foods, watchFood]);
 
   // Internal Form
 
@@ -86,7 +70,7 @@ export function useEditFoodModalHook(props: EditFoodModalProps) {
   }, [onClose, reset]);
 
   const handleInternalFormSubmit = hookFormSubmit((data) => {
-    const selectedFood = foods.find((food) => food.id === data.id);
+    const selectedFood = foods.find((food) => food.id === data.foodId);
 
     if (!selectedFood) return;
 
@@ -94,7 +78,7 @@ export function useEditFoodModalHook(props: EditFoodModalProps) {
       name: selectedFood.name,
       measure: data.measure,
       qty: data.qty,
-      id: data.id,
+      foodId: data.foodId,
     });
 
     handleOnCloseModal();
@@ -102,23 +86,26 @@ export function useEditFoodModalHook(props: EditFoodModalProps) {
 
   const handleChangeSelectAutoComplete = useCallback(
     (param: HandleChangeSelectAutoCompleteParams) => {
-      const { event, onChange } = param;
+      const { newValue, onChange } = param;
 
-      const selectedFood = foods.find(
-        (food) => food.id === event.target.value
-      )!;
+      const selectedFood = foods.find((food) => food.id === newValue)!;
+
+      const formState = getValues();
 
       const hasSameMeasure = selectedFood.measures.find(
-        (measure) => measure.name === initialValues?.measure.name
+        (measure) => measure.name === formState.measure?.name
       );
 
       if (!hasSameMeasure) {
         setValue('measure', selectedFood.measures[0]);
+      } else {
+        setValue('measure', hasSameMeasure);
       }
 
-      onChange(event);
+      setValue('name', selectedFood.name);
+      onChange(newValue);
     },
-    [foods, initialValues?.measure, setValue]
+    [foods, setValue, getValues]
   );
 
   const foodOptions = useMemo(
@@ -126,8 +113,21 @@ export function useEditFoodModalHook(props: EditFoodModalProps) {
     [foods]
   );
 
+  const measureOptions = useMemo(() => {
+    if (!watchFood) return [];
+
+    if (!watchFood.foodId) return [];
+
+    const selectedFood = foods.find((food) => food.id === watchFood.foodId);
+
+    if (!selectedFood) return [];
+
+    return selectedFood.measures;
+  }, [foods, watchFood]);
+
   const formIsValid = useMemo(() => {
     return Boolean(internalFormIsValid && watchFood?.measure?.name);
+    // return true;
   }, [internalFormIsValid, watchFood?.measure?.name]);
 
   return {

@@ -19,7 +19,7 @@ export function Options(props: OptionsProps) {
               className
             )}
           >
-            {mealFood.food.name} - {mealFood.qty} {mealFood.measure.name}
+            {mealFood.name} - {mealFood.qty} {mealFood.measure.name}
           </small>
         </div>
         <div className="flex w-full flex-col gap-2">

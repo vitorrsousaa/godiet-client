@@ -85,7 +85,10 @@ export function PlanningMeal() {
               botão abaixo para criar um novo planejamento alimentar para o
               paciente.
             </p>
-            <Button onClick={handleNavigateToCreatePlanning}>
+            <Button
+              onClick={handleNavigateToCreatePlanning}
+              isLoading={isFetchingPlanningMeals}
+            >
               Adicionar novo plano
             </Button>
           </div>

@@ -60,7 +60,7 @@ export function useStartMealModalHook(props: StarMealModalProps) {
     const initialFoodsByMeal: FoodsByMeal[] = [];
     watchMealFoods.forEach((food) => {
       const selectedFood = foods.find(
-        (foodDatabase) => foodDatabase.id === food.id
+        (foodDatabase) => foodDatabase.id === food.foodId
       );
 
       if (!selectedFood) return;
@@ -87,7 +87,7 @@ export function useStartMealModalHook(props: StarMealModalProps) {
 
   const handleSubmit = hookFormSubmit(async (data) => {
     const newMealFoods = watchMealFoods.map((mealFood) => ({
-      foodId: mealFood.id,
+      foodId: mealFood.foodId,
       measure: mealFood.measure,
       options: [],
       qty: mealFood.qty,
