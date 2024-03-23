@@ -79,7 +79,7 @@ export function useCreatePlanningHook() {
         planningMeal: data,
       });
 
-      toast.success('Plano alimentar criado com sucesso!');
+      toast.success('Plano alimentar criado!');
     } catch (error) {
       toast.error('Erro ao criar o plano alimentar');
     } finally {
