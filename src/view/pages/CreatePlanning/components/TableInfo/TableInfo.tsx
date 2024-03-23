@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
+import React from 'react';
 
+import { TCreatePlanningMealDTO } from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
 import { Button } from '@godiet-ui/Button';
 import {
   Table,
@@ -12,6 +14,7 @@ import {
 import { cn } from '@godiet-utils/cn';
 
 import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 
 interface openModalEditParams {
   mealFoodIndex: number;
@@ -35,16 +38,33 @@ export interface TableInfoProps {
   onOpenModalEdit?: (params: openModalEditParams) => void;
   disabledActions?: boolean;
   mealFoods: FoodsByMeal[];
+  editable?: boolean;
 }
+
+type HandleChangeInputFunction = ({
+  value,
+  mealFoodIndex,
+}: {
+  value: string;
+  mealFoodIndex: number;
+}) => void;
 
 export function TableInfo(props: TableInfoProps) {
   const {
     mealIndex,
     mealFoods,
     disabledActions = false,
+    editable = false,
     onOpenModalRemove,
     onOpenModalEdit,
   } = props;
+
+  const { control } = useFormContext<TCreatePlanningMealDTO>();
+
+  const { update, fields } = useFieldArray({
+    name: `meals.${mealIndex}.mealFoods`,
+    control,
+  });
 
   const totalFoods = useMemo(() => {
     if (mealFoods.length === 0) return [];
@@ -88,6 +108,23 @@ export function TableInfo(props: TableInfoProps) {
     ];
   }, [mealFoods]);
 
+  const handleChangeInputEditable =
+    React.useCallback<HandleChangeInputFunction>(
+      (params) => {
+        const { value, mealFoodIndex } = params;
+
+        const mealFood = fields[mealFoodIndex];
+
+        const mealFoodToUpdate = {
+          ...mealFood,
+          name: value,
+        };
+
+        update(mealFoodIndex, mealFoodToUpdate);
+      },
+      [fields, update]
+    );
+
   return (
     <>
       <Table>
@@ -114,7 +151,23 @@ export function TableInfo(props: TableInfoProps) {
 
             return (
               <TableRow key={`mealfood-${id}-${index}`}>
-                <TableCell className="text-[12px]">{name}</TableCell>
+                <TableCell className="text-[12px]">
+                  {editable ? (
+                    <input
+                      value={name}
+                      name={name}
+                      className="w-full bg-muted/40 outline-none"
+                      onChange={(event) =>
+                        handleChangeInputEditable({
+                          value: event.target.value,
+                          mealFoodIndex: index,
+                        })
+                      }
+                    />
+                  ) : (
+                    name
+                  )}
+                </TableCell>
                 <TableCell className="hidden text-[12px] min-[430px]:table-cell">
                   {qty} {measure.name}
                 </TableCell>
