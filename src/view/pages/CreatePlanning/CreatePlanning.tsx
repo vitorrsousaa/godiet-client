@@ -22,7 +22,7 @@ export function CreatePlanning() {
 
   return (
     <FormProvider {...methods}>
-      <form className="sm:md-20 mb-32">
+      <form className="mb-32 sm:mb-20">
         <div className="flex flex-col gap-4">
           <h3 className="pb-2 text-lg font-bold text-foreground">
             Plano alimentar
