@@ -11,7 +11,6 @@ interface TFavoriteMeal {
       name: string;
     };
     qty: number;
-    options: [];
     food: TFood;
   }[];
 }
