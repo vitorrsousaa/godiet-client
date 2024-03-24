@@ -80,6 +80,20 @@ export function useCreateMealHook(props: CreateMealProps) {
     return `food-to-edit-${hashId}-${hashMeasureName}-${hashQty}-${hashMealFoodIndex}`;
   }, [selectedFoodToEdit]);
 
+  const defaultMealTitles = useMemo(() => {
+    return [
+      { value: 'Café da manhã', label: 'Café da manhã' },
+      { value: 'Desjejum', label: 'Desjejum' },
+      { value: 'Colação', label: 'Colação' },
+      { value: 'Pré-treino', label: 'Pré-treino' },
+      { value: 'Pós-treino', label: 'Pós-treino' },
+      { value: 'Almoço', label: 'Almoço' },
+      { value: 'Lanche', label: 'Lanche' },
+      { value: 'Jantar', label: 'Jantar' },
+      { value: 'Ceia', label: 'Ceia' },
+    ];
+  }, []);
+
   const handleOpenModalEditFood = useCallback(
     ({
       mealFoodIndex,
@@ -143,6 +157,8 @@ export function useCreateMealHook(props: CreateMealProps) {
     selectedMealIndex,
     modalAddFavoriteMealIsOpen,
     modalUseFavoriteMealIsOpen,
+    control,
+    defaultMealTitles,
     toggleModalUseFavoriteMealOpen,
     toggleModalAddFavoriteMealOpen,
     toggleSelectedMealIndex,

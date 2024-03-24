@@ -3,6 +3,14 @@ import { Button } from '@godiet-ui/Button';
 import { Card } from '@godiet-ui/Card';
 import { DangerModal } from '@godiet-ui/DangerModal';
 import { Input } from '@godiet-ui/Input';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@godiet-ui/Select';
 import { Separator } from '@godiet-ui/Separator';
 import { Tooltip } from '@godiet-ui/Tooltip';
 
@@ -12,7 +20,7 @@ import {
   SymbolIcon,
   TrashIcon,
 } from '@radix-ui/react-icons';
-import { UseFieldArrayAppend } from 'react-hook-form';
+import { Controller, UseFieldArrayAppend } from 'react-hook-form';
 
 import { AddFoodModal } from '../modals/AddFoodModal';
 import { EditFoodModal } from '../modals/EditFoodModal';
@@ -40,6 +48,8 @@ export function CreateMeal(props: CreateMealProps) {
     selectedMealIndex,
     modalAddFavoriteMealIsOpen,
     modalUseFavoriteMealIsOpen,
+    control,
+    defaultMealTitles,
     toggleModalUseFavoriteMealOpen,
     toggleModalAddFavoriteMealOpen,
     handleCloseModalEditFood,
@@ -101,7 +111,7 @@ export function CreateMeal(props: CreateMealProps) {
         </Card.Description>
       </Card.Header>
       <Card.Content className="flex flex-col items-center gap-2 ">
-        <div className="flex flex-col gap-2 min-[400px]:w-full min-[400px]:flex-row">
+        <div className="flex w-full flex-col gap-2 min-[400px]:w-full min-[400px]:flex-row">
           <Input
             placeholder="Horário"
             type="time"
@@ -110,11 +120,46 @@ export function CreateMeal(props: CreateMealProps) {
             {...register(`meals.${mealIndex}.time`)}
           />
           <div className="w-full">
-            <Input
-              placeholder="Nome da refeição"
-              className="w-full "
-              minVersion
-              {...register(`meals.${mealIndex}.name`)}
+            <Controller
+              control={control}
+              name={`meals.${mealIndex}.name`}
+              render={({ field: { value, onChange, name } }) => {
+                if (value.length === 0) {
+                  return (
+                    <Select onValueChange={onChange} name={name} value={value}>
+                      <SelectTrigger className="h-8 w-full">
+                        <SelectValue
+                          className="bg-red-400"
+                          placeholder="Nome da refeição"
+                        />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          {defaultMealTitles.map((title, index) => (
+                            <SelectItem
+                              key={`select-item-${title.value}-${index}`}
+                              value={title.value}
+                            >
+                              {title.label}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  );
+                }
+
+                return (
+                  <Input
+                    placeholder="Nome da refeição"
+                    className="w-full "
+                    minVersion
+                    value={value}
+                    onChange={onChange}
+                    name={name}
+                  />
+                );
+              }}
             />
           </div>
         </div>
