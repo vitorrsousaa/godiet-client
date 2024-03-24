@@ -17,6 +17,7 @@ import {
   navigationMenuTriggerStyle,
 } from '@godiet-ui/NavigationMenu';
 import { Tooltip } from '@godiet-ui/Tooltip';
+import { cn } from '@godiet-utils/cn';
 
 import {
   BellIcon,
@@ -25,11 +26,13 @@ import {
   GearIcon,
   StarFilledIcon,
 } from '@radix-ui/react-icons';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
 export function DashboardLayout() {
   const { signout, email, name } = useAuth();
   const { navigate } = useNavigate();
+
+  const { pathname } = useLocation();
 
   return (
     <section className="h-full">
@@ -46,7 +49,10 @@ export function DashboardLayout() {
               <NavigationMenu.Item>
                 <Link
                   to={ROUTES.PATIENTS}
-                  className={navigationMenuTriggerStyle()}
+                  className={cn(
+                    navigationMenuTriggerStyle(),
+                    pathname.includes(ROUTES.PATIENTS) && 'bg-accent/50'
+                  )}
                 >
                   Pacientes
                 </Link>
