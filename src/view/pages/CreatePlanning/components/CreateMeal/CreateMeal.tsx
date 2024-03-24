@@ -1,3 +1,4 @@
+import { TCreatePlanningMealDTO } from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
 import { Button } from '@godiet-ui/Button';
 import { Card } from '@godiet-ui/Card';
 import { DangerModal } from '@godiet-ui/DangerModal';
@@ -11,6 +12,7 @@ import {
   SymbolIcon,
   TrashIcon,
 } from '@radix-ui/react-icons';
+import { UseFieldArrayAppend } from 'react-hook-form';
 
 import { AddFoodModal } from '../modals/AddFoodModal';
 import { EditFoodModal } from '../modals/EditFoodModal';
@@ -23,6 +25,7 @@ import { useCreateMealHook } from './CreateMeal.hook';
 export interface CreateMealProps {
   mealIndex: number;
   onRemoveMeal: () => void;
+  onAddMeal: UseFieldArrayAppend<TCreatePlanningMealDTO, 'meals'>;
 }
 
 export function CreateMeal(props: CreateMealProps) {

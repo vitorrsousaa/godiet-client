@@ -18,6 +18,7 @@ export function CreatePlanning() {
     handleSubmit,
     handleAddNewMeal,
     handleRemoveMeal,
+    appendMeals,
   } = useCreatePlanningHook();
 
   return (
@@ -55,6 +56,7 @@ export function CreatePlanning() {
                   key={`meal-form-${index}`}
                   mealIndex={index}
                   onRemoveMeal={() => handleRemoveMeal(index)}
+                  onAddMeal={appendMeals}
                 />
               ))}
             </div>
