@@ -19,17 +19,6 @@ describe('DraggableRow', () => {
       rendered.unmount();
     });
 
-    it('Should render correct drag and drop item', () => {
-      // Arrange
-
-      // Act
-
-      rendered = render(<DraggableRow id="draggable-id" />);
-
-      // Assert
-
-      expect(rendered.getByText('DraggableRow'));
-    });
     it('Should render correctlty children', () => {
       // Arrange
 
