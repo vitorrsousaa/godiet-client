@@ -22,6 +22,8 @@ export type HandleChangeInputFunction = ({
   mealFoodIndex: number;
 }) => void;
 
+export type TParamsDisableColumns = 'prot' | 'carb' | 'fat' | 'energy';
+
 export interface TableInfoProps {
   /**
    * The index of the meal.
@@ -56,4 +58,9 @@ export interface TableInfoProps {
    * @param callback The function to update meal foods.
    */
   onUpdateMealFoods?: (callback: CallbackUpdateMealFoodsFunction) => void;
+  /**
+   *
+   * @param disableColumns The columns to disable.
+   */
+  disableColumns?: TParamsDisableColumns[];
 }

@@ -22,13 +22,14 @@ import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
 import { DraggableRow } from './components/DraggableRow';
 import { Row } from './components/Row';
 import { useTableInfoHook } from './table-info.hook';
-import { TableInfoProps } from './table-info.types';
+import { TableInfoProps, TParamsDisableColumns } from './table-info.types';
 
 export function TableInfo(props: TableInfoProps) {
   const {
     mealIndex,
     disabledActions = false,
     editable = false,
+    disableColumns = [],
     onOpenModalRemove,
     onOpenModalEdit,
   } = props;
@@ -59,10 +60,16 @@ export function TableInfo(props: TableInfoProps) {
               <TableHead className="hidden min-[430px]:table-cell">
                 Quantidade
               </TableHead>
-              <TableHead className="hidden sm:table-cell">Prot</TableHead>
-              <TableHead className="hidden sm:table-cell">Carb</TableHead>
-              <TableHead className="hidden sm:table-cell">Gord</TableHead>
-              <TableHead>Cal</TableHead>
+              {!disableColumns.includes('prot') && (
+                <TableHead className="hidden sm:table-cell">Prot</TableHead>
+              )}
+              {!disableColumns.includes('carb') && (
+                <TableHead className="hidden sm:table-cell">Carb</TableHead>
+              )}
+              {!disableColumns.includes('fat') && (
+                <TableHead className="hidden sm:table-cell">Gord</TableHead>
+              )}
+              {!disableColumns.includes('energy') && <TableHead>Cal</TableHead>}
               {!disabledActions && (
                 <TableHead className={cn('flex items-center justify-center')}>
                   Ações
@@ -86,6 +93,7 @@ export function TableInfo(props: TableInfoProps) {
                       })
                     }
                     mealFood={foods}
+                    disableColumns={disableColumns}
                   >
                     {!disabledActions && (
                       <TableCell>
@@ -129,6 +137,14 @@ export function TableInfo(props: TableInfoProps) {
                 <TableHead></TableHead>
                 <TableHead className="text-[12px]">Total</TableHead>
                 {totalFoods.map((total, index) => {
+                  if (
+                    disableColumns.includes(
+                      total.attribute as TParamsDisableColumns
+                    )
+                  ) {
+                    return null;
+                  }
+
                   return (
                     <TableHead
                       key={`total-${index}`}
