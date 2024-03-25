@@ -13,7 +13,7 @@
     "prepare": "husky",
     "test": "vitest run --coverage",
     "test:ci": "vitest run --no-watch --passWithNoTests ",
-    "test:ui": "vitest run --ui",
+    "test:ui": "vitest --ui --api 3080 --coverage",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
