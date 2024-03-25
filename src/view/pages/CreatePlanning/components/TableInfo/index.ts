@@ -1,1 +1,3 @@
-export { TableInfo } from './TableInfo';
+import { TableInfo } from './table-info';
+
+export { TableInfo };
