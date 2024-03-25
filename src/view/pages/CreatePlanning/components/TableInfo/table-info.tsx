@@ -10,7 +10,12 @@ import {
 } from '@godiet-ui/Table';
 import { cn } from '@godiet-utils/cn';
 
-import { DndContext } from '@dnd-kit/core';
+import {
+  DndContext,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
 import { SortableContext } from '@dnd-kit/sortable';
 import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
 
@@ -35,8 +40,16 @@ export function TableInfo(props: TableInfoProps) {
     handleDragEnd,
   } = useTableInfoHook(props);
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  );
+
   return (
-    <DndContext onDragEnd={handleDragEnd}>
+    <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
       <SortableContext items={mealFoodsWithCustomId}>
         <Table className="overflow-x-hidden">
           <TableHeader>
