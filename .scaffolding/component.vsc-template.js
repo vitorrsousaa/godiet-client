@@ -94,8 +94,8 @@ import {
 } from '@testing-react';
 import { clearAllMocks } from '@testing-suit';
 
-import { ${toPascalCase(inputs.name)}, ${toPascalCase(inputs.name)}Props } from './${toCamelCase(inputs.name)}';
-import { use${toPascalCase(inputs.name)}Hook } from './${toCamelCase(inputs.name)}.hook';
+import { ${toPascalCase(inputs.name)}, ${toPascalCase(inputs.name)}Props } from './${toKebabCase(inputs.name)}';
+import { use${toPascalCase(inputs.name)}Hook } from './${toKebabCase(inputs.name)}.hook';
 
 describe('${toPascalCase(inputs.name)}', () => {
   beforeEach(() => {
