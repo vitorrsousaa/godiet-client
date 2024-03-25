@@ -7,6 +7,12 @@
   const toCamelCase = (str) =>
     toPascalCase(str).replace(/^./, (firstLetter) => firstLetter.toLowerCase());
 
+  const toKebabCase = (str) =>
+    str
+      .replace(/([a-z])([A-Z])/g, '$1-$2') // Adiciona um hífen entre letras minúsculas e maiúsculas
+      .replace(/\s+/g, '-') // Substitui espaços por hífens
+      .toLowerCase();
+
   return {
     userInputs: [
       {
@@ -27,7 +33,7 @@
               inputs.name
             )}, ${toPascalCase(
               inputs.name
-            )}Props } from './${toCamelCase(inputs.name)}';
+            )}Props } from './${toKebabCase(inputs.name)}';
 
 export { ${toPascalCase(inputs.name)} };
 export type { ${toPascalCase(inputs.name)}Props };
@@ -35,10 +41,10 @@ export type { ${toPascalCase(inputs.name)}Props };
           },
           {
             type: 'file',
-            name: (inputs) => `${toCamelCase(inputs.name)}.tsx`,
+            name: (inputs) => `${toKebabCase(inputs.name)}.tsx`,
             content: (
               inputs
-            ) => `import { use${toPascalCase(inputs.name)}Hook } from './${toCamelCase(inputs.name)}.hook';
+            ) => `import { use${toPascalCase(inputs.name)}Hook } from './${toKebabCase(inputs.name)}.hook';
 
 export interface ${toPascalCase(inputs.name)}Props {
   data: string;
@@ -59,10 +65,10 @@ export function ${toPascalCase(inputs.name)}(props: ${toPascalCase(inputs.name)}
           },
           {
             type: 'file',
-            name: (inputs) => `${toCamelCase(inputs.name)}.hook.ts`,
+            name: (inputs) => `${toKebabCase(inputs.name)}.hook.ts`,
             content: (inputs) => `import React from 'react';
 
-import { ${toPascalCase(inputs.name)}Props } from './${toCamelCase(inputs.name)}';
+import { ${toPascalCase(inputs.name)}Props } from './${toKebabCase(inputs.name)}';
 
 export function use${toPascalCase(inputs.name)}Hook(props: ${toPascalCase(inputs.name)}Props) {
   const { data } = props;
@@ -78,7 +84,7 @@ export function use${toPascalCase(inputs.name)}Hook(props: ${toPascalCase(inputs
           },
           {
             type: 'file',
-            name: (inputs) => `${toCamelCase(inputs.name)}.spec.tsx`,
+            name: (inputs) => `${toKebabCase(inputs.name)}.spec.tsx`,
             content: (inputs) => `
 import {
   render,
