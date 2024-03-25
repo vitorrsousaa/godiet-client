@@ -17,7 +17,7 @@ export interface TableFoodsByMealProps {
 export function TableFoodsByMeal(props: TableFoodsByMealProps) {
   const { mealIndex, onOpenModalRemove, onOpenModalEdit } = props;
 
-  const { foodsByMeal } = useTableFoodsByMealHook(props);
+  const { foodsByMeal, handleUpdateMealFoods } = useTableFoodsByMealHook(props);
 
   return (
     <>
@@ -28,6 +28,7 @@ export function TableFoodsByMeal(props: TableFoodsByMealProps) {
           onOpenModalEdit={onOpenModalEdit}
           onOpenModalRemove={onOpenModalRemove}
           editable
+          onUpdateMealFoods={handleUpdateMealFoods}
         />
       ) : (
         <div>
