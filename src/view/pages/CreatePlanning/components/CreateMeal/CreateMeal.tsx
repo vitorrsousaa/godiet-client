@@ -40,6 +40,7 @@ export function CreateMeal(props: CreateMealProps) {
     selectedMealIndex,
     modalAddFavoriteMealIsOpen,
     modalUseFavoriteMealIsOpen,
+    generateHashKeyOfStarMealFood,
     toggleModalUseFavoriteMealOpen,
     toggleModalAddFavoriteMealOpen,
     handleCloseModalEditFood,
@@ -148,6 +149,7 @@ export function CreateMeal(props: CreateMealProps) {
         isOpen={modalAddFavoriteMealIsOpen}
         onClose={toggleModalAddFavoriteMealOpen}
         mealIndex={mealIndex}
+        key={generateHashKeyOfStarMealFood()}
       />
 
       <SetFavoriteMealModal

@@ -134,6 +134,13 @@ export function useCreateMealHook(props: CreateMealProps) {
     onAddMeal(watchMeal);
   }, [onAddMeal, watchMeal]);
 
+  const generateHashKeyOfStarMealFood = useCallback(() => {
+    const array = watchMealFoods.map((food) => {
+      return `${food.foodId}-${food.measure.name}-${food.qty}-${food.name}`;
+    });
+    return array.join('-');
+  }, [watchMealFoods]);
+
   return {
     modalAddFoodIsOpen,
     modalRemoveFoodIsOpen,
@@ -143,6 +150,7 @@ export function useCreateMealHook(props: CreateMealProps) {
     selectedMealIndex,
     modalAddFavoriteMealIsOpen,
     modalUseFavoriteMealIsOpen,
+    watchMealFoods,
     toggleModalUseFavoriteMealOpen,
     toggleModalAddFavoriteMealOpen,
     toggleSelectedMealIndex,
@@ -152,6 +160,7 @@ export function useCreateMealHook(props: CreateMealProps) {
     handleOpenModalRemoveFood,
     handleCloseModalRemoveFood,
     handleRemoveMealFood,
+    generateHashKeyOfStarMealFood,
     handleDuplicateMeal,
     register,
   };
