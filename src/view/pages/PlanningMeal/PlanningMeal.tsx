@@ -76,7 +76,7 @@ export function PlanningMeal() {
                 <Card.Content>
                   <div className="flex flex-col">
                     <small>
-                      Carboidratos:{planningMeal.summary.carb.toFixed(2)}g
+                      Carboidratos: {planningMeal.summary.carb.toFixed(2)}g
                     </small>
                     <small>
                       Proteína: {planningMeal.summary.prot.toFixed(2)}g

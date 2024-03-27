@@ -1,10 +1,12 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
+import { useAuth } from '@godiet-hooks/auth';
 import { usePatient } from '@godiet-hooks/patient';
 import { useCreatePlanningMeal } from '@godiet-hooks/planningMeal';
 import { useNavigate } from '@godiet-hooks/routes';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { PlanningMealStorage } from '@storage/planningMeal';
 import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
@@ -34,6 +36,16 @@ export const CreatePlanningMealSchema = z.object({
     .min(1, 'O plano alimentar deve conter pelo menos uma refeição'),
 });
 
+const defaultInitialValues = {
+  meals: [
+    {
+      name: '',
+      time: '',
+      mealFoods: [],
+    },
+  ],
+};
+
 export type TCreatePlanningMealDTO = z.infer<typeof CreatePlanningMealSchema>;
 
 export function useCreatePlanningHook() {
@@ -45,17 +57,42 @@ export function useCreatePlanningHook() {
 
   const { navigate } = useNavigate();
 
+  const { email } = useAuth();
+
+  const planningMealKey = useMemo(() => {
+    const userEmail = email || '';
+    const patientId = patient?.id || '';
+
+    const object = {
+      email: userEmail,
+      patientId: patientId,
+    };
+
+    return JSON.stringify(object);
+  }, [email, patient?.id]);
+
+  const storage = useMemo(
+    () =>
+      new PlanningMealStorage<TCreatePlanningMealDTO>(
+        planningMealKey,
+        defaultInitialValues
+      ),
+    [planningMealKey]
+  );
+
+  const removeStoragePlanningMeal = useCallback(() => {
+    storage.remove();
+  }, [storage]);
+
+  const getStoragePlanningMeal = useCallback(() => {
+    const data = storage.get();
+
+    return data;
+  }, [storage]);
+
   const methods = useForm<TCreatePlanningMealDTO>({
     resolver: zodResolver(CreatePlanningMealSchema),
-    defaultValues: {
-      meals: [
-        {
-          name: '',
-          time: '',
-          mealFoods: [],
-        },
-      ],
-    },
+    defaultValues: getStoragePlanningMeal(),
   });
 
   const {
@@ -63,6 +100,7 @@ export function useCreatePlanningHook() {
     formState: { errors },
     control,
     register,
+    getValues,
   } = methods;
 
   const {
@@ -82,6 +120,8 @@ export function useCreatePlanningHook() {
         patientId: patient?.id || '',
         planningMeal: data,
       });
+
+      removeStoragePlanningMeal();
 
       toast.success('Plano alimentar criado!');
     } catch (error) {
@@ -111,6 +151,19 @@ export function useCreatePlanningHook() {
     },
     [removeMeal, watchMeals]
   );
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      toast.promise(new Promise((resolve) => setTimeout(resolve, 2500)), {
+        error: '',
+        loading: 'Salvando...',
+        success: 'Salvo com sucesso! Próximo em 60s',
+      });
+      storage.set(getValues());
+    }, 60000);
+
+    return () => clearInterval(timer);
+  }, [getValues, storage]);
 
   return {
     methods,
