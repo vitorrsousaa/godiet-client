@@ -1,19 +1,10 @@
-import { TFood } from '@godiet-entities';
+import { TMealFood } from '@godiet-entities';
 import { httpClient } from '@godiet-services/httpClient';
 
 interface TFavoriteMeal {
   id: string;
   name: string;
-  mealFoods: {
-    id: string;
-    measure: {
-      qty: number;
-      name: string;
-    };
-    qty: number;
-    options: [];
-    food: TFood;
-  }[];
+  mealFoods: TMealFood[];
 }
 
 export async function getAll() {
