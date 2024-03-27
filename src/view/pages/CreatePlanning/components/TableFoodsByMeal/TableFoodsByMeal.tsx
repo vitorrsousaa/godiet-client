@@ -1,4 +1,4 @@
-import { TableInfo } from '../TableInfo';
+import { TableInfo } from '@godiet-components/TableInfo';
 
 import { useTableFoodsByMealHook } from './TableFoodsByMeal.hook';
 

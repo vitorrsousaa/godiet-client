@@ -1,8 +1,7 @@
+import { TableInfo } from '@godiet-components/TableInfo';
 import { Button } from '@godiet-ui/Button';
 import { Input } from '@godiet-ui/Input';
 import { Modal } from '@godiet-ui/Modal';
-
-import { TableInfo } from '../../TableInfo';
 
 import { useStartMealModalHook } from './StartMealModal.hook';
 
