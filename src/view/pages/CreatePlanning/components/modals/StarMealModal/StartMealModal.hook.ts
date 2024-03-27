@@ -92,10 +92,6 @@ export function useStartMealModalHook(props: StarMealModalProps) {
       mealFoods: newMealFoods,
     };
 
-    console.log(newData);
-
-    console.log(data);
-
     try {
       await createFavoriteMeal({
         name: newData.name,
@@ -106,7 +102,7 @@ export function useStartMealModalHook(props: StarMealModalProps) {
     } catch {
       toast.error('Tivemos um erro ao favoritar');
     } finally {
-      // handleCloseModal();
+      handleCloseModal();
     }
   });
 
