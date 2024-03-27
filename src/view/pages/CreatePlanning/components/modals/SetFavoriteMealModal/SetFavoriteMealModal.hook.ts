@@ -121,7 +121,7 @@ export function useSetFavoriteMealModalHook(props: SetFavoriteMealModalProps) {
     const mealFoodsReadyToAdd = selectedFavorite.mealFoods.map((mealFood) => ({
       foodId: mealFood.food.id,
       measure: mealFood.measure,
-      name: mealFood.food.name,
+      name: mealFood.name,
       qty: mealFood.qty,
     }));
 

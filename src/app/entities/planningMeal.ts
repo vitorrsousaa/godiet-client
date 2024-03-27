@@ -1,8 +1,4 @@
-import { TFood } from './Food';
-interface TMeasure {
-  name: string;
-  qty: number;
-}
+import { TFood, TMeasure } from './Food';
 
 /**
  * Represents a food item within a meal.

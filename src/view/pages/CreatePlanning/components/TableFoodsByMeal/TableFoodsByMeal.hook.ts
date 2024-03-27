@@ -1,15 +1,25 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { useGetAllFoods } from '@godiet-hooks/foods';
-import { TCreatePlanningMealDTO } from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
+import {
+  CreateMealFoodSchema,
+  TCreatePlanningMealDTO,
+} from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
 import {
   calculateMealFoods,
   FoodsByMeal,
 } from '@godiet-pages/CreatePlanning/utils/calculateMealFoods';
 
-import { useFormContext, useWatch } from 'react-hook-form';
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import * as z from 'zod';
 
 import { TableFoodsByMealProps } from './TableFoodsByMeal';
+
+type TCreateMealFood = z.infer<typeof CreateMealFoodSchema>;
+
+type GetNewMealFoodsFunction = (
+  oldMealFoods: TCreateMealFood[]
+) => TCreateMealFood[];
 
 export function useTableFoodsByMealHook(props: TableFoodsByMealProps) {
   const { mealIndex } = props;
@@ -22,6 +32,20 @@ export function useTableFoodsByMealHook(props: TableFoodsByMealProps) {
     control,
     name: `meals.${mealIndex}`,
   });
+
+  const { update } = useFieldArray({
+    control,
+    name: 'meals',
+  });
+
+  const handleUpdateMealFoods = useCallback(
+    (getNewMealFoods: GetNewMealFoodsFunction) => {
+      const newMealFoods = getNewMealFoods(watchMeal.mealFoods);
+
+      update(mealIndex, { ...watchMeal, mealFoods: newMealFoods });
+    },
+    [mealIndex, update, watchMeal]
+  );
 
   const foodsByMeal = useMemo<FoodsByMeal[]>(() => {
     const initialFoodsByMeal: FoodsByMeal[] = [];
@@ -49,5 +73,6 @@ export function useTableFoodsByMealHook(props: TableFoodsByMealProps) {
 
   return {
     foodsByMeal,
+    handleUpdateMealFoods,
   };
 }

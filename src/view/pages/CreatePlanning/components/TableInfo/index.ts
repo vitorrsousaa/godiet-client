@@ -1,1 +1,0 @@
-export { TableInfo } from './TableInfo';
