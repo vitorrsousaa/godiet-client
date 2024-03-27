@@ -73,6 +73,22 @@ export function PlanningMeal() {
                     Criado em: {formatDate(planningMeal.createdAt, 'PP')}
                   </Card.Description>
                 </Card.Header>
+                <Card.Content>
+                  <div className="flex flex-col">
+                    <small>
+                      Carboidratos:{planningMeal.summary.carb.toFixed(2)}g
+                    </small>
+                    <small>
+                      Proteína: {planningMeal.summary.prot.toFixed(2)}g
+                    </small>
+                    <small>
+                      Lipídeos: {planningMeal.summary.fat.toFixed(2)}g
+                    </small>
+                    <small>
+                      Calorias: {planningMeal.summary.energy.toFixed(2)}kcal
+                    </small>
+                  </div>
+                </Card.Content>
               </Card.Root>
             );
           })}
