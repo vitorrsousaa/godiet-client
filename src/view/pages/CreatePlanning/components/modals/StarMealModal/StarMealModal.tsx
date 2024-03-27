@@ -1,8 +1,7 @@
+import { TableInfo } from '@godiet-components/TableInfo';
 import { Button } from '@godiet-ui/Button';
 import { Input } from '@godiet-ui/Input';
 import { Modal } from '@godiet-ui/Modal';
-
-import { TableInfo } from '../../TableInfo';
 
 import { useStartMealModalHook } from './StartMealModal.hook';
 
@@ -21,6 +20,7 @@ export function StarMealModal(props: StarMealModalProps) {
     isValid,
     watchMealFoods,
     register,
+    setTableFoods,
     handleSubmit,
     handleCloseModal,
   } = useStartMealModalHook(props);
@@ -44,6 +44,8 @@ export function StarMealModal(props: StarMealModalProps) {
           mealIndex={mealIndex}
           disabledActions={true}
           mealFoods={mealFoods}
+          onUpdateMealFoods={setTableFoods}
+          disableColumns={['prot', 'carb', 'fat']}
         />
       ) : (
         <div>
