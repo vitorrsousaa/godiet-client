@@ -19,7 +19,6 @@ interface TCreatePlanningMeal {
         name: string;
         qty: number;
       };
-      options: [];
     }[];
   }[];
 }
@@ -48,7 +47,6 @@ function mapper(planningMeal: TCreatePlanningMealDTO): TCreatePlanningMeal {
         name: mealFood.name,
         qty: mealFood.qty,
         measure: mealFood.measure,
-        options: [],
       })),
     })),
   };
