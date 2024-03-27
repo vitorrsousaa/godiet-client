@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { useCreateFavoriteMeal } from '@godiet-hooks/favoriteMeal';
 import { useGetAllFoods } from '@godiet-hooks/foods';
@@ -30,9 +30,13 @@ export function useStartMealModalHook(props: StarMealModalProps) {
 
   const { foods } = useGetAllFoods();
 
-  // Custom hooks
+  const { control } = useFormContext<TCreatePlanningMealDTO>();
 
-  // Internal form
+  const watchMealFoods = useWatch({
+    control,
+    name: `meals.${mealIndex}.mealFoods`,
+  });
+
   const {
     register,
     handleSubmit: hookFormSubmit,
@@ -42,23 +46,12 @@ export function useStartMealModalHook(props: StarMealModalProps) {
     resolver: zodResolver(FavoriteMealSchema),
   });
 
-  // Internal form
-
-  // External form
-
-  const { control } = useFormContext<TCreatePlanningMealDTO>();
-
-  const watchMealFoods = useWatch({
-    control,
-    name: `meals.${mealIndex}.mealFoods`,
-  });
-
-  // External form
+  const [tableFoods, setTableFoods] = useState(watchMealFoods);
 
   // usememo
   const mealFoods = useMemo<FoodsByMeal[]>(() => {
     const initialFoodsByMeal: FoodsByMeal[] = [];
-    watchMealFoods.forEach((food) => {
+    tableFoods.forEach((food) => {
       const selectedFood = foods.find(
         (foodDatabase) => foodDatabase.id === food.foodId
       );
@@ -66,7 +59,7 @@ export function useStartMealModalHook(props: StarMealModalProps) {
       if (!selectedFood) return;
 
       const mealFoodCalculated = calculateMealFoods({
-        food: selectedFood,
+        food: { ...selectedFood, name: food.name },
         measure: food.measure,
         qty: food.qty,
       });
@@ -75,7 +68,7 @@ export function useStartMealModalHook(props: StarMealModalProps) {
     });
 
     return initialFoodsByMeal;
-  }, [foods, watchMealFoods]);
+  }, [foods, tableFoods]);
 
   const isValid = useMemo(
     () => Boolean(watchMealFoods.length > 0 && internalFormIsValid),
@@ -86,17 +79,22 @@ export function useStartMealModalHook(props: StarMealModalProps) {
   // callbacks
 
   const handleSubmit = hookFormSubmit(async (data) => {
-    const newMealFoods = watchMealFoods.map((mealFood) => ({
+    const newMealFoods = tableFoods.map((mealFood) => ({
       foodId: mealFood.foodId,
       measure: mealFood.measure,
       options: [],
       qty: mealFood.qty,
+      name: mealFood.name,
     }));
 
     const newData = {
       name: data.name,
       mealFoods: newMealFoods,
     };
+
+    console.log(newData);
+
+    console.log(data);
 
     try {
       await createFavoriteMeal({
@@ -108,7 +106,7 @@ export function useStartMealModalHook(props: StarMealModalProps) {
     } catch {
       toast.error('Tivemos um erro ao favoritar');
     } finally {
-      handleCloseModal();
+      // handleCloseModal();
     }
   });
 
@@ -123,6 +121,7 @@ export function useStartMealModalHook(props: StarMealModalProps) {
     isValid,
     watchMealFoods,
     register,
+    setTableFoods,
     handleSubmit,
     handleCloseModal,
   };
