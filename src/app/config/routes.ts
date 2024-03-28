@@ -22,4 +22,5 @@ export const ROUTES = {
   FAVORITES_MEALS: '/favoritos/refeicoes',
   FAVORITES_MANIPULATED: '/favoritos/manipulados',
   FAVORITES_PLANNING: '/favoritos/plano-alimentar',
+  FAVORITES_EXAMS: '/favoritos/exames',
 } as const;
