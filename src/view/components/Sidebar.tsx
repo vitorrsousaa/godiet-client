@@ -1,4 +1,5 @@
 import { Button } from '@godiet-ui/Button';
+import { Tooltip } from '@godiet-ui/Tooltip';
 import { cn } from '@godiet-utils/cn';
 
 import { Link, useLocation } from 'react-router-dom';
@@ -38,20 +39,22 @@ export function Sidebar({ className, sideBarItens }: SidebarProps) {
             <div className="space-y-1">
               {sidebarItem.items.map((item) => (
                 <Link key={`sidebar-item-${item.title}`} to={item.href}>
-                  <Button
-                    variant="ghost"
-                    className={cn(
-                      'w-full justify-center transition-all sm:justify-start',
+                  <Tooltip content={item.title} className="sm:hidden">
+                    <Button
+                      variant="ghost"
+                      className={cn(
+                        'w-full justify-center transition-all sm:justify-start',
 
-                      pathname === item.href && 'bg-gray-50 text-teal-600'
-                    )}
-                  >
-                    <span className="inline-flex items-center gap-1 ">
-                      {item.icon}
+                        pathname === item.href && 'bg-gray-50 text-teal-600'
+                      )}
+                    >
+                      <span className="inline-flex items-center gap-1 ">
+                        {item.icon}
 
-                      <span className="hidden sm:block">{item.title}</span>
-                    </span>
-                  </Button>
+                        <span className="hidden sm:block">{item.title}</span>
+                      </span>
+                    </Button>
+                  </Tooltip>
                 </Link>
               ))}
             </div>

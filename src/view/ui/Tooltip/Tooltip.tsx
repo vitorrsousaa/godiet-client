@@ -29,15 +29,16 @@ TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 interface TooltipProps {
   children: React.ReactNode;
   content: React.ReactNode;
+  className?: string;
 }
 
 function Tooltip(props: TooltipProps) {
-  const { children, content } = props;
+  const { children, content, className } = props;
   return (
     <TooltipProvider>
       <TooltipBase>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent>{content}</TooltipContent>
+        <TooltipContent className={className}>{content}</TooltipContent>
       </TooltipBase>
     </TooltipProvider>
   );
