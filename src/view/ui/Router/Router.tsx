@@ -124,6 +124,15 @@ export function Router() {
                   }
                 />
                 <Route
+                  path={ROUTES.FAVORITES_EXAMS}
+                  element={
+                    <div className="flex flex-col">
+                      Exames
+                      <small>Esta página ainda esta em construção!</small>
+                    </div>
+                  }
+                />
+                <Route
                   path={ROUTES.FAVORITES_OBSERVATIONS}
                   element={
                     <div className="flex flex-col">
