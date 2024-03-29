@@ -28,6 +28,7 @@ export default defineConfig({
       ),
       '@testing-suit': path.resolve(__dirname, './src/app/libs/testing/suit'),
       '@testing-react': path.resolve(__dirname, './src/app/libs/testing/react'),
+      '@storage': path.resolve(__dirname, './src/app/storage'),
     },
   },
 });
