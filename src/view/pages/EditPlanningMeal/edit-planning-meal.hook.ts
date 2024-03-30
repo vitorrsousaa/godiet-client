@@ -8,7 +8,10 @@ import {
 import { usePersistPlanningMeal } from '@godiet-components/PlanningMealForm/hooks';
 import { useAuth } from '@godiet-hooks/auth';
 import { usePatient } from '@godiet-hooks/patient';
-import { useGetByPlanningId } from '@godiet-hooks/planningMeal';
+import {
+  useGetByPlanningId,
+  useUpdatePlanningMeal,
+} from '@godiet-hooks/planningMeal';
 import { useNavigate } from '@godiet-hooks/routes';
 import { ReturnHookPage } from '@godiet-utils/types';
 
@@ -28,6 +31,8 @@ interface EditPlanningMealHookOutput {
   planningMealToEdit: TCreatePlanningMealDTO;
   controller: UsePlanningMealFormController;
   handleSubmit: (data: TCreatePlanningMealDTO) => Promise<void>;
+
+  isUpdatingPlanningMeal: boolean;
 }
 
 /**
@@ -51,6 +56,11 @@ export function useEditPlanningMealHook(): ReturnHookPage<EditPlanningMealHookOu
       patientId: patient?.id,
       planningId,
     });
+
+  const { isUpdatingPlanningMeal, updatePlanningMeal } = useUpdatePlanningMeal({
+    patientId: patient?.id || '',
+    planningMealId: planningId || '',
+  });
 
   const controller = usePlanningMealFormController();
 
@@ -76,20 +86,23 @@ export function useEditPlanningMealHook(): ReturnHookPage<EditPlanningMealHookOu
   const handleSubmit = React.useCallback(
     async (data: TCreatePlanningMealDTO) => {
       try {
-        console.log(data);
+        await updatePlanningMeal({
+          patientId: patient?.id || '',
+          planningMeal: data,
+        });
 
         toast.success('Plano editado com sucesso!');
       } catch {
         toast.error('Erro ao editar plano alimentar');
       } finally {
-        // navigate('PLANNING_MEAL_BY_PATIENT', {
-        //   replace: {
-        //     id: patient?.id || '',
-        //   },
-        // });
+        navigate('PLANNING_MEAL_BY_PATIENT', {
+          replace: {
+            id: patient?.id || '',
+          },
+        });
       }
     },
-    [navigate, patient?.id]
+    [navigate, patient?.id, updatePlanningMeal]
   );
 
   const planningMealToEdit = React.useMemo(() => {
@@ -108,6 +121,7 @@ export function useEditPlanningMealHook(): ReturnHookPage<EditPlanningMealHookOu
     planningMealToEdit,
     controller,
     handleSubmit,
+    isUpdatingPlanningMeal,
     pageStatus: {
       isLoading: isFetchingPlanningMeal || isFetchingPatient,
       isError: isErrorPatient || isErrorPlanningMeal,
