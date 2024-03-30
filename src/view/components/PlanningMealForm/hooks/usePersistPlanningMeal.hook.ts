@@ -11,10 +11,11 @@ import {
 interface UsePersistPlanningMealProps {
   planningMealKey: string;
   getValues: () => TCreatePlanningMealDTO;
+  hasError?: boolean;
 }
 
 export function usePersistPlanningMeal(props: UsePersistPlanningMealProps) {
-  const { planningMealKey, getValues } = props;
+  const { planningMealKey, hasError, getValues } = props;
 
   const storage = React.useMemo(
     () =>
@@ -27,6 +28,8 @@ export function usePersistPlanningMeal(props: UsePersistPlanningMealProps) {
 
   React.useEffect(() => {
     const timer = setInterval(() => {
+      if (!hasError) return null;
+
       toast.promise(new Promise((resolve) => setTimeout(resolve, 2500)), {
         error: '',
         loading: 'Salvando...',
@@ -36,7 +39,7 @@ export function usePersistPlanningMeal(props: UsePersistPlanningMealProps) {
     }, 60000);
 
     return () => clearInterval(timer);
-  }, [getValues, storage]);
+  }, [getValues, hasError, storage]);
 
   return {
     storage,
