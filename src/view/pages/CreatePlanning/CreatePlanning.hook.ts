@@ -1,26 +1,16 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import {
   TCreatePlanningMealDTO,
   usePlanningMealFormController,
 } from '@godiet-components/PlanningMealForm';
+import { usePersistPlanningMeal } from '@godiet-components/PlanningMealForm/hooks/usePersistPlanningMeal.hook';
 import { useAuth } from '@godiet-hooks/auth';
 import { usePatient } from '@godiet-hooks/patient';
 import { useCreatePlanningMeal } from '@godiet-hooks/planningMeal';
 import { useNavigate } from '@godiet-hooks/routes';
 
-import { PlanningMealStorage } from '@storage/planningMeal';
 import toast from 'react-hot-toast';
-
-const defaultInitialValues = {
-  meals: [
-    {
-      name: '',
-      time: '',
-      mealFoods: [],
-    },
-  ],
-};
 
 export function useCreatePlanningHook() {
   const { patient } = usePatient();
@@ -47,14 +37,10 @@ export function useCreatePlanningHook() {
     return JSON.stringify(object);
   }, [email, patient?.id]);
 
-  const storage = useMemo(
-    () =>
-      new PlanningMealStorage<TCreatePlanningMealDTO>(
-        planningMealKey,
-        defaultInitialValues
-      ),
-    [planningMealKey]
-  );
+  const { storage } = usePersistPlanningMeal({
+    planningMealKey,
+    getValues: controller.getValues,
+  });
 
   const removeStoragePlanningMeal = useCallback(() => {
     storage.remove();
@@ -89,19 +75,6 @@ export function useCreatePlanningHook() {
     },
     [createPlanningMeal, navigate, patient?.id, removeStoragePlanningMeal]
   );
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      toast.promise(new Promise((resolve) => setTimeout(resolve, 2500)), {
-        error: '',
-        loading: 'Salvando...',
-        success: 'Salvo com sucesso! Próximo em 60s',
-      });
-      storage.set(controller.getValues());
-    }, 60000);
-
-    return () => clearInterval(timer);
-  }, [controller, storage]);
 
   return {
     isCreatingPlanningMeal,
