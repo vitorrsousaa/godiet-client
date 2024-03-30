@@ -25,6 +25,7 @@ export function PlanningMeal() {
     handleDeletePlanningMeal,
     handleNavigateToCreatePlanning,
     handleNavigateToShowPlanning,
+    handleNavigateToEditPlanning,
   } = usePlanningMealHook();
 
   return (
@@ -55,8 +56,7 @@ export function PlanningMeal() {
                         <Button
                           variant={'outline'}
                           onClick={() =>
-                            // handleNavigateToShowPlanning(planningMeal.id)
-                            console.log('editr')
+                            handleNavigateToEditPlanning(planningMeal.id)
                           }
                         >
                           <Pencil1Icon />
