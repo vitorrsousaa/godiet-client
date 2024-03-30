@@ -16,10 +16,5 @@ interface EditPlanningMealLayoutProps {
 export function EditPlanningMealLayout(props: EditPlanningMealLayoutProps) {
   const { children } = props;
 
-  return (
-    <div>
-      EditPlanningMeal layout
-      {children}
-    </div>
-  );
+  return <div>{children}</div>;
 }

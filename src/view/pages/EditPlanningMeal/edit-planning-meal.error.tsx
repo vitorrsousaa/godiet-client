@@ -7,8 +7,9 @@
  */
 export function EditPlanningMealError() {
   return (
-    <div>
-      <h1>EditPlanningMealError</h1>
+    <div className="w-full text-center">
+      <span>Tivemos um erro para carregar esta página!</span>
+      <p>Por favor, tente novamente</p>
     </div>
   );
 }

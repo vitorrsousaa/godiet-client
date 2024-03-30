@@ -16,7 +16,8 @@ import { EditPlanningMealView } from './edit-planning-meal.view';
  * @returns Retorna o componente da página de exemplo.
  */
 export function EditPlanningMealController() {
-  const { pageStatus, state } = useEditPlanningMealHook();
+  const { pageStatus, planningMealToEdit, controller, handleSubmit } =
+    useEditPlanningMealHook();
 
   const { isError, isLoading, noData } = pageStatus;
 
@@ -32,5 +33,11 @@ export function EditPlanningMealController() {
     return <EditPlanningMealEmpty />;
   }
 
-  return <EditPlanningMealView data={state} />;
+  return (
+    <EditPlanningMealView
+      onSubmit={handleSubmit}
+      initialValues={planningMealToEdit}
+      controller={controller}
+    />
+  );
 }

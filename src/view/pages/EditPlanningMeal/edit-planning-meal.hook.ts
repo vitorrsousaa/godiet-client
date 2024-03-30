@@ -1,6 +1,21 @@
-import { useState } from 'react';
+import React from 'react';
 
+import {
+  TCreatePlanningMealDTO,
+  UsePlanningMealFormController,
+  usePlanningMealFormController,
+} from '@godiet-components/PlanningMealForm';
+import { usePersistPlanningMeal } from '@godiet-components/PlanningMealForm/hooks';
+import { useAuth } from '@godiet-hooks/auth';
+import { usePatient } from '@godiet-hooks/patient';
+import { useGetByPlanningId } from '@godiet-hooks/planningMeal';
+import { useNavigate } from '@godiet-hooks/routes';
 import { ReturnHookPage } from '@godiet-utils/types';
+
+import toast from 'react-hot-toast';
+import { useParams } from 'react-router-dom';
+
+import { mapperPlanningMealToEdit } from './edit-planning-meal.utils';
 
 /**
  * Define o formato de saída do hook `useEditPlanningMealHook`.
@@ -10,7 +25,9 @@ import { ReturnHookPage } from '@godiet-utils/types';
  * @interface EditPlanningMealHookOutput
  */
 interface EditPlanningMealHookOutput {
-  state: number;
+  planningMealToEdit: TCreatePlanningMealDTO;
+  controller: UsePlanningMealFormController;
+  handleSubmit: (data: TCreatePlanningMealDTO) => Promise<void>;
 }
 
 /**
@@ -21,14 +38,80 @@ interface EditPlanningMealHookOutput {
  * @returns Retorna um objeto contendo o estado interno e o status da página.
  */
 export function useEditPlanningMealHook(): ReturnHookPage<EditPlanningMealHookOutput> {
-  const [state] = useState(0);
+  const { planningId } = useParams<{ id: string; planningId: string }>();
+
+  const { email } = useAuth();
+
+  const { navigate } = useNavigate();
+
+  const { isErrorPatient, isFetchingPatient, patient } = usePatient();
+
+  const { isErrorPlanningMeal, isFetchingPlanningMeal, planningMeal } =
+    useGetByPlanningId({
+      patientId: patient?.id,
+      planningId,
+    });
+
+  const controller = usePlanningMealFormController();
+
+  const planningMealKey = React.useMemo(() => {
+    const userEmail = email || '';
+    const patientId = patient?.id || '';
+
+    const object = {
+      email: userEmail,
+      patientId: patientId,
+      planningMealId: planningId,
+    };
+
+    return JSON.stringify(object);
+  }, [email, patient?.id, planningId]);
+
+  const { storage } = usePersistPlanningMeal({
+    planningMealKey,
+    getValues: controller.getValues,
+    hasError: isErrorPlanningMeal || isErrorPatient,
+  });
+
+  const handleSubmit = React.useCallback(
+    async (data: TCreatePlanningMealDTO) => {
+      try {
+        console.log(data);
+
+        toast.success('Plano editado com sucesso!');
+      } catch {
+        toast.error('Erro ao editar plano alimentar');
+      } finally {
+        // navigate('PLANNING_MEAL_BY_PATIENT', {
+        //   replace: {
+        //     id: patient?.id || '',
+        //   },
+        // });
+      }
+    },
+    [navigate, patient?.id]
+  );
+
+  const planningMealToEdit = React.useMemo(() => {
+    const storagedPlanningMeal = storage.get();
+
+    if (storagedPlanningMeal?.name?.length > 0) {
+      return storagedPlanningMeal;
+    }
+
+    if (!planningMeal) return {} as TCreatePlanningMealDTO;
+
+    return mapperPlanningMealToEdit(planningMeal);
+  }, [planningMeal, storage]);
 
   return {
-    state,
+    planningMealToEdit,
+    controller,
+    handleSubmit,
     pageStatus: {
-      isLoading: false,
-      isError: false,
-      noData: true,
+      isLoading: isFetchingPlanningMeal || isFetchingPatient,
+      isError: isErrorPatient || isErrorPlanningMeal,
+      noData: false,
     },
   };
 }
