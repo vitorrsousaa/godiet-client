@@ -9,6 +9,7 @@ export interface TMealFood {
   qty: number;
   food: TFood;
   name: string;
+  foodId: string;
 }
 
 /**
