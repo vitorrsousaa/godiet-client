@@ -1,26 +1,11 @@
-import { TCreatePlanningMealDTO } from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
+import { TCreatePlanningMealDTO } from '@godiet-components/PlanningMealForm';
 import { httpClient } from '@godiet-services/httpClient';
+
+import { mapper } from './mapper';
 
 export interface CreatePlanningMealInput {
   planningMeal: TCreatePlanningMealDTO;
   patientId: string;
-}
-
-interface TCreatePlanningMeal {
-  name: string;
-  meals: {
-    name: string;
-    time: string;
-    mealFoods: {
-      foodId: string;
-      name: string;
-      qty: number;
-      measure: {
-        name: string;
-        qty: number;
-      };
-    }[];
-  }[];
 }
 
 export async function create(createPlanningMealInput: CreatePlanningMealInput) {
@@ -34,20 +19,4 @@ export async function create(createPlanningMealInput: CreatePlanningMealInput) {
   );
 
   return data;
-}
-
-function mapper(planningMeal: TCreatePlanningMealDTO): TCreatePlanningMeal {
-  return {
-    name: planningMeal.name,
-    meals: planningMeal.meals.map((meal) => ({
-      time: meal.time,
-      name: meal.name,
-      mealFoods: meal.mealFoods.map((mealFood) => ({
-        foodId: mealFood.foodId,
-        name: mealFood.name,
-        qty: mealFood.qty,
-        measure: mealFood.measure,
-      })),
-    })),
-  };
 }
