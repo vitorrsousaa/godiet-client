@@ -28,7 +28,7 @@ export function CreatePlanning() {
         isLoading={isCreatingPlanningMeal}
         className="w-full"
       >
-        Criar plano alimentar2
+        Criar plano alimentar
       </Button>
     </div>
   );
