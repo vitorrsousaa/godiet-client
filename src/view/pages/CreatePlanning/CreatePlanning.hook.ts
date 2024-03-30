@@ -1,40 +1,16 @@
 import { useCallback, useEffect, useMemo } from 'react';
 
+import {
+  TCreatePlanningMealDTO,
+  usePlanningMealFormController,
+} from '@godiet-components/PlanningMealForm';
 import { useAuth } from '@godiet-hooks/auth';
 import { usePatient } from '@godiet-hooks/patient';
 import { useCreatePlanningMeal } from '@godiet-hooks/planningMeal';
 import { useNavigate } from '@godiet-hooks/routes';
 
-import { zodResolver } from '@hookform/resolvers/zod';
 import { PlanningMealStorage } from '@storage/planningMeal';
-import { useFieldArray, useForm, useWatch } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import * as z from 'zod';
-
-export const CreateMealFoodSchema = z.object({
-  name: z.string(),
-  foodId: z.string().uuid(),
-  qty: z.number().min(1),
-  measure: z.object({
-    name: z.string(),
-    qty: z.number(),
-  }),
-});
-
-export const CreateMealSchema = z.object({
-  name: z.string().min(1, 'O nome da refeição é obrigatório'),
-  time: z.string().refine((value) => /^([01]\d|2[0-3]):[0-5]\d$/.test(value), {
-    message: 'Insira um formato de hora válido (HH:mm).',
-  }),
-  mealFoods: z.array(CreateMealFoodSchema),
-});
-
-export const CreatePlanningMealSchema = z.object({
-  name: z.string().min(1, 'O nome do plano alimentar é obrigatório.'),
-  meals: z
-    .array(CreateMealSchema)
-    .min(1, 'O plano alimentar deve conter pelo menos uma refeição'),
-});
 
 const defaultInitialValues = {
   meals: [
@@ -46,14 +22,14 @@ const defaultInitialValues = {
   ],
 };
 
-export type TCreatePlanningMealDTO = z.infer<typeof CreatePlanningMealSchema>;
-
 export function useCreatePlanningHook() {
   const { patient } = usePatient();
 
   const { createPlanningMeal, isCreatingPlanningMeal } = useCreatePlanningMeal(
     patient?.id || ''
   );
+
+  const controller = usePlanningMealFormController();
 
   const { navigate } = useNavigate();
 
@@ -90,66 +66,28 @@ export function useCreatePlanningHook() {
     return data;
   }, [storage]);
 
-  const methods = useForm<TCreatePlanningMealDTO>({
-    resolver: zodResolver(CreatePlanningMealSchema),
-    defaultValues: getStoragePlanningMeal(),
-  });
+  const handleSubmit = useCallback(
+    async (data: TCreatePlanningMealDTO) => {
+      try {
+        await createPlanningMeal({
+          patientId: patient?.id || '',
+          planningMeal: data,
+        });
 
-  const {
-    handleSubmit: hookFormSubmit,
-    formState: { errors },
-    control,
-    register,
-    getValues,
-  } = methods;
+        removeStoragePlanningMeal();
 
-  const {
-    append: appendMeals,
-    remove: removeMeal,
-    fields,
-  } = useFieldArray({
-    control,
-    name: 'meals',
-  });
-
-  const watchMeals = useWatch({ control, name: 'meals' });
-
-  const handleSubmit = hookFormSubmit(async (data) => {
-    try {
-      await createPlanningMeal({
-        patientId: patient?.id || '',
-        planningMeal: data,
-      });
-
-      removeStoragePlanningMeal();
-
-      toast.success('Plano alimentar criado!');
-    } catch (error) {
-      toast.error('Erro ao criar o plano alimentar');
-    } finally {
-      navigate('PLANNING_MEAL_BY_PATIENT', {
-        replace: {
-          id: patient?.id || '',
-        },
-      });
-    }
-  });
-
-  const handleAddNewMeal = useCallback(() => {
-    appendMeals({
-      name: '',
-      time: '',
-      mealFoods: [],
-    });
-  }, [appendMeals]);
-
-  const handleRemoveMeal = useCallback(
-    (index: number) => {
-      if (watchMeals.length > 1) {
-        removeMeal(index);
+        toast.success('Plano alimentar criado!');
+      } catch (error) {
+        toast.error('Erro ao criar o plano alimentar');
+      } finally {
+        navigate('PLANNING_MEAL_BY_PATIENT', {
+          replace: {
+            id: patient?.id || '',
+          },
+        });
       }
     },
-    [removeMeal, watchMeals]
+    [createPlanningMeal, navigate, patient?.id, removeStoragePlanningMeal]
   );
 
   useEffect(() => {
@@ -159,21 +97,16 @@ export function useCreatePlanningHook() {
         loading: 'Salvando...',
         success: 'Salvo com sucesso! Próximo em 60s',
       });
-      storage.set(getValues());
+      storage.set(controller.getValues());
     }, 60000);
 
     return () => clearInterval(timer);
-  }, [getValues, storage]);
+  }, [controller, storage]);
 
   return {
-    methods,
-    errors,
-    meals: fields,
     isCreatingPlanningMeal,
-    appendMeals,
-    register,
+    controller,
     handleSubmit,
-    handleRemoveMeal,
-    handleAddNewMeal,
+    getStoragePlanningMeal,
   };
 }

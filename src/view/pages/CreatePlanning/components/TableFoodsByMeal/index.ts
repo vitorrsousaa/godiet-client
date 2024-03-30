@@ -1,1 +1,0 @@
-export { TableFoodsByMeal } from './TableFoodsByMeal';
