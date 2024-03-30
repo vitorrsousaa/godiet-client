@@ -12,7 +12,7 @@ export function CreatePlanning() {
   } = useCreatePlanningHook();
 
   return (
-    <div className="mb-32 flex w-full flex-col gap-2 sm:mb-20">
+    <div className="mb-32 flex w-full flex-col gap-2 sm:mb-24">
       <PlanningMealForm
         initialValues={getStoragePlanningMeal()}
         isSubmitting={isCreatingPlanningMeal}
