@@ -1,8 +1,8 @@
-import { EditPlanningMealEmpty } from './editPlanningMeal.empty';
-import { EditPlanningMealError } from './editPlanningMeal.error';
-import { useEditPlanningMealHook } from './editPlanningMeal.hook';
-import { EditPlanningMealLoading } from './editPlanningMeal.loading';
-import { EditPlanningMealView } from './editPlanningMeal.view';
+import { EditPlanningMealEmpty } from './edit-planning-meal.empty';
+import { EditPlanningMealError } from './edit-planning-meal.error';
+import { useEditPlanningMealHook } from './edit-planning-meal.hook';
+import { EditPlanningMealLoading } from './edit-planning-meal.loading';
+import { EditPlanningMealView } from './edit-planning-meal.view';
 
 /**
  * Componente que controla a lógica da página de exemplo.

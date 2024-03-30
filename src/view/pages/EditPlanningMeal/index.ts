@@ -1,3 +1,3 @@
-import { EditPlanningMeal } from './editPlanningMeal';
+import { EditPlanningMeal } from './edit-planning-meal';
 
 export { EditPlanningMeal };

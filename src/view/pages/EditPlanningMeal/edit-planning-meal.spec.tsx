@@ -6,8 +6,8 @@ import {
 } from '@testing-react';
 import { clearAllMocks } from '@testing-suit';
 
-import { useEditPlanningMealHook } from './editPlanningMeal.hook';
-import { EditPlanningMealView } from './editPlanningMeal.view';
+import { useEditPlanningMealHook } from './edit-planning-meal.hook';
+import { EditPlanningMealView } from './edit-planning-meal.view';
 
 describe('EditPlanningMealPage', () => {
   afterEach(() => {
