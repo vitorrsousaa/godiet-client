@@ -28,7 +28,9 @@ export function usePersistPlanningMeal(props: UsePersistPlanningMealProps) {
 
   React.useEffect(() => {
     const timer = setInterval(() => {
-      if (!hasError) return null;
+      if (hasError) {
+        return null;
+      }
 
       toast.promise(new Promise((resolve) => setTimeout(resolve, 2500)), {
         error: '',
