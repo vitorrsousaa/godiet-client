@@ -1,4 +1,4 @@
-import { FoodsByMeal } from '@godiet-pages/CreatePlanning/utils/calculateMealFoods';
+import { FoodsByMeal } from '@godiet-utils/foods';
 
 import {
   act,

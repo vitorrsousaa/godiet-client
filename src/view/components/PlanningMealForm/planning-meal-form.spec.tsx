@@ -11,7 +11,7 @@ import {
   screen,
   waitFor,
 } from '@testing-react';
-import { clearAllMocks, SpyInstance, spyOn } from '@testing-suit';
+import { clearAllMocks, fn, SpyInstance, spyOn } from '@testing-suit';
 
 import { foodsMock } from './mocks/food';
 import { PlanningMealForm, PlanningMealFormProps } from './planning-meal-form';
@@ -77,9 +77,10 @@ describe('PlanningMealForm', () => {
 
     it('Should render input for change the name of planning meal', () => {
       // Arrange
+      const onSubmit = fn();
 
       // Act
-      rendered = render(<PlanningMealForm />);
+      rendered = render(<PlanningMealForm onSubmit={onSubmit} />);
 
       // Assert
       expect(rendered.getByLabelText('Nome do plano alimentar'));
@@ -87,10 +88,13 @@ describe('PlanningMealForm', () => {
 
     it('Should render the name of planning meal when use initialValues', () => {
       // Arrange
-
+      const onSubmit = fn();
       // Act
       rendered = render(
-        <PlanningMealForm initialValues={defaultInitialValues} />
+        <PlanningMealForm
+          initialValues={defaultInitialValues}
+          onSubmit={onSubmit}
+        />
       );
 
       // Assert
@@ -99,9 +103,11 @@ describe('PlanningMealForm', () => {
 
     it('Should get form by id when uses form id property', () => {
       // Arrange
-
+      const onSubmit = fn();
       // Act
-      rendered = render(<PlanningMealForm formID="custom-planning" />);
+      rendered = render(
+        <PlanningMealForm formID="custom-planning" onSubmit={onSubmit} />
+      );
 
       // Assert
       expect(rendered.getByLabelText('form').getAttribute('id')).toEqual(
@@ -110,7 +116,8 @@ describe('PlanningMealForm', () => {
     });
     it('Should show error message when name of planning meal is empty', async () => {
       // Arrange
-      rendered = render(<PlanningMealForm />);
+      const onSubmit = fn();
+      rendered = render(<PlanningMealForm onSubmit={onSubmit} />);
 
       // Act
       act(() => {
@@ -124,7 +131,8 @@ describe('PlanningMealForm', () => {
     });
     it('Should remove error message when the user typing on input of name of planning meal', async () => {
       // Arrange
-      rendered = render(<PlanningMealForm />);
+      const onSubmit = fn();
+      rendered = render(<PlanningMealForm onSubmit={onSubmit} />);
 
       // Act
       act(() => {
@@ -165,8 +173,10 @@ describe('PlanningMealForm', () => {
 
     it('Should return default formId when the formId property is undefined', () => {
       // Arrange
+      const onSubmit = fn();
       const props: PlanningMealFormProps = {
         // data: 'teste',
+        onSubmit,
       };
 
       // Act
@@ -177,10 +187,12 @@ describe('PlanningMealForm', () => {
     });
 
     it('Should return custom formId when the formId property is custom', () => {
+      const onSubmit = fn();
       // Arrange
       const props: PlanningMealFormProps = {
         // data: 'teste',
         formID: 'custom-form-id',
+        onSubmit,
       };
 
       // Act
@@ -191,9 +203,11 @@ describe('PlanningMealForm', () => {
     });
 
     it('Should return empty meal when the initialValues is empty', () => {
+      const onSubmit = fn();
       // Arrange
       const props: PlanningMealFormProps = {
         // data: 'teste',
+        onSubmit,
       };
 
       // Act
@@ -211,8 +225,11 @@ describe('PlanningMealForm', () => {
 
     it('Should return correct meal when the initialValues is valid', () => {
       // Arrange
+      const onSubmit = fn();
+
       const props: PlanningMealFormProps = {
         // data: 'teste',
+        onSubmit,
         initialValues: {
           name: 'Default plano alimentar',
           meals: [
@@ -239,7 +256,9 @@ describe('PlanningMealForm', () => {
     });
     it('Should add new meal empty when call the handleAddNewMeal ', () => {
       // Arrange
-      const props: PlanningMealFormProps = {};
+      const onSubmit = fn();
+      const props: PlanningMealFormProps = { onSubmit };
+
       rendered = renderHook(() => usePlanningMealFormHook(props));
 
       // Act
@@ -255,8 +274,9 @@ describe('PlanningMealForm', () => {
       });
     });
     it('Should add new meal empty when call the handleAddNewMeal and not uses initialValues', () => {
+      const onSubmit = fn();
       // Arrange
-      const props: PlanningMealFormProps = {};
+      const props: PlanningMealFormProps = { onSubmit };
       rendered = renderHook(() => usePlanningMealFormHook(props));
 
       // Act
@@ -268,9 +288,11 @@ describe('PlanningMealForm', () => {
       expect(rendered.result.current.meals.length).toBe(2);
     });
     it('Should add new meal empty when call the handleAddNewMeal function when uses initialValues', () => {
+      const onSubmit = fn();
       // Arrange
       const props: PlanningMealFormProps = {
         // data: 'teste',
+        onSubmit,
         initialValues: {
           name: 'Default plano alimentar',
           meals: [
@@ -293,8 +315,9 @@ describe('PlanningMealForm', () => {
       expect(rendered.result.current.meals.length).toBe(2);
     });
     it('Should add new meal when call the appendMeals function ', () => {
+      const onSubmit = fn();
       // Arrange
-      const props: PlanningMealFormProps = {};
+      const props: PlanningMealFormProps = { onSubmit };
       rendered = renderHook(() => usePlanningMealFormHook(props));
 
       // Act
@@ -315,8 +338,9 @@ describe('PlanningMealForm', () => {
       });
     });
     it('Should not remove meal when call function handleRemoveMeal but exists just one meal', () => {
+      const onSubmit = fn();
       // Arrange
-      const props: PlanningMealFormProps = {};
+      const props: PlanningMealFormProps = { onSubmit };
       rendered = renderHook(() => usePlanningMealFormHook(props));
 
       // Act
@@ -328,8 +352,9 @@ describe('PlanningMealForm', () => {
       expect(rendered.result.current.meals.length).toBe(1);
     });
     it('Should remove meal when call function handleRemoveMeal', () => {
+      const onSubmit = fn();
       // Arrange
-      const props: PlanningMealFormProps = {};
+      const props: PlanningMealFormProps = { onSubmit };
       rendered = renderHook(() => usePlanningMealFormHook(props));
 
       // Act
@@ -347,8 +372,10 @@ describe('PlanningMealForm', () => {
       expect(rendered.result.current.meals.length).toBe(1);
     });
     it('Should remove meal when call function handleRemoveMeal and uses initialValues', () => {
+      const onSubmit = fn();
       // Arrange
       const props: PlanningMealFormProps = {
+        onSubmit,
         initialValues: {
           name: 'planning',
           meals: [
