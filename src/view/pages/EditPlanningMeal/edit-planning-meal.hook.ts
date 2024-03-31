@@ -59,7 +59,6 @@ export function useEditPlanningMealHook(): ReturnHookPage<EditPlanningMealHookOu
 
   const { isUpdatingPlanningMeal, updatePlanningMeal } = useUpdatePlanningMeal({
     patientId: patient?.id || '',
-    planningMealId: planningId || '',
   });
 
   const controller = usePlanningMealFormController();
@@ -88,7 +87,11 @@ export function useEditPlanningMealHook(): ReturnHookPage<EditPlanningMealHookOu
       try {
         await updatePlanningMeal({
           patientId: patient?.id || '',
-          planningMeal: data,
+          planningMeal: {
+            ...data,
+            id: planningMeal?.id || '',
+            createdAt: planningMeal?.createdAt || new Date().toDateString(),
+          },
         });
 
         toast.success('Plano editado com sucesso!');
@@ -100,9 +103,17 @@ export function useEditPlanningMealHook(): ReturnHookPage<EditPlanningMealHookOu
             id: patient?.id || '',
           },
         });
+        storage.remove();
       }
     },
-    [navigate, patient?.id, updatePlanningMeal]
+    [
+      updatePlanningMeal,
+      patient?.id,
+      planningMeal?.id,
+      planningMeal?.createdAt,
+      navigate,
+      storage,
+    ]
   );
 
   const planningMealToEdit = React.useMemo(() => {
