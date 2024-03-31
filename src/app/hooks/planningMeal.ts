@@ -116,15 +116,17 @@ export function useDeletePlanningMeal(
   };
 }
 
-export function useUpdatePlanningMeal(params: HandlerEditPlanningMealParams) {
-  const { patientId, planningMealId } = params;
+export function useUpdatePlanningMeal(
+  params: Omit<HandlerEditPlanningMealParams, 'planningMealId'>
+) {
+  const { patientId } = params;
   const queryClient = useQueryClient();
 
   const { isPending, mutateAsync: updatePlanningMeal } = useMutation({
     mutationFn: planningMealServices.update,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: [QUERY_CACHE_KEYS.PLANNING_MEAL, patientId, planningMealId],
+        queryKey: [QUERY_CACHE_KEYS.PLANNING_MEAL, patientId],
       });
     },
   });
