@@ -1,4 +1,5 @@
 import { TableInfo } from '@godiet-components/TableInfo';
+import { Spinner } from '@godiet-ui/Spinner';
 
 import { useTableFoodsByMealHook } from './table-foods-by-meal.hook';
 
@@ -17,7 +18,10 @@ export interface TableFoodsByMealProps {
 export function TableFoodsByMeal(props: TableFoodsByMealProps) {
   const { mealIndex, onOpenModalRemove, onOpenModalEdit } = props;
 
-  const { foodsByMeal, handleUpdateMealFoods } = useTableFoodsByMealHook(props);
+  const { foodsByMeal, isFetchingFoods, handleUpdateMealFoods } =
+    useTableFoodsByMealHook(props);
+
+  if (isFetchingFoods) return <Spinner />;
 
   return (
     <>

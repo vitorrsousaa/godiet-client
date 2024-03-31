@@ -18,7 +18,7 @@ type GetNewMealFoodsFn = (
 export function useTableFoodsByMealHook(props: TableFoodsByMealProps) {
   const { mealIndex } = props;
 
-  const { foods } = useGetAllFoods();
+  const { foods, isFetchingFoods } = useGetAllFoods();
 
   const { control } = useFormContext<TCreatePlanningMealDTO>();
 
@@ -67,6 +67,7 @@ export function useTableFoodsByMealHook(props: TableFoodsByMealProps) {
 
   return {
     foodsByMeal,
+    isFetchingFoods,
     handleUpdateMealFoods,
   };
 }
