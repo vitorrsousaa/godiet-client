@@ -1,1 +1,0 @@
-export { StarMealModal } from './StarMealModal';

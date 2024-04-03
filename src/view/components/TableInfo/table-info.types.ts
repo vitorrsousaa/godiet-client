@@ -1,13 +1,9 @@
-import { CreateMealFoodSchema } from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
-import { FoodsByMeal } from '@godiet-pages/CreatePlanning/utils/calculateMealFoods';
-
-import * as z from 'zod';
-
-export type TCreateMealFood = z.infer<typeof CreateMealFoodSchema>;
+import { TCreateMealFoodDTO } from '@godiet-components/PlanningMealForm';
+import { FoodsByMeal } from '@godiet-utils/foods';
 
 export type CallbackUpdateMealFoodsFunction = (
-  oldMealFoods: TCreateMealFood[]
-) => TCreateMealFood[];
+  oldMealFoods: TCreateMealFoodDTO[]
+) => TCreateMealFoodDTO[];
 
 interface OpenModalEditParams {
   mealFoodIndex: number;

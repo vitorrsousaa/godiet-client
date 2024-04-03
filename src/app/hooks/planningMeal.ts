@@ -89,13 +89,13 @@ export function usePrefetchAllPlanningMeal() {
   };
 }
 
-interface IDeletePlanningInput {
+interface HandlerEditPlanningMealParams {
   planningMealId: string;
   patientId: string;
 }
 
 export function useDeletePlanningMeal(
-  deletePlanningInput: IDeletePlanningInput
+  deletePlanningInput: HandlerEditPlanningMealParams
 ) {
   const queryClient = useQueryClient();
 
@@ -113,5 +113,26 @@ export function useDeletePlanningMeal(
   return {
     isDeletingPlanningMeal: isPending,
     deletePlanningMeal,
+  };
+}
+
+export function useUpdatePlanningMeal(
+  params: Omit<HandlerEditPlanningMealParams, 'planningMealId'>
+) {
+  const { patientId } = params;
+  const queryClient = useQueryClient();
+
+  const { isPending, mutateAsync: updatePlanningMeal } = useMutation({
+    mutationFn: planningMealServices.update,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_CACHE_KEYS.PLANNING_MEAL, patientId],
+      });
+    },
+  });
+
+  return {
+    isUpdatingPlanningMeal: isPending,
+    updatePlanningMeal,
   };
 }

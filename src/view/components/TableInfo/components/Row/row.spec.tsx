@@ -66,7 +66,7 @@ describe('Row', () => {
       // Arrange
       const props: RowProps = {
         ...defaultProps,
-        children: <div>children</div>,
+        children: <>children</>,
       };
 
       // Act

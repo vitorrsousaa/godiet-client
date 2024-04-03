@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { FoodsByMeal } from '@godiet-pages/CreatePlanning/utils/calculateMealFoods';
 import { TableCell } from '@godiet-ui/Table';
+import { FoodsByMeal } from '@godiet-utils/foods';
 
 export type TParamsDisableColumns = 'prot' | 'carb' | 'fat' | 'energy';
 export interface RowProps {

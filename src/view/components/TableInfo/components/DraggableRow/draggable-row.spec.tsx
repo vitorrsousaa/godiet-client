@@ -19,13 +19,13 @@ describe('DraggableRow', () => {
       rendered.unmount();
     });
 
-    it('Should render correctlty children', () => {
+    it('Should render correctly children', () => {
       // Arrange
 
       // Act
       rendered = render(
         <DraggableRow id="draggable-id">
-          <div>draggable-row</div>
+          <>draggable-row</>
         </DraggableRow>
       );
 
