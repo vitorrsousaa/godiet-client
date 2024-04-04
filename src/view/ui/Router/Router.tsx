@@ -37,7 +37,6 @@ const { FavoritesAnamnesis } = lazyLoad(
   () => import('@godiet-pages/FavoritesAnamnesis')
 );
 const { Login } = lazyLoad(() => import('@godiet-pages/Login'));
-const { LandingPage } = lazyLoad(() => import('@godiet-pages/LandingPage'));
 const { Register } = lazyLoad(() => import('@godiet-pages/Register'));
 const { Settings } = lazyLoad(() => import('@godiet-pages/Settings'));
 
@@ -76,7 +75,6 @@ export function Router() {
           <Route element={<AuthGuard isPrivate={false} />}>
             <Route path={ROUTES.LOGIN} element={<Login />} />
             <Route path={ROUTES.REGISTER} element={<Register />} />
-            <Route path={ROUTES.HOME} element={<LandingPage />} />
           </Route>
           <Route element={<AuthGuard isPrivate={true} />}>
             <Route element={<DashboardLayout />}>
