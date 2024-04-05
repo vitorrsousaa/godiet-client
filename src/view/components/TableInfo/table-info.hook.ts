@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { TCreatePlanningMealDTO } from '@godiet-pages/CreatePlanning/CreatePlanning.hook';
+import { TCreatePlanningMealDTO } from '@godiet-components/PlanningMealForm';
 
 import { DragEndEvent } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';

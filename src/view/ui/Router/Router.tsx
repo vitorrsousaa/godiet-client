@@ -18,7 +18,6 @@ const { CreateAnamnesis } = lazyLoad(
 const { CreatePlanning } = lazyLoad(
   () => import('@godiet-pages/CreatePlanning')
 );
-
 const { Dashboard } = lazyLoad(() => import('@godiet-pages/Dashboard'));
 const { DetailsPlanningMeal } = lazyLoad(
   () => import('@godiet-pages/DetailsPlanningMeal')
@@ -26,7 +25,9 @@ const { DetailsPlanningMeal } = lazyLoad(
 const { DashboardLayout } = lazyLoad(
   () => import('@godiet-layouts/DashboardLayout')
 );
-
+const { EditPlanningMeal } = lazyLoad(
+  () => import('@godiet-pages/EditPlanningMeal')
+);
 const { FavoritesLayout } = lazyLoad(
   () => import('@godiet-layouts/FavoritesLayout')
 );
@@ -192,6 +193,11 @@ export function Router() {
                 <Route
                   path={ROUTES.CREATE_PLANNING_CONVENTIONAL}
                   element={<CreatePlanning />}
+                />
+
+                <Route
+                  path={ROUTES.EDITING_PLANNING_MEAL_BY_PATIENT}
+                  element={<EditPlanningMeal />}
                 />
               </Route>
             </Route>

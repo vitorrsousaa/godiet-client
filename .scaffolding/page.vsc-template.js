@@ -7,6 +7,12 @@
   const toCamelCase = (str) =>
     toPascalCase(str).replace(/^./, (firstLetter) => firstLetter.toLowerCase());
 
+  const toKebabCase = (str) =>
+    str
+      .replace(/([a-z])([A-Z])/g, '$1-$2') // Adiciona um hífen entre letras minúsculas e maiúsculas
+      .replace(/\s+/g, '-') // Substitui espaços por hífens
+      .toLowerCase();
+
   return {
     userInputs: [
       {
@@ -25,14 +31,14 @@
             name: 'index.ts',
             content: (inputs) => `import { ${toPascalCase(
               inputs.name
-            )} } from './${toCamelCase(inputs.name)}';
+            )} } from './${toKebabCase(inputs.name)}';
 
 export { ${toPascalCase(inputs.name)} };
 `,
           },
           {
             type: 'file',
-            name: (inputs) => `${toCamelCase(inputs.name)}.error.tsx`,
+            name: (inputs) => `${toKebabCase(inputs.name)}.error.tsx`,
             content: (inputs) => `/**
 * Componente de indicador de erro.
 *
@@ -51,14 +57,14 @@ export function ${toPascalCase(inputs.name)}Error() {
           },
           {
             type: 'file',
-            name: (inputs) => `${toCamelCase(inputs.name)}.controller.tsx`,
+            name: (inputs) => `${toKebabCase(inputs.name)}.controller.tsx`,
             content: (
               inputs
-            ) => `import { ${toPascalCase(inputs.name)}Empty } from './${toCamelCase(inputs.name)}.empty';
-import { ${toPascalCase(inputs.name)}Error } from './${toCamelCase(inputs.name)}.error';
-import { use${toPascalCase(inputs.name)}Hook } from './${toCamelCase(inputs.name)}.hook';
-import { ${toPascalCase(inputs.name)}Loading } from './${toCamelCase(inputs.name)}.loading';
-import { ${toPascalCase(inputs.name)}View } from './${toCamelCase(inputs.name)}.view';
+            ) => `import { ${toPascalCase(inputs.name)}Empty } from './${toKebabCase(inputs.name)}.empty';
+import { ${toPascalCase(inputs.name)}Error } from './${toKebabCase(inputs.name)}.error';
+import { use${toPascalCase(inputs.name)}Hook } from './${toKebabCase(inputs.name)}.hook';
+import { ${toPascalCase(inputs.name)}Loading } from './${toKebabCase(inputs.name)}.loading';
+import { ${toPascalCase(inputs.name)}View } from './${toKebabCase(inputs.name)}.view';
 
 /**
  * Componente que controla a lógica da página de exemplo.
@@ -95,7 +101,7 @@ export function ${toPascalCase(inputs.name)}Controller() {
           },
           {
             type: 'file',
-            name: (inputs) => `${toCamelCase(inputs.name)}.layout.tsx`,
+            name: (inputs) => `${toKebabCase(inputs.name)}.layout.tsx`,
             content: (inputs) => `import React from 'react';
 
 interface ${toPascalCase(inputs.name)}LayoutProps {
@@ -126,7 +132,7 @@ export function ${toPascalCase(inputs.name)}Layout(props: ${toPascalCase(inputs.
           },
           {
             type: 'file',
-            name: (inputs) => `${toCamelCase(inputs.name)}.loading.tsx`,
+            name: (inputs) => `${toKebabCase(inputs.name)}.loading.tsx`,
             content: (inputs) => `/**
  * Componente de indicador de carregamento.
  *
@@ -145,11 +151,11 @@ export function ${toPascalCase(inputs.name)}Loading() {
           },
           {
             type: 'file',
-            name: (inputs) => `${toCamelCase(inputs.name)}.tsx`,
+            name: (inputs) => `${toKebabCase(inputs.name)}.tsx`,
             content: (
               inputs
-            ) => `import { ${toPascalCase(inputs.name)}Controller } from './${toCamelCase(inputs.name)}.controller';
-import { ${toPascalCase(inputs.name)}Layout } from './${toCamelCase(inputs.name)}.layout';
+            ) => `import { ${toPascalCase(inputs.name)}Controller } from './${toKebabCase(inputs.name)}.controller';
+import { ${toPascalCase(inputs.name)}Layout } from './${toKebabCase(inputs.name)}.layout';
 
 export function ${toPascalCase(inputs.name)}() {
   return (
@@ -162,7 +168,7 @@ export function ${toPascalCase(inputs.name)}() {
           },
           {
             type: 'file',
-            name: (inputs) => `${toCamelCase(inputs.name)}.empty.tsx`,
+            name: (inputs) => `${toKebabCase(inputs.name)}.empty.tsx`,
             content: (inputs) => `/**
 * Componente de indicador de dados vazios.
 *
@@ -181,7 +187,7 @@ export function ${toPascalCase(inputs.name)}Empty() {
           },
           {
             type: 'file',
-            name: (inputs) => `${toCamelCase(inputs.name)}.hook.ts`,
+            name: (inputs) => `${toKebabCase(inputs.name)}.hook.ts`,
             content: (inputs) => `import { useState } from 'react';
 
 import { ReturnHookPage } from '@godiet-utils/types';
@@ -220,7 +226,7 @@ export function use${toPascalCase(inputs.name)}Hook(): ReturnHookPage<${toPascal
           },
           {
             type: 'file',
-            name: (inputs) => `${toCamelCase(inputs.name)}.view.tsx`,
+            name: (inputs) => `${toKebabCase(inputs.name)}.view.tsx`,
             content: (inputs) => `
 /**
  * Interface que define as propriedades aceitas pelo componente \`${toPascalCase(inputs.name)}View\`.
@@ -254,7 +260,7 @@ export function ${toPascalCase(inputs.name)}View(props: ${toPascalCase(inputs.na
           },
           {
             type: 'file',
-            name: (inputs) => `${toCamelCase(inputs.name)}.spec.tsx`,
+            name: (inputs) => `${toKebabCase(inputs.name)}.spec.tsx`,
             content: (inputs) =>
               `import {
   render,
@@ -264,8 +270,8 @@ export function ${toPascalCase(inputs.name)}View(props: ${toPascalCase(inputs.na
 } from '@testing-react';
 import { clearAllMocks } from '@testing-suit';
 
-import { use${toPascalCase(inputs.name)}Hook } from './${toCamelCase(inputs.name)}.hook';
-import { ${toPascalCase(inputs.name)}View } from './${toCamelCase(inputs.name)}.view';
+import { use${toPascalCase(inputs.name)}Hook } from './${toKebabCase(inputs.name)}.hook';
+import { ${toPascalCase(inputs.name)}View } from './${toKebabCase(inputs.name)}.view';
 
 describe('${toPascalCase(inputs.name)}Page' ,() => {
   afterEach(() => {

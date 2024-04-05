@@ -4,7 +4,11 @@ import { DangerModal } from '@godiet-ui/DangerModal';
 import { Tooltip } from '@godiet-ui/Tooltip';
 import { formatDate } from '@godiet-utils/formatDate';
 
-import { ExternalLinkIcon, TrashIcon } from '@radix-ui/react-icons';
+import {
+  ExternalLinkIcon,
+  Pencil1Icon,
+  TrashIcon,
+} from '@radix-ui/react-icons';
 
 import { PlanningMealError } from './PlanningMeal.error';
 import { usePlanningMealHook } from './PlanningMeal.hook';
@@ -21,6 +25,7 @@ export function PlanningMeal() {
     handleDeletePlanningMeal,
     handleNavigateToCreatePlanning,
     handleNavigateToShowPlanning,
+    handleNavigateToEditPlanning,
   } = usePlanningMealHook();
 
   return (
@@ -47,6 +52,16 @@ export function PlanningMeal() {
                   <Card.Title className="flex w-full items-center justify-between">
                     {planningMeal.name}
                     <div className="flex gap-1 [&>button]:h-8 [&>button]:px-2">
+                      <Tooltip content="Editar plano">
+                        <Button
+                          variant={'outline'}
+                          onClick={() =>
+                            handleNavigateToEditPlanning(planningMeal.id)
+                          }
+                        >
+                          <Pencil1Icon />
+                        </Button>
+                      </Tooltip>
                       <Tooltip content="Exibir plano">
                         <Button
                           onClick={() =>

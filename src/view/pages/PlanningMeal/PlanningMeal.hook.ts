@@ -56,6 +56,18 @@ export function usePlanningMealHook() {
     [navigate, patient?.id]
   );
 
+  const handleNavigateToEditPlanning = useCallback(
+    (planningId: string) => {
+      navigate('EDITING_PLANNING_MEAL_BY_PATIENT', {
+        replace: {
+          id: patient?.id || '',
+          planningId: planningId,
+        },
+      });
+    },
+    [navigate, patient?.id]
+  );
+
   const toggleModalDeletePlanning = useCallback((planningId: string | null) => {
     setIsDeletePlanningModalOpen((prevState) => !prevState);
     setSelectedPlanningToDelete(planningId);
@@ -98,5 +110,6 @@ export function usePlanningMealHook() {
     handleDeletePlanningMeal,
     handleNavigateToCreatePlanning,
     handleNavigateToShowPlanning,
+    handleNavigateToEditPlanning,
   };
 }

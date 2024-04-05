@@ -8,6 +8,7 @@ export const ROUTES = {
   PATIENTS_BY_ID: '/pacientes/:id',
   PLANNING_MEAL_BY_PATIENT: '/pacientes/:id/plano',
   PLANNING_MEAL_BY_PATIENT_SHOW: '/pacientes/:id/plano/:planningId',
+  EDITING_PLANNING_MEAL_BY_PATIENT: '/pacientes/:id/plano/:planningId/editar',
   REGISTER: '/register',
   SETTINGS: '/configuracoes',
   SETTINGS_MYPLAN: '/configuracoes/meu-plano',
