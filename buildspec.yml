@@ -16,5 +16,5 @@ phases:
 
   post_build:
     commands:
-      - aws s3 sync --delete ./dist s3://app.godiet.com.br-client
-      - aws cloudfront create-invalidation --distribution-id E2K3XRBRL8ZGGF --paths /index.html
+      - aws s3 sync --delete ./dist s3://${{DEPLOY_BUCKET}}
+      - aws cloudfront create-invalidation --distribution-id ${{CLOUDFRONT_ID}} --paths /index.html
