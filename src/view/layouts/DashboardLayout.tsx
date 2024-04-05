@@ -42,7 +42,10 @@ export function DashboardLayout() {
           <NavigationMenu.Root>
             <NavigationMenu.List>
               <NavigationMenu.Item>
-                <Link to={ROUTES.HOME} className={navigationMenuTriggerStyle()}>
+                <Link
+                  to={ROUTES.DASHBOARD}
+                  className={navigationMenuTriggerStyle()}
+                >
                   Home
                 </Link>
               </NavigationMenu.Item>

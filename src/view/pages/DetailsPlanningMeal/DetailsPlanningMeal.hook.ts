@@ -23,7 +23,7 @@ export function useDetailsPlanningMealHook() {
   const { navigate } = useNavigate();
 
   const handleNavigateToHomePage = useCallback(() => {
-    navigate('HOME');
+    navigate('DASHBOARD');
   }, [navigate]);
 
   const handleExportPDF = useCallback(() => {

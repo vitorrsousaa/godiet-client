@@ -27,7 +27,7 @@ export function usePatientLayoutHook() {
   }, [navigate, patient]);
 
   const handleNavigateToHome = useCallback(() => {
-    navigate('HOME');
+    navigate('DASHBOARD');
   }, [navigate]);
 
   const toggleEditModal = useCallback(() => {
