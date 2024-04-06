@@ -10,17 +10,13 @@ import {
 } from '@godiet-ui/Table';
 import { cn } from '@godiet-utils/cn';
 
-import {
-  DndContext,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core';
+import { DndContext } from '@dnd-kit/core';
 import { SortableContext } from '@dnd-kit/sortable';
 import { Pencil1Icon, TrashIcon } from '@radix-ui/react-icons';
 
 import { DraggableRow } from './components/DraggableRow';
 import { Row } from './components/Row';
+import { useSensors } from './hooks/useSensors';
 import { useTableInfoHook } from './table-info.hook';
 import { TableInfoProps, TParamsDisableColumns } from './table-info.types';
 
@@ -41,13 +37,7 @@ export function TableInfo(props: TableInfoProps) {
     handleDragEnd,
   } = useTableInfoHook(props);
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, {
-      activationConstraint: {
-        distance: 8,
-      },
-    })
-  );
+  const sensors = useSensors();
 
   return (
     <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
