@@ -57,10 +57,14 @@ export function PatientsView(props: PatientsViewProps) {
               </Card.Description>
             </Card.Header>
             <Card.Footer>
-              <Button onClick={() => onNavigateToPatientPage(patient.id)}>
+              <Button
+                onClick={() => onNavigateToPatientPage(patient.id)}
+                aria-label="Ver mais"
+              >
                 Ver mais
               </Button>
               <Button
+                aria-label="Deletar paciente"
                 variant={'destructive'}
                 onClick={() => toggleModalDeletePatient(patient.id)}
               >
