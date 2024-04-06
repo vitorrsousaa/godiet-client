@@ -74,21 +74,19 @@ export function ModalCreateFavoriteMeal(props: ModalCreateFavoriteMealProps) {
           )}
         />
 
-        <div>
-          <Controller
-            control={internalControl}
-            name="foodId"
-            render={({ field: { value, onChange } }) => (
-              <Combobox
-                isLoading={isFetchingFoods}
-                placeholder="Selecione um alimento"
-                options={foodOptions}
-                value={value}
-                onChange={onChange}
-              />
-            )}
-          />
-        </div>
+        <Controller
+          control={internalControl}
+          name="foodId"
+          render={({ field: { value, onChange } }) => (
+            <Combobox
+              isLoading={isFetchingFoods}
+              placeholder="Selecione um alimento"
+              options={foodOptions}
+              value={value}
+              onChange={onChange}
+            />
+          )}
+        />
 
         <Controller
           control={internalControl}

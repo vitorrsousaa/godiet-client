@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from 'react';
 
+import { TCreateMealFoodDTO as TCreateMealFoodForm } from '@godiet-components/PlanningMealForm';
 import { useCreateFavoriteMeal } from '@godiet-hooks/favoriteMeal';
 import { useGetAllFoods } from '@godiet-hooks/foods';
 
@@ -12,9 +13,7 @@ import { ModalCreateFavoriteMealProps } from './ModalCreateFavoriteMeal';
 
 const CreateMealFoodSchema = z.object({
   foodId: z.string().uuid(),
-
   measure: z.string(),
-
   qty: z.z.number().nonnegative().min(1),
 });
 
@@ -95,21 +94,24 @@ export function useModalCreateFavoriteMealHook(
   }, [foods, watchFood]);
 
   const handleSubmit = hookFormSubmit(async (data) => {
-    const mapperMealFoods = data.mealFood.map((mealFoodUnit) => {
-      const selectedFood = foods.find(
-        (food) => food.id === mealFoodUnit.foodId
-      )!;
+    const mapperMealFoods: TCreateMealFoodForm[] = data.mealFood.map(
+      (mealFoodUnit) => {
+        const selectedFood = foods.find(
+          (food) => food.id === mealFoodUnit.foodId
+        )!;
 
-      const selectedMeasure = selectedFood.measures.find(
-        (measure) => measure.name === mealFoodUnit.measure
-      );
+        const selectedMeasure = selectedFood.measures.find(
+          (measure) => measure.name === mealFoodUnit.measure
+        );
 
-      return {
-        ...mealFoodUnit,
-        measure: selectedMeasure ?? selectedFood.measures[0],
-        options: [],
-      };
-    });
+        return {
+          measure: selectedMeasure ?? selectedFood.measures[0],
+          name: selectedFood.name,
+          foodId: selectedFood.id,
+          qty: mealFoodUnit.qty,
+        };
+      }
+    );
 
     const newData = {
       name: data.name,

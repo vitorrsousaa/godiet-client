@@ -80,8 +80,8 @@ export function Settings() {
           classContainer="sm:flex-col md:flex-row "
         >
           <div className="space-y-4 text-right sm:min-w-72">
-            <Input name="password" placeholder="Senha atual" />
-            <Input name="new-password" placeholder="Nova senha" />
+            <Input name="password" placeholder="Senha atual" minVersion />
+            <Input name="new-password" placeholder="Nova senha" minVersion />
             <Button className="">Atualizar senha</Button>
           </div>
         </Section>
