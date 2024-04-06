@@ -62,7 +62,7 @@ export function ${toPascalCase(inputs.name)}Error() {
               inputs
             ) => `import { ${toPascalCase(inputs.name)}Empty } from './${toKebabCase(inputs.name)}.empty';
 import { ${toPascalCase(inputs.name)}Error } from './${toKebabCase(inputs.name)}.error';
-import { use${toPascalCase(inputs.name)}Hook } from './${toKebabCase(inputs.name)}.hook';
+import { ${toPascalCase(inputs.name)}HookOutput } from './${toKebabCase(inputs.name)}.hook';
 import { ${toPascalCase(inputs.name)}Loading } from './${toKebabCase(inputs.name)}.loading';
 import { ${toPascalCase(inputs.name)}View } from './${toKebabCase(inputs.name)}.view';
 
@@ -70,15 +70,15 @@ import { ${toPascalCase(inputs.name)}View } from './${toKebabCase(inputs.name)}.
  * Componente que controla a lógica da página de exemplo.
  *
  * Este componente gerencia o estado da página de exemplo, lidando com casos de carregamento, erro e dados vazios.
- * Ele utiliza o hook use${toPascalCase(inputs.name)}Hook para obter os dados e o estado da página.
+ * Ele recebe como propriedade tudo que é retornado do use${toPascalCase(inputs.name)}Hook para obter os dados e o estado da página.
  *
  * As propriedades necessárias para renderizar a view são encaminhadas no controller. E devem ser definidas
  * dentro do componente de view.
  *
  * @returns Retorna o componente da página de exemplo.
  */
-export function ${toPascalCase(inputs.name)}Controller() {
-  const { pageStatus, state } = use${toPascalCase(inputs.name)}Hook();
+export function ${toPascalCase(inputs.name)}Controller(props: ${toPascalCase(inputs.name)}HookOutput) {
+  const { pageStatus, state } = props;
 
   const { isError, isLoading, noData } = pageStatus;
 
@@ -114,6 +114,8 @@ interface ${toPascalCase(inputs.name)}LayoutProps {
  * Este componente é responsável por fornecer um layout consistente para toda a página.
  * Qualquer conteúdo definido dentro deste componente será carregado para a página inteira,
  * independente do estado de carregamento, erro ou dados vazios da página.
+ *
+ * As propriedades que o layout recebe são encaminhadas no ${toPascalCase(inputs.name)}.tsx
  *
  * @returns Retorna o componente de layout para a página inteira.
  */
@@ -155,15 +157,23 @@ export function ${toPascalCase(inputs.name)}Loading() {
             content: (
               inputs
             ) => `import { ${toPascalCase(inputs.name)}Controller } from './${toKebabCase(inputs.name)}.controller';
+import { withHook } from './${toKebabCase(inputs.name)}.hoc';
+import { ${toPascalCase(inputs.name)}HookOutput } from './${toKebabCase(inputs.name)}.hook';
 import { ${toPascalCase(inputs.name)}Layout } from './${toKebabCase(inputs.name)}.layout';
 
-export function ${toPascalCase(inputs.name)}() {
+export type ${toPascalCase(inputs.name)}Props = ${toPascalCase(inputs.name)}HookOutput;
+
+function ${toPascalCase(inputs.name)}WithoutHook(props: ${toPascalCase(inputs.name)}Props) {
   return (
     <${toPascalCase(inputs.name)}Layout>
-      <${toPascalCase(inputs.name)}Controller />
+      <${toPascalCase(inputs.name)}Controller {...props} />
     </${toPascalCase(inputs.name)}Layout>
   );
 }
+
+const ${toPascalCase(inputs.name)} = withHook(${toPascalCase(inputs.name)}WithoutHook);
+
+export { ${toPascalCase(inputs.name)} };
 `,
           },
           {
@@ -197,11 +207,15 @@ import { ReturnHookPage } from '@godiet-utils/types';
  *
  * Este tipo descreve a estrutura dos dados de saída retornados pelo hook \`use${toPascalCase(inputs.name)}Hook\`.
  *
- * @interface ${toPascalCase(inputs.name)}HookOutput
+ * @interface ${toPascalCase(inputs.name)}HookProps
  */
-interface ${toPascalCase(inputs.name)}HookOutput {
+interface ${toPascalCase(inputs.name)}HookProps {
   state: number;
 }
+/**
+ * Adiciona na tipagem do retorno do hook algumas tipagens obrigatórias.
+ */
+export type ${toPascalCase(inputs.name)}HookOutput = ReturnHookPage<${toPascalCase(inputs.name)}HookProps>;
 
 /**
  * Hook customizado que gerencia a lógica da página de exemplo.
@@ -210,7 +224,7 @@ interface ${toPascalCase(inputs.name)}HookOutput {
  *
  * @returns Retorna um objeto contendo o estado interno e o status da página.
  */
-export function use${toPascalCase(inputs.name)}Hook(): ReturnHookPage<${toPascalCase(inputs.name)}HookOutput> {
+export function use${toPascalCase(inputs.name)}Hook(): ${toPascalCase(inputs.name)}HookOutput {
   const [state] = useState(0);
 
   return {
@@ -322,6 +336,23 @@ describe('${toPascalCase(inputs.name)}Page' ,() => {
     });
   })
 })
+`,
+          },
+          {
+            type: 'file',
+            name: (inputs) => `${toKebabCase(inputs.name)}.hoc.tsx`,
+            content: (inputs) => `import React from 'react';
+
+import { ${toPascalCase(inputs.name)}Props } from './${toKebabCase(inputs.name)}';
+import { use${toPascalCase(inputs.name)}Hook } from './${toKebabCase(inputs.name)}.hook';
+
+export function withHook(Component: React.ComponentType<${toPascalCase(inputs.name)}Props>) {
+  return function ComponentWithHook() {
+    const hook = use${toPascalCase(inputs.name)}Hook();
+
+    return <Component {...hook} />;
+  };
+}
 `,
           },
         ],
