@@ -1,3 +1,3 @@
-import { Patients } from './Patients';
+import { Patients } from './patients';
 
 export { Patients };

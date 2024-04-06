@@ -1,115 +1,21 @@
-import noData from '@godiet-assets/no_data.svg';
-import warning from '@godiet-assets/warning.svg';
-import { Button } from '@godiet-ui/Button';
-import { Card } from '@godiet-ui/Card';
-import { DangerModal } from '@godiet-ui/DangerModal';
-import { formatDate } from '@godiet-utils/formatDate';
+import { PatientsController } from './patients.controller';
+import { withHook } from './patients.hoc';
+import { PatientsHookOutput } from './patients.hook';
+import { PatientsLayout } from './patients.layout';
 
-import { CalendarIcon, PlusIcon, TrashIcon } from '@radix-ui/react-icons';
+export type PatientsProps = PatientsHookOutput;
 
-import { CreatePatientModal } from './components/modals/CreatePatientModal';
-import { usePatientsHook } from './Patients.hook';
-
-export function Patients() {
-  const {
-    patients,
-    isCreatePatientModalOpen,
-    isDeletePatientModalOpen,
-    isFetchingPatients,
-    isDeletingPatient,
-    isLoadingPatients,
-    isErrorPatients,
-    toggleModalCreatePatient,
-    toggleModalDeletePatient,
-    handleDeletePatient,
-    handleNavigateToPatientPage,
-  } = usePatientsHook();
-
+function PatientsWithoutHook(props: PatientsProps) {
   return (
-    <div>
-      <div className="mb-8 flex items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl font-medium">Pacientes</h1>
-          <small className="tracking-wide text-gray-500">
-            Acompanhe todas os seus pacientes por aqui.
-          </small>
-        </div>
-        <div>
-          <Button
-            onClick={toggleModalCreatePatient}
-            isLoading={isFetchingPatients}
-          >
-            <PlusIcon className="" />
-            <span className="hidden sm:block">Adicionar paciente</span>
-          </Button>
-        </div>
-      </div>
-      <div className="flex h-full w-full flex-col items-center justify-center gap-4">
-        {isLoadingPatients ? (
-          <div>Carregando...</div>
-        ) : patients.length > 0 ? (
-          <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6">
-            {patients.map((patient) => (
-              <Card.Root key={patient.id}>
-                <Card.Header>
-                  <Card.Title>{patient.name}</Card.Title>
-                  <Card.Description>
-                    <span className="flex items-center gap-1">
-                      <CalendarIcon />
-                      {formatDate(patient.birthDate, 'P')}
-                    </span>
-                  </Card.Description>
-                </Card.Header>
-                <Card.Footer>
-                  <Button
-                    onClick={() => handleNavigateToPatientPage(patient.id)}
-                  >
-                    Ver mais
-                  </Button>
-                  <Button
-                    variant={'destructive'}
-                    onClick={() => toggleModalDeletePatient(patient.id)}
-                  >
-                    <TrashIcon />
-                  </Button>
-                </Card.Footer>
-              </Card.Root>
-            ))}
-          </div>
-        ) : isErrorPatients ? (
-          <>
-            <img src={warning} alt="warning" className="w-24" />
-            <p>Tivemos um erro para buscar seus pacientes.</p>
-            <p>Por favor, tente novamente!</p>
-          </>
-        ) : (
-          <>
-            <img src={noData} alt="no-data" className="w-20" />
-            <div className="text-center">
-              <h1 className="text-center text-xl font-medium sm:text-2xl">
-                Nenhum paciente cadastrado
-              </h1>
-              <small className="tracking-wide text-gray-500">
-                Cadastre um paciente para acompanhar por aqui.
-              </small>
-            </div>
-          </>
-        )}
-      </div>
-
-      <CreatePatientModal
-        isOpen={isCreatePatientModalOpen}
-        onClose={toggleModalCreatePatient}
-      />
-
-      <DangerModal
-        isOpen={isDeletePatientModalOpen}
-        description="Atenção, esta ação não pode ser desfeita."
-        onClose={() => toggleModalDeletePatient(null)}
-        title="Deletar um paciente"
-        onConfirm={handleDeletePatient}
-        isLoading={isDeletingPatient}
-      />
-    </div>
+    <PatientsLayout
+      isFetchingPatients={props.isFetchingPatients}
+      isErrorPatients={props.isErrorPatients}
+    >
+      <PatientsController {...props} />
+    </PatientsLayout>
   );
 }
+
+const Patients = withHook(PatientsWithoutHook);
+
+export { Patients };
