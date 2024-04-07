@@ -91,5 +91,29 @@ describe('CreateFavoriteObservationModal', () => {
       // Assert
       expect(onClose).toHaveBeenCalled();
     });
+    it('Should call create', async () => {
+      // Arrange
+      const createFavoritesObservation = fn();
+      const onClose = fn();
+      const props: CreateFavoriteObservationModalProps = {
+        isOpen: true,
+        onClose,
+      };
+      spy.useCreateFavoritesObservation.mockReturnValue({
+        createFavoritesObservation,
+      });
+
+      // Act
+      rendered = renderHook(() => useCreateFavoriteObservationModalHook(props));
+      await act(async () => {
+        await rendered.result.current.handleSubmit({
+          text: 'text',
+          title: 'title',
+        });
+      });
+
+      // Assert
+      expect(createFavoritesObservation).toHaveBeenCalled();
+    });
   });
 });
