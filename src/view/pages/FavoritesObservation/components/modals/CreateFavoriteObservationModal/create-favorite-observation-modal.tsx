@@ -1,7 +1,9 @@
 import { Button } from '@godiet-ui/Button';
-import { Editor } from '@godiet-ui/Editor';
 import { Input } from '@godiet-ui/Input';
 import { Modal } from '@godiet-ui/Modal';
+import { TextEditor } from '@godiet-ui/TextEditor';
+
+import { Controller } from 'react-hook-form';
 
 import { useCreateFavoriteObservationModalHook } from './create-favorite-observation-modal.hook';
 
@@ -13,12 +15,18 @@ export interface CreateFavoriteObservationModalProps {
 export function CreateFavoriteObservationModal(
   props: CreateFavoriteObservationModalProps
 ) {
-  const { isOpen, onClose } = props;
+  const { isOpen } = props;
 
-  const { state } = useCreateFavoriteObservationModalHook(props);
+  const {
+    control,
+    isValid,
+    isCreatingFavoritesObservation,
+    handleCloseModal,
+    handleSubmit,
+  } = useCreateFavoriteObservationModalHook(props);
 
   return (
-    <Modal.Root isOpen={isOpen} onClose={onClose}>
+    <Modal.Root isOpen={isOpen} onClose={handleCloseModal}>
       <Modal.Header>
         <Modal.Title>Criar uma nova observação favorita</Modal.Title>
 
@@ -26,25 +34,53 @@ export function CreateFavoriteObservationModal(
           Preencha os dados abaixo para criar uma nova observação favorita.
         </Modal.Description>
       </Modal.Header>
-      <form id="create-favorite-observation">
-        <Input name="nam" placeholder="Nome da observação" />
+      <form
+        id="create-favorite-observation"
+        className="flex flex-col gap-4"
+        onSubmit={handleSubmit}
+      >
+        <Controller
+          name="title"
+          control={control}
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <Input
+              placeholder="Nome da observação"
+              value={value}
+              name="title"
+              onChange={onChange}
+              error={error?.message}
+              minVersion
+              disabled={isCreatingFavoritesObservation}
+            />
+          )}
+        />
 
-        <Editor />
+        <Controller
+          control={control}
+          name="text"
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <TextEditor
+              value={value}
+              onChange={onChange}
+              error={error?.message}
+            />
+          )}
+        />
       </form>
 
       <Modal.Footer>
         <Button
-          // onClick={handleCloseModal}
+          onClick={handleCloseModal}
           variant={'destructive'}
-          // disabled={isCreatingFavoriteMeal}
+          disabled={isCreatingFavoritesObservation}
         >
           Cancelar
         </Button>
         <Button
-          // disabled={!formIsValid}
+          disabled={!isValid}
           type="submit"
           form="create-favorite-observation"
-          // isLoading={isCreatingFavoriteMeal}
+          isLoading={isCreatingFavoritesObservation}
         >
           Criar
         </Button>
