@@ -1,9 +1,7 @@
 import { Button } from '@godiet-ui/Button';
-import { Input } from '@godiet-ui/Input';
 import { Modal } from '@godiet-ui/Modal';
-import { TextEditor } from '@godiet-ui/TextEditor';
 
-import { Controller } from 'react-hook-form';
+import { FavoriteObservationForm } from '../../FavoriteObservationForm';
 
 import { useCreateFavoriteObservationModalHook } from './create-favorite-observation-modal.hook';
 
@@ -18,8 +16,7 @@ export function CreateFavoriteObservationModal(
   const { isOpen } = props;
 
   const {
-    control,
-    isValid,
+    controller,
     isCreatingFavoritesObservation,
     handleCloseModal,
     handleSubmit,
@@ -34,39 +31,13 @@ export function CreateFavoriteObservationModal(
           Preencha os dados abaixo para criar uma nova observação favorita.
         </Modal.Description>
       </Modal.Header>
-      <form
-        id="create-favorite-observation"
-        className="flex flex-col gap-4"
-        onSubmit={handleSubmit}
-      >
-        <Controller
-          name="title"
-          control={control}
-          render={({ field: { onChange, value }, fieldState: { error } }) => (
-            <Input
-              placeholder="Nome da observação"
-              value={value}
-              name="title"
-              onChange={onChange}
-              error={error?.message}
-              minVersion
-              disabled={isCreatingFavoritesObservation}
-            />
-          )}
-        />
 
-        <Controller
-          control={control}
-          name="text"
-          render={({ field: { onChange, value }, fieldState: { error } }) => (
-            <TextEditor
-              value={value}
-              onChange={onChange}
-              error={error?.message}
-            />
-          )}
-        />
-      </form>
+      <FavoriteObservationForm
+        isSubmitting={isCreatingFavoritesObservation}
+        onSubmit={handleSubmit}
+        formId="create-favorite-observation"
+        controller={controller}
+      />
 
       <Modal.Footer>
         <Button
@@ -77,7 +48,6 @@ export function CreateFavoriteObservationModal(
           Cancelar
         </Button>
         <Button
-          disabled={!isValid}
           type="submit"
           form="create-favorite-observation"
           isLoading={isCreatingFavoritesObservation}
