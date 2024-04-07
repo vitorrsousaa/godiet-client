@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 
 import { UseFormReset } from 'react-hook-form';
 
@@ -6,7 +6,6 @@ import { TCreateFavoriteObservationDTO } from './favorite-observation-form.hook'
 
 export type UseFavoriteObservationFormController = {
   reset: UseFormReset<TCreateFavoriteObservationDTO>;
-  isValid: boolean;
 };
 
 export interface UseFavoriteObservationFormControllerInternal
@@ -15,7 +14,6 @@ export interface UseFavoriteObservationFormControllerInternal
     resetRef: React.MutableRefObject<
       UseFormReset<TCreateFavoriteObservationDTO>
     >;
-    isValidRef: React.MutableRefObject<boolean>;
   };
 }
 
@@ -29,9 +27,6 @@ export function useFavoriteObservationFormController(): UseFavoriteObservationFo
   const resetRef = useRef<UseFormReset<TCreateFavoriteObservationDTO>>(
     () => {}
   );
-  const isValidRef = useRef<boolean>(false);
-
-  const isValid = useMemo(() => isValidRef.current, []);
 
   const reset = useCallback(() => {
     if (resetRef.current) {
@@ -41,10 +36,8 @@ export function useFavoriteObservationFormController(): UseFavoriteObservationFo
 
   const result: UseFavoriteObservationFormControllerInternal = {
     reset,
-    isValid,
     _refs: {
       resetRef,
-      isValidRef,
     },
   };
 

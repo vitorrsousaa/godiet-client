@@ -20,7 +20,6 @@ export function useFavoriteObservationFormHook(
   const { controller, onSubmit } = props;
 
   const {
-    formState: { isValid },
     control,
     reset,
     handleSubmit: hookFormSubmit,
@@ -39,9 +38,8 @@ export function useFavoriteObservationFormHook(
   React.useEffect(() => {
     if (controller) {
       castToInternalUse(controller)._refs.resetRef.current = reset;
-      castToInternalUse(controller)._refs.isValidRef.current = isValid;
     }
-  }, [controller, isValid, reset]);
+  }, [controller, reset]);
 
   return {
     control,
