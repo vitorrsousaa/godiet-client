@@ -1,3 +1,5 @@
+import { Spinner } from '@godiet-ui/Spinner';
+
 /**
  * Componente de indicador de carregamento.
  *
@@ -7,8 +9,8 @@
  */
 export function FavoritesObservationLoading() {
   return (
-    <div>
-      <h1>FavoritesObservationLoading</h1>
+    <div className="mt-4 grid w-full place-items-center">
+      <Spinner />
     </div>
   );
 }

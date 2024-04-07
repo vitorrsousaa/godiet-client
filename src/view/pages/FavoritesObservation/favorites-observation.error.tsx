@@ -7,8 +7,9 @@
  */
 export function FavoritesObservationError() {
   return (
-    <div>
-      <h1>FavoritesObservationError</h1>
+    <div className="flex h-full w-full flex-col items-center justify-center text-center">
+      <strong>Ops! Algo deu errado para carregar as observações!</strong>
+      <p>Por favor, reinicie a página e tente novamente.</p>
     </div>
   );
 }

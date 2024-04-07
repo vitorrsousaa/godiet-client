@@ -18,7 +18,7 @@ import { FavoritesObservationView } from './favorites-observation.view';
 export function FavoritesObservationController(
   props: FavoritesObservationHookOutput
 ) {
-  const { pageStatus, state } = props;
+  const { pageStatus, favoritesObservations } = props;
 
   const { isError, isLoading, noData } = pageStatus;
 
@@ -34,5 +34,5 @@ export function FavoritesObservationController(
     return <FavoritesObservationEmpty />;
   }
 
-  return <FavoritesObservationView data={state} />;
+  return <FavoritesObservationView observations={favoritesObservations} />;
 }

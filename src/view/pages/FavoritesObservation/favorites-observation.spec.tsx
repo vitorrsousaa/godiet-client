@@ -1,3 +1,4 @@
+import { TFavoritesObservation } from '@godiet-entities';
 import * as FavoritesService from '@godiet-hooks/favoritesObservation';
 
 import {
@@ -32,6 +33,23 @@ describe('FavoritesObservationPage', () => {
     clearAllMocks();
   });
 
+  const favoritesObservationsMock: TFavoritesObservation[] = [
+    {
+      createdAt: '2021-10-10',
+      id: '1',
+      text: 'Observation 1',
+      title: 'Title 1',
+      userId: '1',
+    },
+    {
+      createdAt: '2021-10-10',
+      id: '2',
+      text: 'Observation 2',
+      title: 'Title 2',
+      userId: '2',
+    },
+  ];
+
   describe('View', () => {
     let rendered: ReturnRenderType;
 
@@ -43,14 +61,17 @@ describe('FavoritesObservationPage', () => {
       rendered.unmount();
     });
 
-    it('Should render the view with default props', () => {
+    it('Should render all favoriteObservations when observations is defined', () => {
       // Arrange
 
       // Act
-      rendered = render(<FavoritesObservationView data={0} />);
+      rendered = render(
+        <FavoritesObservationView observations={favoritesObservationsMock} />
+      );
 
       // Assert
-      expect(true).toBeTruthy();
+      expect(rendered.getByText('Title 1'));
+      expect(rendered.getByText('Title 2'));
     });
   });
 

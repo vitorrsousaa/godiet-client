@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { TFavoritesObservation } from '@godiet-entities';
 import { useGetAllFavoritesObservation } from '@godiet-hooks/favoritesObservation';
 import { ReturnHookPage } from '@godiet-utils/types';
 
@@ -14,6 +15,7 @@ interface FavoritesObservationHookProps {
   isFetchingFavoritesObservation: boolean;
   modalCreateFavoriteIsOpen: boolean;
   toggleModalCreateFavorite: () => void;
+  favoritesObservations: TFavoritesObservation[];
 }
 /**
  * Adiciona na tipagem do retorno do hook algumas tipagens obrigatórias.
@@ -39,12 +41,11 @@ export function useFavoritesObservationHook(): FavoritesObservationHookOutput {
     isFetchingFavoritesObservation,
   } = useGetAllFavoritesObservation();
 
-  console.log(favoritesObservations);
-
   return {
     isFetchingFavoritesObservation,
     modalCreateFavoriteIsOpen,
     toggleModalCreateFavorite,
+    favoritesObservations,
     pageStatus: {
       isLoading: isLoadingFavoritesObservation,
       isError: isErrorFavoritesObservation,
