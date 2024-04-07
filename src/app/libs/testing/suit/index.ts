@@ -2,7 +2,7 @@ import { MockInstance } from '@vitest/spy';
 import { vi } from 'vitest';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type SpyInstance<T> = MockInstance<any, T>;
+type SpyInstance<T> = MockInstance<any, Partial<T>>;
 
 const customClearAllMocks = vi.clearAllMocks;
 
