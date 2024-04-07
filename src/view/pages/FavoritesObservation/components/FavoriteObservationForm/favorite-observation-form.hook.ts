@@ -17,7 +17,7 @@ export type TCreateFavoriteObservationDTO = z.infer<typeof schema>;
 export function useFavoriteObservationFormHook(
   props: FavoriteObservationFormProps
 ) {
-  const { controller, onSubmit } = props;
+  const { controller, initialValues, onSubmit } = props;
 
   const {
     control,
@@ -26,8 +26,8 @@ export function useFavoriteObservationFormHook(
   } = useForm<TCreateFavoriteObservationDTO>({
     resolver: zodResolver(schema),
     defaultValues: {
-      title: '',
-      text: '',
+      title: initialValues?.title || '',
+      text: initialValues?.text || '',
     },
   });
 

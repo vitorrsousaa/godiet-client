@@ -8,7 +8,7 @@ interface UpdateInput extends TCreateFavoriteObservationDTO {
 export async function update(updateInput: UpdateInput) {
   const { id, text, title } = updateInput;
 
-  const { data } = await httpClient.post('/observation-template', {
+  const { data } = await httpClient.put('/observation-template', {
     id,
     text,
     title,

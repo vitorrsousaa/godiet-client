@@ -14,6 +14,7 @@ export interface FavoriteObservationFormProps {
   onSubmit: (data: TCreateFavoriteObservationDTO) => Promise<void>;
   formId?: string;
   controller?: UseFavoriteObservationFormController;
+  initialValues?: TCreateFavoriteObservationDTO;
 }
 
 export function FavoriteObservationForm(props: FavoriteObservationFormProps) {

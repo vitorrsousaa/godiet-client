@@ -28,6 +28,8 @@ export function useEditFavoriteObservationModalHook(
 
   const handleSubmit = React.useCallback(
     async (data: TCreateFavoriteObservationDTO) => {
+      if (!initialValues) return;
+
       try {
         await updateFavoritesObservation({
           id: initialValues.id,
@@ -42,7 +44,7 @@ export function useEditFavoriteObservationModalHook(
         handleCloseModal();
       }
     },
-    [handleCloseModal, initialValues.id, updateFavoritesObservation]
+    [handleCloseModal, initialValues, updateFavoritesObservation]
   );
 
   return {

@@ -1,23 +1,21 @@
+import { TFavoritesObservation } from '@godiet-entities';
 import { Button } from '@godiet-ui/Button';
 import { Modal } from '@godiet-ui/Modal';
 
-import {
-  FavoriteObservationForm,
-  TCreateFavoriteObservationDTO,
-} from '../../FavoriteObservationForm';
+import { FavoriteObservationForm } from '../../FavoriteObservationForm';
 
 import { useEditFavoriteObservationModalHook } from './edit-favorite-observation-modal.hook';
 
 export interface EditFavoriteObservationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  initialValues: TCreateFavoriteObservationDTO & { id: string };
+  initialValues: TFavoritesObservation | null;
 }
 
 export function EditFavoriteObservationModal(
   props: EditFavoriteObservationModalProps
 ) {
-  const { isOpen } = props;
+  const { isOpen, initialValues } = props;
 
   const {
     controller,
@@ -41,6 +39,10 @@ export function EditFavoriteObservationModal(
         onSubmit={handleSubmit}
         formId="edit-favorite-observation"
         controller={controller}
+        initialValues={{
+          text: initialValues?.text || '',
+          title: initialValues?.title || '',
+        }}
       />
 
       <Modal.Footer>
