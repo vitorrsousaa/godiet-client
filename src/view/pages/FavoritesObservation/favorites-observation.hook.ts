@@ -22,9 +22,14 @@ interface FavoritesObservationHookProps {
   modalCreateFavoriteIsOpen: boolean;
   favoritesObservations: TFavoritesObservation[];
   isDeletingFavoritesObservation: boolean;
+  modalEditFavoriteIsOpen: boolean;
+  favoriteObservationToEdit: TFavoritesObservation | null;
   toggleModalCreateFavorite: () => void;
   toggleModalToDeleteFavoriteObservation: (id: string | null) => void;
   handleDeleteFavoriteObservation: () => Promise<void>;
+  toggleModalToEditFavoriteObservation: (
+    favoriteObservation: TFavoritesObservation | null
+  ) => void;
 }
 /**
  * Adiciona na tipagem do retorno do hook algumas tipagens obrigatórias.
@@ -44,6 +49,13 @@ export function useFavoritesObservationHook(): FavoritesObservationHookOutput {
     React.useReducer((state) => !state, false);
   const [modalDeleteFavoriteIsOpen, toggleModalDeleteFavorite] =
     React.useReducer((state) => !state, false);
+  const [modalEditFavoriteIsOpen, toggleModalEditFavorite] = React.useReducer(
+    (state) => !state,
+    false
+  );
+
+  const [favoriteObservationToEdit, setFavoriteObservationToEdit] =
+    React.useState<TFavoritesObservation | null>(null);
 
   const [favoriteObservationToDelete, setFavoriteObservationToDelete] =
     React.useState<null | string>(null);
@@ -62,6 +74,14 @@ export function useFavoritesObservationHook(): FavoritesObservationHookOutput {
     (id: string | null) => {
       setFavoriteObservationToDelete(id);
       toggleModalDeleteFavorite();
+    },
+    []
+  );
+
+  const toggleModalToEditFavoriteObservation = React.useCallback(
+    (favoriteObservation: TFavoritesObservation | null) => {
+      setFavoriteObservationToEdit(favoriteObservation);
+      toggleModalEditFavorite();
     },
     []
   );
@@ -92,9 +112,12 @@ export function useFavoritesObservationHook(): FavoritesObservationHookOutput {
     modalDeleteFavoriteIsOpen,
     favoritesObservations,
     isDeletingFavoritesObservation,
+    modalEditFavoriteIsOpen,
+    favoriteObservationToEdit,
     toggleModalCreateFavorite,
     toggleModalToDeleteFavoriteObservation,
     handleDeleteFavoriteObservation,
+    toggleModalToEditFavoriteObservation,
     pageStatus: {
       isLoading: isLoadingFavoritesObservation,
       isError: isErrorFavoritesObservation,

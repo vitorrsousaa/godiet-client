@@ -6,6 +6,8 @@ import { formatDate } from '@godiet-utils/formatDate';
 
 import { Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
 
+import { EditFavoriteObservationModal } from './components/modals/EditFavoriteObservationModal';
+
 /**
  * Interface que define as propriedades aceitas pelo componente `FavoritesObservationView`.
  *
@@ -17,7 +19,10 @@ export interface FavoritesObservationViewProps {
   observations: TFavoritesObservation[];
   modalDeleteFavoriteIsOpen: boolean;
   isDeletingFavoritesObservation?: boolean;
+  modalEditFavoriteIsOpen: boolean;
+  favoriteObservationToEdit: TFavoritesObservation | null;
   toggleModalDeleteFavorite: (id: string | null) => void;
+  toggleModalEditFavorite: (favorite: TFavoritesObservation | null) => void;
   onDeleteFavoriteObservation: () => Promise<void>;
 }
 
@@ -30,9 +35,12 @@ export function FavoritesObservationView(props: FavoritesObservationViewProps) {
   const {
     observations,
     modalDeleteFavoriteIsOpen,
+    modalEditFavoriteIsOpen,
     isDeletingFavoritesObservation,
+    favoriteObservationToEdit,
     toggleModalDeleteFavorite,
     onDeleteFavoriteObservation,
+    toggleModalEditFavorite,
   } = props;
 
   return (
@@ -47,7 +55,11 @@ export function FavoritesObservationView(props: FavoritesObservationViewProps) {
               </Card.Description>
             </div>
             <div className="flex flex-row items-center space-x-1">
-              <Button className="h-8 px-2">
+              <Button
+                className="h-8 px-2"
+                variant={'outline'}
+                onClick={() => toggleModalEditFavorite(observation)}
+              >
                 <Pencil2Icon />
               </Button>
               <Button
@@ -70,6 +82,12 @@ export function FavoritesObservationView(props: FavoritesObservationViewProps) {
         onConfirm={onDeleteFavoriteObservation}
         title="Deletar uma observação favorita"
         isLoading={isDeletingFavoritesObservation}
+      />
+
+      <EditFavoriteObservationModal
+        isOpen={modalEditFavoriteIsOpen}
+        initialValues={favoriteObservationToEdit}
+        onClose={() => toggleModalEditFavorite(null)}
       />
     </>
   );

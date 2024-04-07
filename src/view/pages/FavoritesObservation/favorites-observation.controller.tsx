@@ -23,7 +23,10 @@ export function FavoritesObservationController(
     favoritesObservations,
     modalDeleteFavoriteIsOpen,
     isDeletingFavoritesObservation,
+    modalEditFavoriteIsOpen,
+    favoriteObservationToEdit,
     toggleModalToDeleteFavoriteObservation,
+    toggleModalToEditFavoriteObservation,
     handleDeleteFavoriteObservation,
   } = props;
 
@@ -45,9 +48,12 @@ export function FavoritesObservationController(
     <FavoritesObservationView
       observations={favoritesObservations}
       modalDeleteFavoriteIsOpen={modalDeleteFavoriteIsOpen}
+      modalEditFavoriteIsOpen={modalEditFavoriteIsOpen}
+      isDeletingFavoritesObservation={isDeletingFavoritesObservation}
+      favoriteObservationToEdit={favoriteObservationToEdit}
       toggleModalDeleteFavorite={toggleModalToDeleteFavoriteObservation}
       onDeleteFavoriteObservation={handleDeleteFavoriteObservation}
-      isDeletingFavoritesObservation={isDeletingFavoritesObservation}
+      toggleModalEditFavorite={toggleModalToEditFavoriteObservation}
     />
   );
 }

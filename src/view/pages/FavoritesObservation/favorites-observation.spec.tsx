@@ -12,7 +12,10 @@ import {
 import { clearAllMocks, fn, SpyInstance, spyOn } from '@testing-suit';
 
 import { useFavoritesObservationHook } from './favorites-observation.hook';
-import { FavoritesObservationView } from './favorites-observation.view';
+import {
+  FavoritesObservationView,
+  FavoritesObservationViewProps,
+} from './favorites-observation.view';
 
 describe('FavoritesObservationPage', () => {
   let spy = {
@@ -63,19 +66,29 @@ describe('FavoritesObservationPage', () => {
       rendered.unmount();
     });
 
-    it('Should render all favoriteObservations when observations is defined', () => {
-      // Arrange
-      const toggleModalDeleteFavorite = fn();
-
-      // Act
-      rendered = render(
+    function renderFavoritesObservationView(
+      props?: Partial<FavoritesObservationViewProps>
+    ) {
+      return render(
         <FavoritesObservationView
           onDeleteFavoriteObservation={fn()}
           observations={favoritesObservationsMock}
           modalDeleteFavoriteIsOpen={false}
-          toggleModalDeleteFavorite={toggleModalDeleteFavorite}
+          toggleModalDeleteFavorite={fn()}
+          modalEditFavoriteIsOpen={false}
+          isDeletingFavoritesObservation={false}
+          toggleModalEditFavorite={fn()}
+          favoriteObservationToEdit={null}
+          {...props}
         />
       );
+    }
+
+    it('Should render all favoriteObservations when observations is defined', () => {
+      // Arrange
+
+      // Act
+      rendered = renderFavoritesObservationView();
 
       // Assert
       expect(rendered.getByText('Title 1'));
@@ -84,14 +97,9 @@ describe('FavoritesObservationPage', () => {
     it('Should call toggleModalDeleteFavorite when click on trash button and toggleModalDeleteFavorite is defined', () => {
       // Arrange
       const toggleModalDeleteFavorite = fn();
-      rendered = render(
-        <FavoritesObservationView
-          onDeleteFavoriteObservation={fn()}
-          observations={favoritesObservationsMock}
-          modalDeleteFavoriteIsOpen={false}
-          toggleModalDeleteFavorite={toggleModalDeleteFavorite}
-        />
-      );
+      rendered = renderFavoritesObservationView({
+        toggleModalDeleteFavorite,
+      });
 
       // Act
       const button = rendered.getByLabelText('Deletar observação Title 2');
