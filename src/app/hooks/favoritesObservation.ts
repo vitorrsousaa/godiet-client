@@ -34,3 +34,21 @@ export function useCreateFavoritesObservation() {
     createFavoritesObservation,
   };
 }
+
+export function useDeleteFavoritesObservation() {
+  const queryClient = useQueryClient();
+
+  const { isPending, mutateAsync: deleteFavoritesObservation } = useMutation({
+    mutationFn: favoritesObservationServices.delete,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_CACHE_KEYS.FAVORITE_OBSERVATIONS],
+      });
+    },
+  });
+
+  return {
+    isDeletingFavoritesObservation: isPending,
+    deleteFavoritesObservation,
+  };
+}
