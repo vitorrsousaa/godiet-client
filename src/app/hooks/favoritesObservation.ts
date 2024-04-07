@@ -52,3 +52,21 @@ export function useDeleteFavoritesObservation() {
     deleteFavoritesObservation,
   };
 }
+
+export function useUpdateFavoritesObservation() {
+  const queryClient = useQueryClient();
+
+  const { isPending, mutateAsync: updateFavoritesObservation } = useMutation({
+    mutationFn: favoritesObservationServices.update,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_CACHE_KEYS.FAVORITE_OBSERVATIONS],
+      });
+    },
+  });
+
+  return {
+    isUpdatingFavoritesObservation: isPending,
+    updateFavoritesObservation,
+  };
+}
