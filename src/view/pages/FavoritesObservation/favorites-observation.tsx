@@ -9,6 +9,8 @@ function FavoritesObservationWithoutHook(props: FavoritesObservationProps) {
   return (
     <FavoritesObservationLayout
       isFetching={props.isFetchingFavoritesObservation}
+      modalCreateFavoriteIsOpen={props.modalCreateFavoriteIsOpen}
+      toggleModalCreateFavorite={props.toggleModalCreateFavorite}
     >
       <FavoritesObservationController {...props} />
     </FavoritesObservationLayout>

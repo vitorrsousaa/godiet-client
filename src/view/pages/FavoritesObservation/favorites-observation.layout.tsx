@@ -3,9 +3,13 @@ import React from 'react';
 import { HeaderSettings } from '@godiet-components/HeaderSettings';
 import { Button } from '@godiet-ui/Button';
 
+import { CreateFavoriteObservationModal } from './components/modals/CreateFavoriteObservationModal';
+
 interface FavoritesObservationLayoutProps {
   children: React.ReactNode;
   isFetching?: boolean;
+  modalCreateFavoriteIsOpen: boolean;
+  toggleModalCreateFavorite: () => void;
 }
 
 /**
@@ -22,17 +26,19 @@ interface FavoritesObservationLayoutProps {
 export function FavoritesObservationLayout(
   props: FavoritesObservationLayoutProps
 ) {
-  const { children, isFetching } = props;
+  const {
+    children,
+    isFetching,
+    modalCreateFavoriteIsOpen,
+    toggleModalCreateFavorite,
+  } = props;
 
   return (
     <div className="flex flex-col gap-3">
       <HeaderSettings
         title="Observações"
         extra={
-          <Button
-            isLoading={isFetching}
-            // onClick={toggleModalCreateFavoriteMeal}
-          >
+          <Button isLoading={isFetching} onClick={toggleModalCreateFavorite}>
             Criar
           </Button>
         }
@@ -43,6 +49,11 @@ export function FavoritesObservationLayout(
         do plano alimentar.
       </HeaderSettings>
       {children}
+
+      <CreateFavoriteObservationModal
+        isOpen={modalCreateFavoriteIsOpen}
+        onClose={toggleModalCreateFavorite}
+      />
     </div>
   );
 }
