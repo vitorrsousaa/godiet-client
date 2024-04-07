@@ -8,18 +8,16 @@ export interface TextEditorProps {
   value: string;
   onChange: (value: string) => void;
   error?: string;
+  disabled?: boolean;
 }
 
 export function TextEditor(props: TextEditorProps) {
-  const { error } = props;
+  const { error, disabled } = props;
 
   const { editor } = useTextEditorHook(props);
-  console.log('adicionar propriedade disabled');
-  console.log('adicionar um initial value');
-  console.log('corrigir estilização');
   return (
     <div className="flex min-h-[250px] flex-col justify-stretch gap-2">
-      <Toolbar editor={editor} />
+      <Toolbar editor={editor} disabled={disabled} />
       <EditorContent editor={editor} />
       {error && (
         <div className="mt-2 flex items-center gap-2 text-red-700 ">
