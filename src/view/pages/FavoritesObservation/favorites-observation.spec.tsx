@@ -2,12 +2,14 @@ import { TFavoritesObservation } from '@godiet-entities';
 import * as FavoritesService from '@godiet-hooks/favoritesObservation';
 
 import {
+  act,
+  fireEvent,
   render,
   renderHook,
   ReturnRenderHookType,
   ReturnRenderType,
 } from '@testing-react';
-import { clearAllMocks, SpyInstance, spyOn } from '@testing-suit';
+import { clearAllMocks, fn, SpyInstance, spyOn } from '@testing-suit';
 
 import { useFavoritesObservationHook } from './favorites-observation.hook';
 import { FavoritesObservationView } from './favorites-observation.view';
@@ -63,15 +65,42 @@ describe('FavoritesObservationPage', () => {
 
     it('Should render all favoriteObservations when observations is defined', () => {
       // Arrange
+      const toggleModalDeleteFavorite = fn();
 
       // Act
       rendered = render(
-        <FavoritesObservationView observations={favoritesObservationsMock} />
+        <FavoritesObservationView
+          onDeleteFavoriteObservation={fn()}
+          observations={favoritesObservationsMock}
+          modalDeleteFavoriteIsOpen={false}
+          toggleModalDeleteFavorite={toggleModalDeleteFavorite}
+        />
       );
 
       // Assert
       expect(rendered.getByText('Title 1'));
       expect(rendered.getByText('Title 2'));
+    });
+    it('Should call toggleModalDeleteFavorite when click on trash button and toggleModalDeleteFavorite is defined', () => {
+      // Arrange
+      const toggleModalDeleteFavorite = fn();
+      rendered = render(
+        <FavoritesObservationView
+          onDeleteFavoriteObservation={fn()}
+          observations={favoritesObservationsMock}
+          modalDeleteFavoriteIsOpen={false}
+          toggleModalDeleteFavorite={toggleModalDeleteFavorite}
+        />
+      );
+
+      // Act
+      const button = rendered.getByLabelText('Deletar observação Title 2');
+      act(() => {
+        fireEvent.click(button);
+      });
+
+      // Assert
+      expect(toggleModalDeleteFavorite).toHaveBeenCalledWith('2');
     });
   });
 

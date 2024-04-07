@@ -1,8 +1,13 @@
 import React from 'react';
 
 import { TFavoritesObservation } from '@godiet-entities';
-import { useGetAllFavoritesObservation } from '@godiet-hooks/favoritesObservation';
+import {
+  useDeleteFavoritesObservation,
+  useGetAllFavoritesObservation,
+} from '@godiet-hooks/favoritesObservation';
 import { ReturnHookPage } from '@godiet-utils/types';
+
+import toast from 'react-hot-toast';
 
 /**
  * Define o formato de saída do hook `useFavoritesObservationHook`.
@@ -13,9 +18,13 @@ import { ReturnHookPage } from '@godiet-utils/types';
  */
 interface FavoritesObservationHookProps {
   isFetchingFavoritesObservation: boolean;
+  modalDeleteFavoriteIsOpen: boolean;
   modalCreateFavoriteIsOpen: boolean;
-  toggleModalCreateFavorite: () => void;
   favoritesObservations: TFavoritesObservation[];
+  isDeletingFavoritesObservation: boolean;
+  toggleModalCreateFavorite: () => void;
+  toggleModalToDeleteFavoriteObservation: (id: string | null) => void;
+  handleDeleteFavoriteObservation: () => Promise<void>;
 }
 /**
  * Adiciona na tipagem do retorno do hook algumas tipagens obrigatórias.
@@ -33,6 +42,11 @@ export type FavoritesObservationHookOutput =
 export function useFavoritesObservationHook(): FavoritesObservationHookOutput {
   const [modalCreateFavoriteIsOpen, toggleModalCreateFavorite] =
     React.useReducer((state) => !state, false);
+  const [modalDeleteFavoriteIsOpen, toggleModalDeleteFavorite] =
+    React.useReducer((state) => !state, false);
+
+  const [favoriteObservationToDelete, setFavoriteObservationToDelete] =
+    React.useState<null | string>(null);
 
   const {
     favoritesObservations,
@@ -41,11 +55,46 @@ export function useFavoritesObservationHook(): FavoritesObservationHookOutput {
     isFetchingFavoritesObservation,
   } = useGetAllFavoritesObservation();
 
+  const { isDeletingFavoritesObservation, deleteFavoritesObservation } =
+    useDeleteFavoritesObservation();
+
+  const toggleModalToDeleteFavoriteObservation = React.useCallback(
+    (id: string | null) => {
+      setFavoriteObservationToDelete(id);
+      toggleModalDeleteFavorite();
+    },
+    []
+  );
+
+  const handleDeleteFavoriteObservation = React.useCallback(async () => {
+    if (!favoriteObservationToDelete) return;
+
+    try {
+      await deleteFavoritesObservation({
+        favoriteObservationId: favoriteObservationToDelete,
+      });
+
+      toast.success('Observação favorita deletada com sucesso');
+    } catch {
+      toast.error('Erro ao deletar observação favorita');
+    } finally {
+      toggleModalToDeleteFavoriteObservation(null);
+    }
+  }, [
+    deleteFavoritesObservation,
+    favoriteObservationToDelete,
+    toggleModalToDeleteFavoriteObservation,
+  ]);
+
   return {
     isFetchingFavoritesObservation,
     modalCreateFavoriteIsOpen,
-    toggleModalCreateFavorite,
+    modalDeleteFavoriteIsOpen,
     favoritesObservations,
+    isDeletingFavoritesObservation,
+    toggleModalCreateFavorite,
+    toggleModalToDeleteFavoriteObservation,
+    handleDeleteFavoriteObservation,
     pageStatus: {
       isLoading: isLoadingFavoritesObservation,
       isError: isErrorFavoritesObservation,

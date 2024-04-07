@@ -18,7 +18,14 @@ import { FavoritesObservationView } from './favorites-observation.view';
 export function FavoritesObservationController(
   props: FavoritesObservationHookOutput
 ) {
-  const { pageStatus, favoritesObservations } = props;
+  const {
+    pageStatus,
+    favoritesObservations,
+    modalDeleteFavoriteIsOpen,
+    isDeletingFavoritesObservation,
+    toggleModalToDeleteFavoriteObservation,
+    handleDeleteFavoriteObservation,
+  } = props;
 
   const { isError, isLoading, noData } = pageStatus;
 
@@ -34,5 +41,13 @@ export function FavoritesObservationController(
     return <FavoritesObservationEmpty />;
   }
 
-  return <FavoritesObservationView observations={favoritesObservations} />;
+  return (
+    <FavoritesObservationView
+      observations={favoritesObservations}
+      modalDeleteFavoriteIsOpen={modalDeleteFavoriteIsOpen}
+      toggleModalDeleteFavorite={toggleModalToDeleteFavoriteObservation}
+      onDeleteFavoriteObservation={handleDeleteFavoriteObservation}
+      isDeletingFavoritesObservation={isDeletingFavoritesObservation}
+    />
+  );
 }

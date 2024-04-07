@@ -1,6 +1,7 @@
 import { TFavoritesObservation } from '@godiet-entities';
 import { Button } from '@godiet-ui/Button';
 import { Card } from '@godiet-ui/Card';
+import { DangerModal } from '@godiet-ui/DangerModal';
 import { formatDate } from '@godiet-utils/formatDate';
 
 import { Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
@@ -14,6 +15,10 @@ import { Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
  */
 export interface FavoritesObservationViewProps {
   observations: TFavoritesObservation[];
+  modalDeleteFavoriteIsOpen: boolean;
+  isDeletingFavoritesObservation?: boolean;
+  toggleModalDeleteFavorite: (id: string | null) => void;
+  onDeleteFavoriteObservation: () => Promise<void>;
 }
 
 /**
@@ -22,7 +27,13 @@ export interface FavoritesObservationViewProps {
  * @returns Retorna o componente da view.
  */
 export function FavoritesObservationView(props: FavoritesObservationViewProps) {
-  const { observations } = props;
+  const {
+    observations,
+    modalDeleteFavoriteIsOpen,
+    isDeletingFavoritesObservation,
+    toggleModalDeleteFavorite,
+    onDeleteFavoriteObservation,
+  } = props;
 
   return (
     <>
@@ -39,13 +50,27 @@ export function FavoritesObservationView(props: FavoritesObservationViewProps) {
               <Button className="h-8 px-2">
                 <Pencil2Icon />
               </Button>
-              <Button variant={'destructive'} className="h-8 px-2">
+              <Button
+                variant={'destructive'}
+                className="h-8 px-2"
+                onClick={() => toggleModalDeleteFavorite(observation.id)}
+                aria-label={`Deletar observação ${observation.title}`}
+              >
                 <TrashIcon />
               </Button>
             </div>
           </Card.Header>
         </Card.Root>
       ))}
+
+      <DangerModal
+        isOpen={modalDeleteFavoriteIsOpen}
+        description="Você tem certeza que deseja deletar esta observação favorita? Esta ação não pode ser desfeita!"
+        onClose={() => toggleModalDeleteFavorite(null)}
+        onConfirm={onDeleteFavoriteObservation}
+        title="Deletar uma observação favorita"
+        isLoading={isDeletingFavoritesObservation}
+      />
     </>
   );
 }
