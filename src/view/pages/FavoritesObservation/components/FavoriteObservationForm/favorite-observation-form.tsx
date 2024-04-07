@@ -53,6 +53,7 @@ export function FavoriteObservationForm(props: FavoriteObservationFormProps) {
             value={value}
             onChange={onChange}
             error={error?.message}
+            disabled={isSubmitting}
           />
         )}
       />
