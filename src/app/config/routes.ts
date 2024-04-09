@@ -3,6 +3,7 @@ export const ROUTES = {
   CREATE_ANAMNESIS: '/pacientes/:id/anamnese/criar',
   CREATE_PLANNING_CONVENTIONAL: '/pacientes/:id/plano/convencional',
   DASHBOARD: '/',
+  ENERGY_CALCULATION: '/pacientes/:id/calculo-energetico',
   LOGIN: '/login',
   PATIENTS: '/pacientes',
   PATIENTS_BY_ID: '/pacientes/:id',

@@ -2,6 +2,7 @@
 import { Suspense } from 'react';
 
 import { ROUTES } from '@godiet-config';
+import { EnergyCalculation } from '@godiet-pages/EnergyCalculation';
 import { NotFound } from '@godiet-pages/NotFound';
 import { Logo } from '@godiet-ui/Logo';
 import { Spinner } from '@godiet-ui/Spinner';
@@ -176,6 +177,11 @@ export function Router() {
                 <Route path={ROUTES.PATIENTS_BY_ID} element={<Patient />} />
 
                 <Route path={ROUTES.ANAMNESIS} element={<Anamnesis />} />
+
+                <Route
+                  path={ROUTES.ENERGY_CALCULATION}
+                  element={<EnergyCalculation />}
+                />
 
                 <Route
                   path={ROUTES.CREATE_ANAMNESIS}
