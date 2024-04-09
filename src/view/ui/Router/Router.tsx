@@ -2,7 +2,6 @@
 import { Suspense } from 'react';
 
 import { ROUTES } from '@godiet-config';
-import { EnergyCalculation } from '@godiet-pages/EnergyCalculation';
 import { NotFound } from '@godiet-pages/NotFound';
 import { Logo } from '@godiet-ui/Logo';
 import { Spinner } from '@godiet-ui/Spinner';
@@ -19,6 +18,10 @@ const { CreateAnamnesis } = lazyLoad(
 const { CreatePlanning } = lazyLoad(
   () => import('@godiet-pages/CreatePlanning')
 );
+const { CreateEnergyCalculation } = lazyLoad(
+  () => import('@godiet-pages/CreateEnergyCalculation')
+);
+
 const { Dashboard } = lazyLoad(() => import('@godiet-pages/Dashboard'));
 const { DetailsPlanningMeal } = lazyLoad(
   () => import('@godiet-pages/DetailsPlanningMeal')
@@ -28,6 +31,9 @@ const { DashboardLayout } = lazyLoad(
 );
 const { EditPlanningMeal } = lazyLoad(
   () => import('@godiet-pages/EditPlanningMeal')
+);
+const { EnergyCalculation } = lazyLoad(
+  () => import('@godiet-pages/EnergyCalculation')
 );
 const { FavoritesLayout } = lazyLoad(
   () => import('@godiet-layouts/FavoritesLayout')
@@ -181,6 +187,10 @@ export function Router() {
                 <Route
                   path={ROUTES.ENERGY_CALCULATION}
                   element={<EnergyCalculation />}
+                />
+                <Route
+                  path={ROUTES.CREATE_ENERGY_CALCULATION}
+                  element={<CreateEnergyCalculation />}
                 />
 
                 <Route
