@@ -51,7 +51,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         {placeholder}
       </label>
       {error && (
-        <div className="mt-2 flex items-center gap-2 text-red-700 ">
+        <div className="mt-2 flex items-center gap-1 text-red-700 ">
           <CrossCircledIcon />
           <span className="text-sx">{error}</span>
         </div>
