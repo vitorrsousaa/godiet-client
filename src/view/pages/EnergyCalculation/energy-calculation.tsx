@@ -7,7 +7,9 @@ export type EnergyCalculationProps = EnergyCalculationHookOutput;
 
 function EnergyCalculationWithoutHook(props: EnergyCalculationProps) {
   return (
-    <EnergyCalculationLayout>
+    <EnergyCalculationLayout
+      onNavigateToCreatePage={props.handleNavigateToCreatePage}
+    >
       <EnergyCalculationController {...props} />
     </EnergyCalculationLayout>
   );

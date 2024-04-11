@@ -1,5 +1,8 @@
 import { useState } from 'react';
+import React from 'react';
 
+import { usePatient } from '@godiet-hooks/patient';
+import { useNavigate } from '@godiet-hooks/routes';
 import { ReturnHookPage } from '@godiet-utils/types';
 
 /**
@@ -11,6 +14,7 @@ import { ReturnHookPage } from '@godiet-utils/types';
  */
 interface EnergyCalculationHookProps {
   state: number;
+  handleNavigateToCreatePage: () => void;
 }
 /**
  * Adiciona na tipagem do retorno do hook algumas tipagens obrigatórias.
@@ -26,10 +30,24 @@ export type EnergyCalculationHookOutput =
  * @returns Retorna um objeto contendo o estado interno e o status da página.
  */
 export function useEnergyCalculationHook(): EnergyCalculationHookOutput {
+  const { navigate } = useNavigate();
+
+  const { patient } = usePatient();
   const [state] = useState(0);
+
+  const handleNavigateToCreatePage = React.useCallback(() => {
+    if (!patient) return;
+
+    navigate('CREATE_ENERGY_CALCULATION', {
+      replace: {
+        id: patient.id,
+      },
+    });
+  }, [navigate, patient]);
 
   return {
     state,
+    handleNavigateToCreatePage,
     pageStatus: {
       isLoading: false,
       isError: false,

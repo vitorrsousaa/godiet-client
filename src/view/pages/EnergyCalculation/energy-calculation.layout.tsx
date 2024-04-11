@@ -4,6 +4,7 @@ import { Button } from '@godiet-ui/Button';
 
 interface EnergyCalculationLayoutProps {
   children: React.ReactNode;
+  onNavigateToCreatePage: () => void;
 }
 
 /**
@@ -18,13 +19,13 @@ interface EnergyCalculationLayoutProps {
  * @returns Retorna o componente de layout para a página inteira.
  */
 export function EnergyCalculationLayout(props: EnergyCalculationLayoutProps) {
-  const { children } = props;
+  const { children, onNavigateToCreatePage } = props;
 
   return (
     <div>
       <div className="flex flex-row items-center justify-between">
         <h1 className="text-lg font-semibold ">Cálculo energético</h1>
-        <Button>Criar novo</Button>
+        <Button onClick={onNavigateToCreatePage}>Criar novo</Button>
       </div>
       {children}
     </div>
