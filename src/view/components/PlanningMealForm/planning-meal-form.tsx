@@ -18,10 +18,11 @@ export interface PlanningMealFormProps {
   isSubmitting?: boolean;
   onSubmit: (data: TCreatePlanningMealDTO) => Promise<void>;
   controller?: UsePlanningMealFormController;
+  header?: React.ReactNode;
 }
 
 export function PlanningMealForm(props: PlanningMealFormProps) {
-  const { className, isSubmitting } = props;
+  const { className, isSubmitting, header } = props;
 
   const {
     errors,
@@ -44,9 +45,13 @@ export function PlanningMealForm(props: PlanningMealFormProps) {
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col gap-4">
-          <h3 className="pb-2 text-lg font-bold text-foreground">
-            Plano alimentar
-          </h3>
+          {header ? (
+            header
+          ) : (
+            <h3 className="pb-2 text-lg font-bold text-foreground">
+              Plano alimentar
+            </h3>
+          )}
           <div>
             <Input
               {...register('name')}
