@@ -65,7 +65,11 @@ export function FavoritesMeals() {
           <>
             {favoritesMeals.length > 0 ? (
               <>
-                <Input name="favorite" placeholder="Nome da refeição" />
+                <Input
+                  name="favorite"
+                  placeholder="Nome da refeição"
+                  minVersion
+                />
                 <Table>
                   <TableHeader>
                     <TableRow>

@@ -10,6 +10,7 @@ function PatientsWithoutHook(props: PatientsProps) {
     <PatientsLayout
       isFetchingPatients={props.isFetchingPatients}
       isErrorPatients={props.isErrorPatients}
+      toggleModalCreatePatient={props.toggleModalCreatePatient}
     >
       <PatientsController {...props} />
     </PatientsLayout>

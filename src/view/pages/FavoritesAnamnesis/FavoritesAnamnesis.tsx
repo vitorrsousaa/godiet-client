@@ -3,9 +3,9 @@ import { Button } from '@godiet-ui/Button';
 import { Card } from '@godiet-ui/Card';
 import { DangerModal } from '@godiet-ui/DangerModal';
 import { Spinner } from '@godiet-ui/Spinner';
+import { formatDate } from '@godiet-utils/formatDate';
 
 import { Pencil2Icon, TrashIcon } from '@radix-ui/react-icons';
-import { formatDate } from 'date-fns';
 
 import { ModalCreateAnamnesisTemplate } from './components/modals/ModalCreateAnamnesisTemplate';
 import { useFavoritesAnamnesisHook } from './FavoritesAnamnesis.hook';

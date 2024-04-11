@@ -34,6 +34,9 @@ const { FavoritesLayout } = lazyLoad(
 const { FavoritesMeals } = lazyLoad(
   () => import('@godiet-pages/FavoritesMeals')
 );
+const { FavoritesObservation } = lazyLoad(
+  () => import('@godiet-pages/FavoritesObservation')
+);
 const { FavoritesAnamnesis } = lazyLoad(
   () => import('@godiet-pages/FavoritesAnamnesis')
 );
@@ -133,12 +136,7 @@ export function Router() {
                 />
                 <Route
                   path={ROUTES.FAVORITES_OBSERVATIONS}
-                  element={
-                    <div className="flex flex-col">
-                      Observações
-                      <small>Esta página ainda esta em construção!</small>
-                    </div>
-                  }
+                  element={<FavoritesObservation />}
                 />
                 <Route
                   path={ROUTES.FAVORITES_PLANNING}

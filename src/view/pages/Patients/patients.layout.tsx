@@ -8,6 +8,7 @@ interface PatientsLayoutProps {
   children: React.ReactNode;
   isFetchingPatients?: boolean;
   isErrorPatients?: boolean;
+  toggleModalCreatePatient: () => void;
 }
 
 /**
@@ -22,7 +23,12 @@ interface PatientsLayoutProps {
  * @returns Retorna o componente de layout para a página inteira.
  */
 export function PatientsLayout(props: PatientsLayoutProps) {
-  const { children, isFetchingPatients, isErrorPatients } = props;
+  const {
+    children,
+    isFetchingPatients,
+    isErrorPatients,
+    toggleModalCreatePatient,
+  } = props;
 
   return (
     <>
@@ -35,7 +41,7 @@ export function PatientsLayout(props: PatientsLayoutProps) {
         </div>
         <div>
           <Button
-            // onClick={toggleModalCreatePatient}
+            onClick={toggleModalCreatePatient}
             isLoading={isFetchingPatients}
             disabled={isErrorPatients}
           >
