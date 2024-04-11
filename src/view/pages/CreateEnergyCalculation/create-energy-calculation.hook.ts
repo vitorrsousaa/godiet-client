@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import React from 'react';
 
 import { ReturnHookPage } from '@godiet-utils/types';
+
+import { TCreateEnergyCalculationDTO } from './components/EnergyCalculationForm';
 
 /**
  * Define o formato de saída do hook `useCreateEnergyCalculationHook`.
@@ -10,7 +12,7 @@ import { ReturnHookPage } from '@godiet-utils/types';
  * @interface CreateEnergyCalculationHookProps
  */
 interface CreateEnergyCalculationHookProps {
-  state: number;
+  handleSubmit: (data: TCreateEnergyCalculationDTO) => Promise<void>;
 }
 /**
  * Adiciona na tipagem do retorno do hook algumas tipagens obrigatórias.
@@ -26,14 +28,19 @@ export type CreateEnergyCalculationHookOutput =
  * @returns Retorna um objeto contendo o estado interno e o status da página.
  */
 export function useCreateEnergyCalculationHook(): CreateEnergyCalculationHookOutput {
-  const [state] = useState(0);
+  const handleSubmit = React.useCallback(
+    async (data: TCreateEnergyCalculationDTO) => {
+      console.log(data);
+    },
+    []
+  );
 
   return {
-    state,
+    handleSubmit,
     pageStatus: {
       isLoading: false,
       isError: false,
-      noData: true,
+      noData: false,
     },
   };
 }

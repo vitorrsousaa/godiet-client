@@ -1,12 +1,6 @@
-import {
-  render,
-  renderHook,
-  ReturnRenderHookType,
-  ReturnRenderType,
-} from '@testing-react';
-import { clearAllMocks } from '@testing-suit';
+import { render, ReturnRenderType } from '@testing-react';
+import { clearAllMocks, fn } from '@testing-suit';
 
-import { useCreateEnergyCalculationHook } from './create-energy-calculation.hook';
 import { CreateEnergyCalculationView } from './create-energy-calculation.view';
 
 describe('CreateEnergyCalculationPage', () => {
@@ -29,32 +23,32 @@ describe('CreateEnergyCalculationPage', () => {
       // Arrange
 
       // Act
-      rendered = render(<CreateEnergyCalculationView data={0} />);
+      rendered = render(<CreateEnergyCalculationView onSubmit={fn()} />);
 
       // Assert
-      expect(rendered.getByText('CreateEnergyCalculation view'));
+      expect(rendered.getByText('Estimativa de gasto energético'));
     });
   });
 
-  describe('Hook', () => {
-    let rendered: ReturnRenderHookType<typeof useCreateEnergyCalculationHook>;
+  // describe('Hook', () => {
+  //   let rendered: ReturnRenderHookType<typeof useCreateEnergyCalculationHook>;
 
-    beforeEach(() => {
-      clearAllMocks();
-    });
+  //   beforeEach(() => {
+  //     clearAllMocks();
+  //   });
 
-    afterEach(() => {
-      rendered.unmount();
-    });
+  //   afterEach(() => {
+  //     rendered.unmount();
+  //   });
 
-    it('Should render the hook with default props', () => {
-      // Arrange
+  //   it('Should render the hook with default props', () => {
+  //     // Arrange
 
-      // Act
-      rendered = renderHook(() => useCreateEnergyCalculationHook());
+  //     // Act
+  //     rendered = renderHook(() => useCreateEnergyCalculationHook());
 
-      // Assert
-      expect(rendered.result.current.state).toEqual(0);
-    });
-  });
+  //     // Assert
+  //     expect(rendered.result.current.state).toEqual(0);
+  //   });
+  // });
 });

@@ -1,3 +1,10 @@
+import { Button } from '@godiet-ui/Button';
+
+import {
+  EnergyCalculationForm,
+  TCreateEnergyCalculationDTO,
+} from './components/EnergyCalculationForm';
+
 /**
  * Interface que define as propriedades aceitas pelo componente `CreateEnergyCalculationView`.
  *
@@ -6,7 +13,7 @@
  * @interface CreateEnergyCalculationViewProps
  */
 export interface CreateEnergyCalculationViewProps {
-  data: number;
+  onSubmit: (data: TCreateEnergyCalculationDTO) => Promise<void>;
 }
 
 /**
@@ -17,12 +24,20 @@ export interface CreateEnergyCalculationViewProps {
 export function CreateEnergyCalculationView(
   props: CreateEnergyCalculationViewProps
 ) {
-  const { data } = props;
+  const { onSubmit } = props;
 
   return (
-    <div>
-      <h1>CreateEnergyCalculation view</h1>
-      {data}
+    <div className="mb-10">
+      <h1 className="font-bold">Estimativa de gasto energético</h1>
+
+      <EnergyCalculationForm
+        formId="create-energy-calculation"
+        onSubmit={onSubmit}
+      />
+
+      <Button type="submit" form="create-energy-calculation">
+        Criar
+      </Button>
     </div>
   );
 }

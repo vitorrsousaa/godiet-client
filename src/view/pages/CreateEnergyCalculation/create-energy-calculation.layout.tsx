@@ -20,10 +20,5 @@ export function CreateEnergyCalculationLayout(
 ) {
   const { children } = props;
 
-  return (
-    <div>
-      CreateEnergyCalculation layout
-      {children}
-    </div>
-  );
+  return <>{children}</>;
 }

@@ -18,7 +18,7 @@ import { CreateEnergyCalculationView } from './create-energy-calculation.view';
 export function CreateEnergyCalculationController(
   props: CreateEnergyCalculationHookOutput
 ) {
-  const { pageStatus, state } = props;
+  const { pageStatus, handleSubmit } = props;
 
   const { isError, isLoading, noData } = pageStatus;
 
@@ -34,5 +34,5 @@ export function CreateEnergyCalculationController(
     return <CreateEnergyCalculationEmpty />;
   }
 
-  return <CreateEnergyCalculationView data={state} />;
+  return <CreateEnergyCalculationView onSubmit={handleSubmit} />;
 }
