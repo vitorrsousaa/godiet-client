@@ -15,7 +15,10 @@ export const CreateMealSchema = z.object({
   time: z.string().refine((value) => /^([01]\d|2[0-3]):[0-5]\d$/.test(value), {
     message: 'Insira um formato de hora válido (HH:mm).',
   }),
-  mealFoods: z.array(CreateMealFoodSchema),
+  mealFoods: z
+    .array(CreateMealFoodSchema)
+    .min(1, 'A refeição deve conter pelo menos um alimento.'),
+  observation: z.string().optional(),
 });
 
 export const CreatePlanningMealSchema = z.object({
