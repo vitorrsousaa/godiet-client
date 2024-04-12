@@ -26,6 +26,7 @@ import { AddFoodModal } from '../modals/AddFoodModal';
 import { EditFoodModal } from '../modals/EditFoodModal';
 import { SaveMealModal } from '../modals/SaveMealModal';
 import { SetFavoriteMealModal } from '../modals/SetFavoriteMealModal';
+import { SetObservationMeal } from '../modals/SetObservationMeal';
 import { TableFoodsByMeal } from '../TableFoodsByMeal';
 
 import { useCreateMealHook } from './create-meal.hook';
@@ -52,6 +53,8 @@ export function CreateMeal(props: CreateMealProps) {
     modalEditFoodIsOpen,
     modalRemoveFoodIsOpen,
     selectedFoodToEdit,
+    modalAddObservationIsOpen,
+    toggleModalAddObservationOpen,
     handleCloseModalRemoveFood,
     toggleModalAddFavoriteMealOpen,
     handleCloseModalEditFood,
@@ -182,7 +185,10 @@ export function CreateMeal(props: CreateMealProps) {
           <Button onClick={toggleModalAddFoodOpen} disabled={isSubmitting}>
             Adicionar alimento
           </Button>
-          <Button className="" disabled={isSubmitting}>
+          <Button
+            disabled={isSubmitting}
+            onClick={toggleModalAddObservationOpen}
+          >
             Adicionar observações
           </Button>
         </div>
@@ -212,6 +218,12 @@ export function CreateMeal(props: CreateMealProps) {
         onClose={toggleModalAddFavoriteMealOpen}
         mealIndex={mealIndex}
         key={hashKeyOfStarMealFood}
+      />
+
+      <SetObservationMeal
+        onClose={toggleModalAddObservationOpen}
+        isOpen={modalAddObservationIsOpen}
+        mealIndex={mealIndex}
       />
 
       <SetFavoriteMealModal

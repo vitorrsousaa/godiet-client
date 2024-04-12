@@ -43,6 +43,9 @@ export function useCreateMealHook(props: CreateMealProps) {
   const [modalAddFavoriteMealIsOpen, toggleModalAddFavoriteMealOpen] =
     React.useReducer((state) => !state, false);
 
+  const [modalAddObservationIsOpen, toggleModalAddObservationOpen] =
+    React.useReducer((state) => !state, false);
+
   const [modalRemoveFoodIsOpen, setModalRemoveFoodIsOpen] =
     React.useState(false);
 
@@ -170,6 +173,8 @@ export function useCreateMealHook(props: CreateMealProps) {
     selectedMealIndex,
     selectedFoodToEdit,
     modalRemoveFoodIsOpen,
+    modalAddObservationIsOpen,
+    toggleModalAddObservationOpen,
     handleOpenModalRemoveFood,
     handleOpenModalEditFood,
     toggleModalAddFavoriteMealOpen,
