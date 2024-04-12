@@ -1,10 +1,9 @@
 import { Button } from '@godiet-ui/Button';
 import { Combobox } from '@godiet-ui/Combobox';
+import { FormField } from '@godiet-ui/FormField';
 import { Modal } from '@godiet-ui/Modal';
 import { ScrollArea } from '@godiet-ui/ScrollArea';
 import { TextEditor } from '@godiet-ui/TextEditor';
-
-import { Controller } from 'react-hook-form';
 
 import { useSetObservationMealHook } from './set-observation-meal.hook';
 
@@ -47,28 +46,50 @@ export function SetObservationMeal(props: SetObservationMealProps) {
             }}
             className="flex max-h-80 flex-col gap-4"
           >
-            <Controller
+            <FormField.Controller
               control={internalControl}
               name="id"
-              render={({ field: { value, onChange } }) => (
-                <Combobox
-                  isLoading={isFetchingFavoritesObservation}
-                  placeholder="Selecione uma observação"
-                  options={favoritesObservationsOptions}
-                  value={value}
-                  onChange={(event) => {
-                    onChange(event);
-                    handleAppendText(event);
-                  }}
-                />
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <FormField.Item error={error?.message}>
+                  <FormField.Label>Observação favorita</FormField.Label>
+                  <FormField.Control>
+                    <Combobox
+                      isLoading={isFetchingFavoritesObservation}
+                      placeholder="Selecione uma observação"
+                      options={favoritesObservationsOptions}
+                      value={value}
+                      onChange={(event) => {
+                        onChange(event);
+                        handleAppendText(event);
+                      }}
+                      emptyMessage="Nenhuma observação encontrada"
+                    />
+                  </FormField.Control>
+                  <FormField.Description>
+                    Selecione uma observação favorita para adicionar ao texto.
+                    Caso não encontre a observação desejada, você pode digitar
+                    diretamente no campo de texto.
+                  </FormField.Description>
+                  <FormField.Message />
+                </FormField.Item>
               )}
             />
 
-            <Controller
+            <FormField.Controller
               control={internalControl}
               name="text"
-              render={({ field: { value, onChange } }) => (
-                <TextEditor value={value} onChange={onChange} />
+              render={({
+                field: { value, onChange },
+                fieldState: { error },
+              }) => (
+                <FormField.Item error={error?.message}>
+                  <FormField.Label>Observação alimentar</FormField.Label>
+                  <TextEditor value={value} onChange={onChange} />
+                  <FormField.Message />
+                </FormField.Item>
               )}
             />
           </form>

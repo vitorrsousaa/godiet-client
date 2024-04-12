@@ -9,8 +9,8 @@ import * as z from 'zod';
 import { SetObservationMealProps } from './set-observation-meal';
 
 const ObservationSchema = z.object({
-  id: z.string().uuid(),
-  text: z.string().min(1),
+  id: z.string().optional(),
+  text: z.string().min(1, 'A observação deve ter pelo menos 1 caracter.'),
 });
 
 type TObservationTemplateDTO = z.infer<typeof ObservationSchema>;
