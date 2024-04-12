@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { cn } from '@godiet-utils/cn';
 
 import Heading from '@tiptap/extension-heading';
@@ -29,6 +31,12 @@ export function useTextEditorHook(props: TextEditorProps) {
     },
     [disabled]
   );
+
+  React.useEffect(() => {
+    if (editor) {
+      editor.commands.setContent(value);
+    }
+  }, [editor, value]);
 
   return {
     editor,
