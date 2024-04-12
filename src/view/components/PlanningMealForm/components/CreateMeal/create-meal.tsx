@@ -54,6 +54,7 @@ export function CreateMeal(props: CreateMealProps) {
     modalRemoveFoodIsOpen,
     selectedFoodToEdit,
     modalAddObservationIsOpen,
+    initialObservation,
     toggleModalAddObservationOpen,
     handleCloseModalRemoveFood,
     toggleModalAddFavoriteMealOpen,
@@ -224,6 +225,7 @@ export function CreateMeal(props: CreateMealProps) {
         onClose={toggleModalAddObservationOpen}
         isOpen={modalAddObservationIsOpen}
         mealIndex={mealIndex}
+        initialObservation={initialObservation}
       />
 
       <SetFavoriteMealModal
