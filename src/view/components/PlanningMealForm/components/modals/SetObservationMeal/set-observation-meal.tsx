@@ -11,6 +11,7 @@ export interface SetObservationMealProps {
   isOpen: boolean;
   onClose: () => void;
   mealIndex: number;
+  initialObservation?: string;
 }
 
 export function SetObservationMeal(props: SetObservationMealProps) {

@@ -1,9 +1,10 @@
 import React from 'react';
 
+import { TCreatePlanningMealDTO } from '@godiet-components/PlanningMealForm';
 import { useGetAllFavoritesObservation } from '@godiet-hooks/favoritesObservation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm, useFormContext } from 'react-hook-form';
 import * as z from 'zod';
 
 import { SetObservationMealProps } from './set-observation-meal';
@@ -16,7 +17,7 @@ const ObservationSchema = z.object({
 type TObservationTemplateDTO = z.infer<typeof ObservationSchema>;
 
 export function useSetObservationMealHook(props: SetObservationMealProps) {
-  const { onClose } = props;
+  const { mealIndex, initialObservation, onClose } = props;
 
   const {
     favoritesObservations,
@@ -32,10 +33,13 @@ export function useSetObservationMealHook(props: SetObservationMealProps) {
   } = useForm<TObservationTemplateDTO>({
     resolver: zodResolver(ObservationSchema),
     defaultValues: {
-      text: '',
+      text: initialObservation || '',
       id: '',
     },
   });
+
+  const { setValue: externalSetValue } =
+    useFormContext<TCreatePlanningMealDTO>();
 
   const handleAppendText = React.useCallback(
     (observationId: string) => {
@@ -60,7 +64,8 @@ export function useSetObservationMealHook(props: SetObservationMealProps) {
   }, [favoritesObservations]);
 
   const handleSubmit = hookFormSubmit(async (data: TObservationTemplateDTO) => {
-    console.log(data);
+    externalSetValue(`meals.${mealIndex}.observation`, data.text);
+    onClose();
   });
 
   return {
