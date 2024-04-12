@@ -1,16 +1,7 @@
-import {
-  render,
-  renderHook,
-  ReturnRenderHookType,
-  ReturnRenderType,
-} from '@testing-react';
-import { clearAllMocks } from '@testing-suit';
+import { render, ReturnRenderType } from '@testing-react';
+import { clearAllMocks, fn } from '@testing-suit';
 
-import {
-  SetObservationMeal,
-  SetObservationMealProps,
-} from './set-observation-meal';
-import { useSetObservationMealHook } from './set-observation-meal.hook';
+import { SetObservationMeal } from './set-observation-meal';
 
 describe('SetObservationMeal', () => {
   beforeEach(() => {
@@ -32,35 +23,12 @@ describe('SetObservationMeal', () => {
       // Arrange
 
       // Act
-      rendered = render(<SetObservationMeal data={'0'} />);
+      rendered = render(
+        <SetObservationMeal isOpen mealIndex={1} onClose={fn()} />
+      );
 
       // Assert
-      expect(rendered.getByText('SetObservationMeal'));
-    });
-  });
-
-  describe('hook', () => {
-    let rendered: ReturnRenderHookType<typeof useSetObservationMealHook>;
-
-    beforeEach(() => {
-      clearAllMocks();
-    });
-
-    afterEach(() => {
-      rendered.unmount();
-    });
-
-    it('Should render the hook with default props', () => {
-      // Arrange
-      const props: SetObservationMealProps = {
-        data: 'teste',
-      };
-
-      // Act
-      rendered = renderHook(() => useSetObservationMealHook(props));
-
-      // Assert
-      expect(rendered.result.current.state).toEqual('teste');
+      expect(rendered.getByText('Adicionando uma observação alimentar'));
     });
   });
 });
