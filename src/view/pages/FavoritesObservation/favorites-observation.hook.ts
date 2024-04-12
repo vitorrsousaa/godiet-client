@@ -94,7 +94,7 @@ export function useFavoritesObservationHook(): FavoritesObservationHookOutput {
         favoriteObservationId: favoriteObservationToDelete,
       });
 
-      toast.success('Observação favorita deletada com sucesso');
+      toast.success('Observação deletada com sucesso');
     } catch {
       toast.error('Erro ao deletar observação favorita');
     } finally {
