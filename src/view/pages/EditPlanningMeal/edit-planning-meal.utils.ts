@@ -17,6 +17,7 @@ export function mapperPlanningMealToEdit(
       return {
         time: initialTime,
         name: meal.name,
+        observation: meal.observation,
         mealFoods: meal.mealFoods.map((mealFood) => ({
           name: mealFood.name,
           foodId: mealFood.foodId,

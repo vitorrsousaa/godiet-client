@@ -5,6 +5,7 @@ interface TCreatePlanningMealToDatabase {
   meals: {
     name: string;
     time: string;
+    observation: string;
     mealFoods: {
       foodId: string;
       name: string;
@@ -25,6 +26,7 @@ export function mapper(
     meals: planningMeal.meals.map((meal) => ({
       time: meal.time,
       name: meal.name,
+      observation: meal.observation || '',
       mealFoods: meal.mealFoods.map((mealFood) => ({
         foodId: mealFood.foodId,
         name: mealFood.name,

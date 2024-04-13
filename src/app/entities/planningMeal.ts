@@ -19,6 +19,7 @@ export interface TMeal {
   id: string;
   name: string;
   time: string;
+  observation: string;
   mealFoods: TMealFood[];
 }
 /**
