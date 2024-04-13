@@ -41,6 +41,8 @@ export function SaveMealModal(props: SaveMealModalProps) {
         placeholder="Nome da refeição favorita"
         value={nameOfFavoriteMeal}
         onChange={handleChangeNameOfFavoriteMeal}
+        minVersion
+        className="mb-4 mt-4"
       />
 
       {watchMealFoods?.length > 0 ? (
@@ -59,7 +61,7 @@ export function SaveMealModal(props: SaveMealModalProps) {
         </div>
       )}
 
-      <Modal.Footer>
+      <Modal.Footer className="mt-4">
         <Button
           variant={'destructive'}
           onClick={handleCloseModal}
