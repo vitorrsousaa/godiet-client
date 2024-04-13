@@ -1,5 +1,7 @@
+import * as FavoriteService from '@godiet-hooks/favoritesObservation';
+
 import { render, ReturnRenderType } from '@testing-react';
-import { clearAllMocks, fn } from '@testing-suit';
+import { clearAllMocks, fn, SpyInstance, spyOn } from '@testing-suit';
 
 import { SetObservationMeal } from './set-observation-meal';
 
@@ -10,12 +12,29 @@ describe('SetObservationMeal', () => {
 
   describe('render', () => {
     let rendered: ReturnRenderType;
+    let spy = {
+      useGetAllFavoritesObservation: {} as SpyInstance<
+        Partial<
+          ReturnType<(typeof FavoriteService)['useGetAllFavoritesObservation']>
+        >
+      >,
+    };
 
     beforeEach(() => {
-      clearAllMocks();
+      spy = {
+        useGetAllFavoritesObservation: spyOn(
+          FavoriteService,
+          'useGetAllFavoritesObservation'
+        ),
+      };
+
+      spy.useGetAllFavoritesObservation.mockReturnValue({
+        favoritesObservations: [],
+      });
     });
 
     afterEach(() => {
+      clearAllMocks();
       rendered.unmount();
     });
 
