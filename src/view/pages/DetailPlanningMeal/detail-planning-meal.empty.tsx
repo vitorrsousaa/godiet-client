@@ -7,8 +7,11 @@
  */
 export function DetailPlanningMealEmpty() {
   return (
-    <div>
-      <h1>DetailPlanningMealEmpty</h1>
+    <div className="mt-10 flex w-full flex-col items-center justify-center gap-4 text-center">
+      <div>
+        <p>Tivemos um erro para encontrar este plano alimentar!</p>
+        <p>Por favor. Tente novamente mais tarde!</p>
+      </div>
     </div>
   );
 }

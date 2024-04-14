@@ -18,7 +18,7 @@ import { DetailPlanningMealView } from './detail-planning-meal.view';
 export function DetailPlanningMealController(
   props: DetailPlanningMealHookOutput
 ) {
-  const { pageStatus, state } = props;
+  const { pageStatus, planningMeal, handleGeneratePDF } = props;
 
   const { isError, isLoading, noData } = pageStatus;
 
@@ -34,5 +34,11 @@ export function DetailPlanningMealController(
     return <DetailPlanningMealEmpty />;
   }
 
-  return <DetailPlanningMealView data={state} />;
+  return (
+    <DetailPlanningMealView
+      name={planningMeal?.name || ''}
+      meals={planningMeal?.meals || []}
+      onGeneratePDF={handleGeneratePDF}
+    />
+  );
 }

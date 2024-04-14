@@ -18,10 +18,5 @@ interface DetailPlanningMealLayoutProps {
 export function DetailPlanningMealLayout(props: DetailPlanningMealLayoutProps) {
   const { children } = props;
 
-  return (
-    <div>
-      DetailPlanningMeal layout
-      {children}
-    </div>
-  );
+  return <>{children}</>;
 }

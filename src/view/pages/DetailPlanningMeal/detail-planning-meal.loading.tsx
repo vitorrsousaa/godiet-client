@@ -1,3 +1,5 @@
+import { Spinner } from '@godiet-ui/Spinner';
+
 /**
  * Componente de indicador de carregamento.
  *
@@ -7,8 +9,8 @@
  */
 export function DetailPlanningMealLoading() {
   return (
-    <div>
-      <h1>DetailPlanningMealLoading</h1>
+    <div className="mt-16 grid h-full w-full place-items-center">
+      <Spinner />
     </div>
   );
 }

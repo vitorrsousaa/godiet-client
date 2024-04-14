@@ -1,3 +1,10 @@
+import { CardMeal } from '@godiet-components/CardMeal';
+import { TMeal } from '@godiet-entities';
+import { Button } from '@godiet-ui/Button';
+import { Tooltip } from '@godiet-ui/Tooltip';
+
+import { DownloadIcon } from '@radix-ui/react-icons';
+
 /**
  * Interface que define as propriedades aceitas pelo componente `DetailPlanningMealView`.
  *
@@ -6,7 +13,9 @@
  * @interface DetailPlanningMealViewProps
  */
 export interface DetailPlanningMealViewProps {
-  data: number;
+  name: string;
+  onGeneratePDF: () => void;
+  meals: TMeal[];
 }
 
 /**
@@ -15,12 +24,41 @@ export interface DetailPlanningMealViewProps {
  * @returns Retorna o componente da view.
  */
 export function DetailPlanningMealView(props: DetailPlanningMealViewProps) {
-  const { data } = props;
+  const { name, meals, onGeneratePDF } = props;
 
   return (
-    <div>
-      <h1>DetailPlanningMeal view</h1>
-      {data}
-    </div>
+    <>
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-row items-center justify-between">
+          <h4>{name}</h4>
+          <Tooltip content="Baixar PDF">
+            <Button
+              onClick={onGeneratePDF}
+              // isLoading={isGeneratingPDF}
+              className="h-8 px-2"
+              aria-label="Baixar PDF"
+            >
+              <DownloadIcon />
+            </Button>
+          </Tooltip>
+        </div>
+        <div className="flex flex-col gap-4">
+          {meals.map((meal) => {
+            return (
+              <CardMeal.Root key={meal.id}>
+                <CardMeal.Header description={meal.time}>
+                  {meal.name}
+                </CardMeal.Header>
+
+                <CardMeal.Content mealFoods={meal.mealFoods} />
+                {meal.observation && (
+                  <CardMeal.Footer>{meal.observation}</CardMeal.Footer>
+                )}
+              </CardMeal.Root>
+            );
+          })}
+        </div>
+      </div>
+    </>
   );
 }
