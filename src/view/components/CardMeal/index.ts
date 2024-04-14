@@ -1,7 +1,7 @@
 import { Content } from './Content';
+import { Footer } from './Footer';
 import { Header } from './Header';
 import { ListHeader } from './ListHeader';
-import { Options } from './Options';
 import { Root } from './Root';
 
 export const CardMeal = {
@@ -9,5 +9,5 @@ export const CardMeal = {
   Header,
   Content,
   ListHeader,
-  Options,
+  Footer,
 };

@@ -11,7 +11,9 @@ export function Header(props: CardMealHeaderProps) {
   return (
     <Card.Header>
       <Card.Title>{children}</Card.Title>
-      <Card.Description>{formatDate(description, 'HH:mm')}</Card.Description>
+      <Card.Description>
+        Horário: {formatDate(description, 'HH:mm')}
+      </Card.Description>
     </Card.Header>
   );
 }
