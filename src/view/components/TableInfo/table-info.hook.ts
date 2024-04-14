@@ -9,7 +9,7 @@ import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { HandleChangeInputFunction, TableInfoProps } from './table-info.types';
 
 export function useTableInfoHook(props: TableInfoProps) {
-  const { mealIndex, mealFoods, onUpdateMealFoods } = props;
+  const { mealIndex, mealFoods, isLoading, onUpdateMealFoods } = props;
 
   const { control } = useFormContext<TCreatePlanningMealDTO>();
 
@@ -104,6 +104,8 @@ export function useTableInfoHook(props: TableInfoProps) {
   }, []);
 
   const handleDragEnd = (event: DragEndEvent) => {
+    if (isLoading) return;
+
     if (!event.over) return;
 
     const composeIdActiveElement = event.active.id.toString();

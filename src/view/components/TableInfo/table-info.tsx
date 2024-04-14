@@ -26,6 +26,7 @@ export function TableInfo(props: TableInfoProps) {
     disabledActions = false,
     editable = false,
     disableColumns = [],
+    isLoading = false,
     onOpenModalRemove,
     onOpenModalEdit,
   } = props;
@@ -42,7 +43,12 @@ export function TableInfo(props: TableInfoProps) {
   return (
     <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
       <SortableContext items={mealFoodsWithCustomId}>
-        <Table className="overflow-x-hidden">
+        <Table
+          className={cn(
+            'overflow-x-hidden',
+            isLoading && 'cursor-not-allowed opacity-50'
+          )}
+        >
           <TableHeader>
             <TableRow>
               <TableHead></TableHead>
@@ -84,6 +90,7 @@ export function TableInfo(props: TableInfoProps) {
                     }
                     mealFood={foods}
                     disableColumns={disableColumns}
+                    isLoading={isLoading}
                   >
                     {!disabledActions && (
                       <TableCell>
@@ -95,6 +102,7 @@ export function TableInfo(props: TableInfoProps) {
                               onOpenModalRemove && onOpenModalRemove(index)
                             }
                             data-testid="remove-food-button"
+                            disabled={isLoading}
                           >
                             <TrashIcon />
                           </Button>
@@ -109,6 +117,7 @@ export function TableInfo(props: TableInfoProps) {
                                 });
                             }}
                             data-testid="edit-food-button"
+                            disabled={isLoading}
                           >
                             <Pencil1Icon />
                           </Button>

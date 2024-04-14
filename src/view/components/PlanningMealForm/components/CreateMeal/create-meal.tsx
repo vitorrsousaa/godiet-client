@@ -211,6 +211,7 @@ export function CreateMeal(props: CreateMealProps) {
           mealIndex={mealIndex}
           onOpenModalRemove={handleOpenModalRemoveFood}
           onOpenModalEdit={handleOpenModalEditFood}
+          isLoading={isSubmitting}
         />
       </Card.Footer>
 

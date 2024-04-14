@@ -1,7 +1,6 @@
+import { FormField } from '@godiet-ui/FormField';
 import { Input } from '@godiet-ui/Input';
 import { TextEditor } from '@godiet-ui/TextEditor';
-
-import { Controller } from 'react-hook-form';
 
 import { UseFavoriteObservationFormController } from './favorite-observation-form.controller';
 import {
@@ -29,32 +28,46 @@ export function FavoriteObservationForm(props: FavoriteObservationFormProps) {
       onSubmit={handleSubmit}
       aria-label="form"
     >
-      <Controller
+      <FormField.Controller
         name="title"
         control={control}
         render={({ field: { onChange, value }, fieldState: { error } }) => (
-          <Input
-            placeholder="Nome da observação"
-            value={value}
-            name="title"
-            onChange={onChange}
-            error={error?.message}
-            minVersion
-            disabled={isSubmitting}
-          />
+          <FormField.Item error={error?.message}>
+            <FormField.Label>Nome da observação</FormField.Label>
+            <FormField.Control>
+              <Input
+                placeholder="Observação favorita"
+                value={value}
+                name="title"
+                onChange={onChange}
+                minVersion
+                disabled={isSubmitting}
+              />
+            </FormField.Control>
+            <FormField.Description>
+              Dê um nome para a sua observação favorita
+            </FormField.Description>
+            <FormField.Message />
+          </FormField.Item>
         )}
       />
 
-      <Controller
+      <FormField.Controller
         control={control}
         name="text"
         render={({ field: { onChange, value }, fieldState: { error } }) => (
-          <TextEditor
-            value={value}
-            onChange={onChange}
-            error={error?.message}
-            disabled={isSubmitting}
-          />
+          <FormField.Item error={error?.message}>
+            <FormField.Label>Texto da observação</FormField.Label>
+            <FormField.Control>
+              <TextEditor
+                value={value}
+                onChange={onChange}
+                disabled={isSubmitting}
+              />
+            </FormField.Control>
+
+            <FormField.Message />
+          </FormField.Item>
         )}
       />
     </form>
