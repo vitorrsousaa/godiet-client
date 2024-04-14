@@ -28,10 +28,11 @@ export function SetObservationMeal(props: SetObservationMealProps) {
 
   return (
     <Modal.Root isOpen={isOpen} onClose={onClose} className="max-w-[640px]">
-      <Modal.Header>
+      <Modal.Header className="mb-4">
         <Modal.Title>Adicionando uma observação alimentar</Modal.Title>
         <Modal.Description>
-          Selecione os alimentos para a refeição
+          Preencha os dados abaixo para adicionar uma observação alimentar a
+          refeição.
         </Modal.Description>
       </Modal.Header>
 
@@ -97,7 +98,7 @@ export function SetObservationMeal(props: SetObservationMealProps) {
         </ScrollArea>
       )}
 
-      <Modal.Footer>
+      <Modal.Footer className="mt-4">
         <Button onClick={onClose} variant={'destructive'}>
           Cancelar
         </Button>
