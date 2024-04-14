@@ -174,7 +174,7 @@ export function useCreateMealHook(props: CreateMealProps) {
     selectedFoodToEdit,
     modalRemoveFoodIsOpen,
     modalAddObservationIsOpen,
-    initialObservation: watchMeal?.observation,
+    initialObservation: watchMeal?.observation || '',
     toggleModalAddObservationOpen,
     handleOpenModalRemoveFood,
     handleOpenModalEditFood,
