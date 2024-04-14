@@ -1,1 +1,0 @@
-export { DetailsPlanningMeal } from './DetailsPlanningMeal';
