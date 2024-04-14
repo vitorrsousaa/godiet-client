@@ -14,10 +14,22 @@ export interface UpdatePlanningMealInput {
 export async function update(updatePlanningMealInput: UpdatePlanningMealInput) {
   const { planningMeal, patientId } = updatePlanningMealInput;
 
+  const mappedPlanningMeal = mapperEditPlanningMeal(planningMeal);
+
   const { data } = await httpClient.put(`/planningMeal/${patientId}`, {
-    planningMeal,
+    planningMeal: mappedPlanningMeal,
     id: planningMeal.id,
   });
 
   return data;
+}
+
+function mapperEditPlanningMeal(planningMeal: TEditPlanningMealDTO) {
+  return {
+    ...planningMeal,
+    meals: planningMeal.meals.map((meal) => ({
+      ...meal,
+      observation: meal.observation || '',
+    })),
+  };
 }
