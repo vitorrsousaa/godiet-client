@@ -23,8 +23,8 @@ const { CreateEnergyCalculation } = lazyLoad(
 );
 
 const { Dashboard } = lazyLoad(() => import('@godiet-pages/Dashboard'));
-const { DetailsPlanningMeal } = lazyLoad(
-  () => import('@godiet-pages/DetailsPlanningMeal')
+const { DetailPlanningMeal } = lazyLoad(
+  () => import('@godiet-pages/DetailPlanningMeal')
 );
 const { DashboardLayout } = lazyLoad(
   () => import('@godiet-layouts/DashboardLayout')
@@ -202,7 +202,7 @@ export function Router() {
                 />
                 <Route
                   path={ROUTES.PLANNING_MEAL_BY_PATIENT_SHOW}
-                  element={<DetailsPlanningMeal />}
+                  element={<DetailPlanningMeal />}
                 />
                 <Route
                   path={ROUTES.CREATE_PLANNING_CONVENTIONAL}
