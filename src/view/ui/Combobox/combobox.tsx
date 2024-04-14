@@ -89,7 +89,10 @@ export function Combobox(props: ComboboxProps) {
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between"
+          className={cn(
+            'w-full justify-between',
+            isLoading && 'cursor-not-allowed opacity-50'
+          )}
         >
           {internalValue ? defaultLabel : defaultPlaceholder}
 
