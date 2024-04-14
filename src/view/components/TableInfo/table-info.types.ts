@@ -59,4 +59,8 @@ export interface TableInfoProps {
    * @param disableColumns The columns to disable.
    */
   disableColumns?: TParamsDisableColumns[];
+  /**
+   *
+   */
+  isLoading?: boolean;
 }

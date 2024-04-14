@@ -14,11 +14,18 @@ export interface RowProps {
    * @param disableColumns The columns to disable.
    */
   disableColumns?: TParamsDisableColumns[];
+  isLoading?: boolean;
 }
 
 export function Row(props: RowProps) {
-  const { children, mealFood, editable, disableColumns, onChangeEditable } =
-    props;
+  const {
+    children,
+    mealFood,
+    editable,
+    disableColumns,
+    isLoading,
+    onChangeEditable,
+  } = props;
   const { name, qty, measure, prot, carb, fat, energy } = mealFood;
 
   return (
@@ -30,6 +37,7 @@ export function Row(props: RowProps) {
             name={name}
             className="w-full bg-muted/40 outline-none"
             onChange={onChangeEditable}
+            disabled={isLoading}
           />
         ) : (
           name
