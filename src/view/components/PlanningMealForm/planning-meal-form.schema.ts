@@ -18,7 +18,7 @@ export const CreateMealSchema = z.object({
   mealFoods: z
     .array(CreateMealFoodSchema)
     .min(1, 'A refeição deve conter pelo menos um alimento.'),
-  observation: z.string().optional(),
+  observation: z.string().optional().or(z.null()),
 });
 
 export const CreatePlanningMealSchema = z.object({

@@ -31,7 +31,6 @@ interface EditPlanningMealHookOutput {
   planningMealToEdit: TCreatePlanningMealDTO;
   controller: UsePlanningMealFormController;
   handleSubmit: (data: TCreatePlanningMealDTO) => Promise<void>;
-
   isUpdatingPlanningMeal: boolean;
 }
 
