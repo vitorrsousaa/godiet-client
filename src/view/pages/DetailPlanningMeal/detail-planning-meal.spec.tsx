@@ -68,6 +68,7 @@ describe('DetailPlanningMealPage', () => {
           name="a"
           onGeneratePDF={fn}
           meals={[]}
+          exportElementRef={{ current: null }}
           {...props}
         />
       );

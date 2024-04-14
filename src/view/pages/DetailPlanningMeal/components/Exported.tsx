@@ -1,23 +1,24 @@
 import { forwardRef } from 'react';
 
 import { CardMeal } from '@godiet-components/CardMeal';
-import { TPlanningMeal } from '@godiet-entities';
+import { TMeal } from '@godiet-entities';
 import { usePatient } from '@godiet-hooks/patient';
 
 interface ExportedPlanningProps {
-  planningMeal: TPlanningMeal;
+  name: string;
+  meals: TMeal[];
 }
 
 export const ExportedPlanning = forwardRef<
   HTMLDivElement,
   ExportedPlanningProps
 >((props, ref) => {
-  const { planningMeal } = props;
+  const { name, meals } = props;
 
   const { patient } = usePatient();
 
   return (
-    <div ref={ref} className=" hidden flex-col gap-4 ">
+    <div ref={ref} className="hidden flex-col gap-4 ">
       {patient && (
         <>
           <div className="ga-3 flex w-full flex-col items-center justify-center">
@@ -27,32 +28,23 @@ export const ExportedPlanning = forwardRef<
             </small>
           </div>
 
-          {planningMeal && (
+          {name && meals && (
             <div className="flex flex-col gap-6">
               <div className="flex flex-row items-center justify-between">
-                <h4>{planningMeal.name}</h4>
+                <h4>{name}</h4>
               </div>
               <div className="flex flex-col gap-4">
-                {planningMeal.meals.map((meal) => {
+                {meals.map((meal) => {
                   return (
                     <CardMeal.Root key={meal.id}>
                       <CardMeal.Header description={meal.time}>
                         {meal.name}
                       </CardMeal.Header>
-                      <CardMeal.Content>
-                        {meal.mealFoods.length > 0 && (
-                          <>
-                            <CardMeal.ListHeader />
 
-                            {meal.mealFoods.map((mealFood) => (
-                              <CardMeal.Options
-                                mealFood={mealFood}
-                                key={mealFood.id}
-                              />
-                            ))}
-                          </>
-                        )}
-                      </CardMeal.Content>
+                      <CardMeal.Content mealFoods={meal.mealFoods} />
+                      {meal.observation && (
+                        <CardMeal.Footer>{meal.observation}</CardMeal.Footer>
+                      )}
                     </CardMeal.Root>
                   );
                 })}

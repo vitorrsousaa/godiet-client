@@ -2,6 +2,7 @@ import React from 'react';
 
 import { TPlanningMeal } from '@godiet-entities';
 import { usePatient } from '@godiet-hooks/patient';
+import { useGeneratePDF } from '@godiet-hooks/pdf';
 import { useGetByPlanningId } from '@godiet-hooks/planningMeal';
 import { ReturnHookPage } from '@godiet-utils/types';
 
@@ -17,6 +18,8 @@ import { useParams } from 'react-router-dom';
 interface DetailPlanningMealHookProps {
   planningMeal?: TPlanningMeal;
   handleGeneratePDF: () => void;
+  exportElementRef: React.RefObject<HTMLDivElement>;
+  isGeneratingPDF: boolean;
 }
 /**
  * Adiciona na tipagem do retorno do hook algumas tipagens obrigatórias.
@@ -42,12 +45,16 @@ export function useDetailPlanningMealHook(): DetailPlanningMealHookOutput {
       planningId,
     });
 
+  const { exportElementRef, isGeneratingPDF, generatePDF } = useGeneratePDF();
+
   const handleGeneratePDF = React.useCallback(() => {
-    console.log('generate pdf');
-  }, []);
+    generatePDF(planningMeal?.name ?? '');
+  }, [generatePDF, planningMeal?.name]);
 
   return {
     planningMeal,
+    exportElementRef,
+    isGeneratingPDF,
     handleGeneratePDF,
     pageStatus: {
       isLoading: isFetchingPatient || isFetchingPlanningMeal,

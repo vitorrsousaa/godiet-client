@@ -5,6 +5,8 @@ import { Tooltip } from '@godiet-ui/Tooltip';
 
 import { DownloadIcon } from '@radix-ui/react-icons';
 
+import { ExportedPlanning } from './components/Exported';
+
 /**
  * Interface que define as propriedades aceitas pelo componente `DetailPlanningMealView`.
  *
@@ -16,6 +18,8 @@ export interface DetailPlanningMealViewProps {
   name: string;
   onGeneratePDF: () => void;
   meals: TMeal[];
+  exportElementRef: React.RefObject<HTMLDivElement>;
+  isGeneratingPDF?: boolean;
 }
 
 /**
@@ -24,7 +28,8 @@ export interface DetailPlanningMealViewProps {
  * @returns Retorna o componente da view.
  */
 export function DetailPlanningMealView(props: DetailPlanningMealViewProps) {
-  const { name, meals, onGeneratePDF } = props;
+  const { name, meals, exportElementRef, isGeneratingPDF, onGeneratePDF } =
+    props;
 
   return (
     <>
@@ -34,7 +39,7 @@ export function DetailPlanningMealView(props: DetailPlanningMealViewProps) {
           <Tooltip content="Baixar PDF">
             <Button
               onClick={onGeneratePDF}
-              // isLoading={isGeneratingPDF}
+              isLoading={isGeneratingPDF}
               className="h-8 px-2"
               aria-label="Baixar PDF"
             >
@@ -59,6 +64,7 @@ export function DetailPlanningMealView(props: DetailPlanningMealViewProps) {
           })}
         </div>
       </div>
+      <ExportedPlanning name={name} meals={meals} ref={exportElementRef} />
     </>
   );
 }
