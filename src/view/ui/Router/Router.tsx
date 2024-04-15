@@ -12,8 +12,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AuthGuard } from './AuthGuard';
 
 const { Anamnesis } = lazyLoad(() => import('@godiet-pages/Anamnesis'));
-const { CreateAnamnesis } = lazyLoad(
-  () => import('@godiet-pages/CreateAnamnesis')
+const { CreateAnamnese } = lazyLoad(
+  () => import('@godiet-pages/CreateAnamnese')
 );
 const { CreatePlanning } = lazyLoad(
   () => import('@godiet-pages/CreatePlanning')
@@ -193,7 +193,7 @@ export function Router() {
 
                 <Route
                   path={ROUTES.CREATE_ANAMNESIS}
-                  element={<CreateAnamnesis />}
+                  element={<CreateAnamnese />}
                 />
 
                 <Route
