@@ -1,5 +1,5 @@
-import { Editor } from '@godiet-ui/Editor';
-import { Input } from '@godiet-ui/Input';
+import { AnamnesisForm } from '@godiet-components/AnamnesisForm';
+import { Button } from '@godiet-ui/Button';
 import { Modal } from '@godiet-ui/Modal';
 
 import { useModalEditAnamnesisHook } from './ModalEditAnamnesis.hook';
@@ -11,15 +11,8 @@ export interface ModalEditAnamnesisProps {
 }
 
 export function ModalEditAnamnesis(props: ModalEditAnamnesisProps) {
-  const {
-    isOpen,
-    errors,
-    isUpdatingAnamnesis,
-    initialText,
-    onClose,
-    register,
-    handleSubmit,
-  } = useModalEditAnamnesisHook(props);
+  const { isOpen, isUpdatingAnamnesis, initialValues, onClose, handleSubmit } =
+    useModalEditAnamnesisHook(props);
 
   return (
     <Modal.Root
@@ -33,22 +26,29 @@ export function ModalEditAnamnesis(props: ModalEditAnamnesisProps) {
         <Modal.Description>Atualize os dados da anamnese.</Modal.Description>
       </Modal.Header>
 
-      <form className="flex flex-col space-y-4">
-        <Input
-          placeholder="Título da anamnese"
-          {...register('title')}
-          error={errors.title?.message}
-        />
+      <AnamnesisForm
+        onSubmit={handleSubmit}
+        formId="update-anamnesis"
+        initialValues={initialValues}
+        isSubmitting={isUpdatingAnamnesis}
+      />
 
-        <Editor
-          initialContent={initialText}
-          hasFooter
-          onBackButton={onClose}
-          isValid
+      <Modal.Footer>
+        <Button
+          variant="destructive"
+          onClick={onClose}
+          disabled={isUpdatingAnamnesis}
+        >
+          Cancelar
+        </Button>
+        <Button
+          type="submit"
+          form="update-anamnesis"
           isLoading={isUpdatingAnamnesis}
-          onSave={handleSubmit}
-        />
-      </form>
+        >
+          Confirmar
+        </Button>
+      </Modal.Footer>
     </Modal.Root>
   );
 }

@@ -1,24 +1,18 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
+import {
+  defaultInitialValues,
+  TCreateAnamnesisFormDTO,
+} from '@godiet-components/AnamnesisForm';
 import {
   useGetAllAnamnesis,
   useUpdateAnamnesis,
 } from '@godiet-hooks/anamnesis';
 import { usePatient } from '@godiet-hooks/patient';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import * as z from 'zod';
 
 import { ModalEditAnamnesisProps } from './ModalEditAnamnesis';
-
-const schema = z.object({
-  title: z.string().nonempty('O título é obrigatório'),
-  text: z.string().nonempty('O texto é obrigatório'),
-});
-
-type FormValues = z.infer<typeof schema>;
 
 export function useModalEditAnamnesisHook(props: ModalEditAnamnesisProps) {
   const { isOpen, onClose, anamnesisId } = props;
@@ -29,38 +23,22 @@ export function useModalEditAnamnesisHook(props: ModalEditAnamnesisProps) {
 
   const { anamnesis } = useGetAllAnamnesis(patient?.id);
 
-  const {
-    formState: { errors },
-    register,
-    setError,
-    getValues,
-    setValue,
-  } = useForm<FormValues>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      title: anamnesisId
-        ? anamnesis.find((a) => a.id === anamnesisId)?.title
-        : '',
-      text: '',
-    },
-  });
+  const initialValues = useMemo(() => {
+    const originalAnamnesis = anamnesis.find((a) => a.id === anamnesisId);
+
+    if (!originalAnamnesis) return defaultInitialValues;
+
+    return {
+      title: originalAnamnesis.title,
+      text: originalAnamnesis.text,
+    };
+  }, [anamnesis, anamnesisId]);
 
   const handleSubmit = useCallback(
-    async (text: string) => {
-      const data = getValues();
-
-      if (data.title === '') {
-        setError('title', {
-          type: 'manual',
-          message: 'O título é obrigatório',
-        });
-
-        return;
-      }
-
+    async (data: TCreateAnamnesisFormDTO) => {
       try {
         await updateAnamnesis({
-          text,
+          text: data.text,
           title: data.title,
           patientId: patient?.id || '',
           id: anamnesisId || '',
@@ -73,27 +51,13 @@ export function useModalEditAnamnesisHook(props: ModalEditAnamnesisProps) {
         toast.error('Erro ao editar anamnese');
       }
     },
-    [anamnesisId, getValues, onClose, patient?.id, setError, updateAnamnesis]
+    [anamnesisId, onClose, patient?.id, updateAnamnesis]
   );
 
-  const initialText = useMemo(() => {
-    return anamnesisId ? anamnesis.find((a) => a.id === anamnesisId)?.text : '';
-  }, [anamnesis, anamnesisId]);
-
-  useEffect(() => {
-    if (anamnesisId) {
-      const correctTitle = anamnesis.find((a) => a.id === anamnesisId)?.title;
-
-      setValue('title', correctTitle || '');
-    }
-  }, [anamnesis, anamnesisId, setValue]);
-
   return {
+    initialValues,
     isOpen,
-    errors,
     isUpdatingAnamnesis,
-    initialText,
-    register,
     onClose,
     handleSubmit,
   };
