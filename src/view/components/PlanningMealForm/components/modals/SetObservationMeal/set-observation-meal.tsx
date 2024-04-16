@@ -98,18 +98,20 @@ export function SetObservationMeal(props: SetObservationMealProps) {
         </ScrollArea>
       )}
 
-      <Modal.Footer className="mt-4">
-        <Button onClick={onClose} variant={'destructive'}>
-          Cancelar
-        </Button>
-        <Button
-          form="form-add-observation"
-          type="submit"
-          // disabled={!formIsValid}
-        >
-          Adicionar
-        </Button>
-      </Modal.Footer>
+      {!isErrorFavoritesObservation && (
+        <Modal.Footer className="mt-4">
+          <Button onClick={onClose} variant={'destructive'}>
+            Cancelar
+          </Button>
+          <Button
+            form="form-add-observation"
+            type="submit"
+            // disabled={!formIsValid}
+          >
+            Adicionar
+          </Button>
+        </Modal.Footer>
+      )}
     </Modal.Root>
   );
 }
