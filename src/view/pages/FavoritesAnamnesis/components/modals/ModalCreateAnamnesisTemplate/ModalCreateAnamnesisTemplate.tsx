@@ -1,6 +1,6 @@
+import { AnamnesisForm } from '@godiet-components/AnamnesisForm';
 import { TAnamnesisTemplate } from '@godiet-entities';
-import { Editor } from '@godiet-ui/Editor';
-import { Input } from '@godiet-ui/Input';
+import { Button } from '@godiet-ui/Button';
 import { Modal } from '@godiet-ui/Modal';
 
 import { useModalCreateAnamnesisTemplateHook } from './ModalCreateAnamnesisTemplate.hook';
@@ -14,20 +14,14 @@ export interface ModalCreateAnamnesisTemplateProps {
 export function ModalCreateAnamnesisTemplate(
   props: ModalCreateAnamnesisTemplateProps
 ) {
-  const { initialAnamnesis } = props;
-  const {
-    isOpen,
-    errors,
-    isCreatingAnamnesisTemplate,
-    handleCloseModal,
-    register,
-    handleSubmit,
-  } = useModalCreateAnamnesisTemplateHook(props);
+  const { initialAnamnesis, onClose } = props;
+  const { isOpen, initialValues, isCreatingAnamnesisTemplate, handleSubmit } =
+    useModalCreateAnamnesisTemplateHook(props);
 
   return (
     <Modal.Root
       isOpen={isOpen}
-      onClose={handleCloseModal}
+      onClose={onClose}
       className="max-h-full max-w-[740px] overflow-y-auto"
     >
       <Modal.Header>
@@ -41,22 +35,30 @@ export function ModalCreateAnamnesisTemplate(
         </Modal.Description>
       </Modal.Header>
 
-      <form className="flex flex-col space-y-4">
-        <Input
-          placeholder="Título da anamnese"
-          {...register('title')}
-          error={errors.title?.message}
-        />
+      <AnamnesisForm
+        formId="create-favorite-anamnesis"
+        onSubmit={handleSubmit}
+        isSubmitting={isCreatingAnamnesisTemplate}
+        initialValues={initialValues}
+        titleDescription="Crie um nome para esta anamnese."
+      />
 
-        <Editor
-          hasFooter
-          onBackButton={handleCloseModal}
-          isValid
+      <Modal.Footer>
+        <Button
+          variant="destructive"
+          onClick={onClose}
+          disabled={isCreatingAnamnesisTemplate}
+        >
+          Cancelar
+        </Button>
+        <Button
+          type="submit"
+          form="create-favorite-anamnesis"
           isLoading={isCreatingAnamnesisTemplate}
-          onSave={handleSubmit}
-          initialContent={initialAnamnesis?.text || ''}
-        />
-      </form>
+        >
+          Confirmar
+        </Button>
+      </Modal.Footer>
     </Modal.Root>
   );
 }

@@ -1,20 +1,14 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
+import {
+  defaultInitialValues,
+  TCreateAnamnesisFormDTO,
+} from '@godiet-components/AnamnesisForm';
 import { useCreateAnamnesisTemplate } from '@godiet-hooks/anamnesisTemplate';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import * as z from 'zod';
 
 import { ModalCreateAnamnesisTemplateProps } from './ModalCreateAnamnesisTemplate';
-
-const schema = z.object({
-  title: z.string().nonempty('O título é obrigatório'),
-  text: z.string().nonempty('O texto é obrigatório'),
-});
-
-type FormValues = z.infer<typeof schema>;
 
 export function useModalCreateAnamnesisTemplateHook(
   props: ModalCreateAnamnesisTemplateProps
@@ -24,35 +18,21 @@ export function useModalCreateAnamnesisTemplateHook(
   const { createAnamnesisTemplate, isCreatingAnamnesisTemplate } =
     useCreateAnamnesisTemplate();
 
-  const {
-    formState: { errors },
-    register,
-    setError,
-    getValues,
-    reset,
-  } = useForm<FormValues>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      title: initialAnamnesis?.title || '',
-    },
-  });
+  const initialValues = useMemo<TCreateAnamnesisFormDTO>(() => {
+    if (initialAnamnesis)
+      return {
+        title: initialAnamnesis.title,
+        text: initialAnamnesis.text,
+      };
+
+    return defaultInitialValues;
+  }, [initialAnamnesis]);
 
   const handleSubmit = useCallback(
-    async (text: string) => {
-      const data = getValues();
-
-      if (data.title === '') {
-        setError('title', {
-          type: 'manual',
-          message: 'O título é obrigatório',
-        });
-
-        return;
-      }
-
+    async (data: TCreateAnamnesisFormDTO) => {
       try {
         await createAnamnesisTemplate({
-          text: text,
+          text: data.text,
           title: data.title,
         });
 
@@ -63,20 +43,13 @@ export function useModalCreateAnamnesisTemplateHook(
         toast.error('Erro ao criar anamnese');
       }
     },
-    [createAnamnesisTemplate, getValues, onClose, setError]
+    [createAnamnesisTemplate, onClose]
   );
-
-  const handleCloseModal = useCallback(() => {
-    reset();
-    onClose();
-  }, [onClose, reset]);
 
   return {
     isOpen,
-    errors,
+    initialValues,
     isCreatingAnamnesisTemplate,
-    register,
-    handleCloseModal,
     handleSubmit,
   };
 }
