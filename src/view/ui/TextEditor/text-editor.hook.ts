@@ -9,7 +9,7 @@ import StarterKit from '@tiptap/starter-kit';
 import { TextEditorProps } from './text-editor';
 
 const originalCss =
-  'rounded-md border min-h-[200px] p-2 w-full focus:outline-none  border-input prose dark:prose-invert';
+  'rounded-md border min-h-[200px] p-2 w-full focus:outline-none border-input prose dark:prose-invert [&>p]:m-0 [&>ul]:m-0 max-w-full';
 
 export function useTextEditorHook(props: TextEditorProps) {
   const { value, disabled, onChange } = props;
