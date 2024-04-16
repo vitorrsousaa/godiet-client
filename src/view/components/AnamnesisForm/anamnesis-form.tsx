@@ -56,6 +56,7 @@ export function AnamnesisForm(props: AnamnesisFormProps) {
                   onChange={onChange}
                   disabled={isSubmitting}
                   name="text"
+                  error={error?.message}
                 />
               </FormField.Control>
 
