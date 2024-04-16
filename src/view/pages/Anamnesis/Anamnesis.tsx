@@ -68,6 +68,7 @@ export function Anamnesis() {
                               <Button
                                 isLoading={isFetchingAnamnesis}
                                 className="[&>svg]:h-4 [&>svg]:w-4"
+                                variant={'outline'}
                               >
                                 <DownloadIcon />
                               </Button>
