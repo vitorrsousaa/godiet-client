@@ -126,7 +126,6 @@ export function CreateMeal(props: CreateMealProps) {
           <Input
             placeholder="Horário"
             type="time"
-            minVersion
             className="h-8 w-full min-[400px]:max-w-24 "
             disabled={isSubmitting}
             {...register(`meals.${mealIndex}.time`)}
@@ -170,7 +169,6 @@ export function CreateMeal(props: CreateMealProps) {
                   <Input
                     placeholder="Nome da refeição"
                     className="w-full "
-                    minVersion
                     value={value}
                     onChange={onChange}
                     name={name}

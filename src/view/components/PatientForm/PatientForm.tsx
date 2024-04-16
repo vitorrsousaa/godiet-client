@@ -32,11 +32,13 @@ function PatientForm(props: PatientFormProps) {
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
         <Input
           type="text"
+          minVersion={false}
           placeholder="Nome do paciente"
           error={errors.name?.message}
           {...register('name')}
         />
         <Input
+          minVersion={false}
           type="email"
           placeholder="E-mail do paciente"
           error={errors.email?.message}
@@ -44,6 +46,7 @@ function PatientForm(props: PatientFormProps) {
         />
         <Input
           type="tel"
+          minVersion={false}
           placeholder="Telefone do paciente"
           error={errors.phone?.message}
           {...register('phone')}
@@ -53,6 +56,7 @@ function PatientForm(props: PatientFormProps) {
           name="birthDate"
           render={({ field: { onChange, value } }) => (
             <DatePicker
+              minVersion={false}
               error={errors.birthDate?.message}
               disabledAfterDays
               onChange={onChange}

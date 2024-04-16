@@ -78,7 +78,6 @@ export function ModalCreateFavoriteMeal(props: ModalCreateFavoriteMealProps) {
                       value={value}
                       onChange={onChange}
                       disabled={isCreatingFavoriteMeal}
-                      minVersion
                     />
                   </FormField.Control>
                   <FormField.Description>

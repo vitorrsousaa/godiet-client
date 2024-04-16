@@ -30,6 +30,7 @@ export function Login() {
           onSubmit={handleSubmit}
         >
           <Input
+            minVersion={false}
             type="email"
             placeholder="Email de acesso"
             error={errors.email?.message}
@@ -37,6 +38,7 @@ export function Login() {
           />
           <Input
             type="password"
+            minVersion={false}
             placeholder="Senha"
             error={errors.password?.message}
             {...register('password')}

@@ -133,6 +133,7 @@ export function EditFoodModal(props: EditFoodModalProps) {
                 <Input
                   placeholder="Quantidade do alimento"
                   type="number"
+                  minVersion={false}
                   value={value}
                   onChange={(event) => {
                     const newValue = event.target.value.replace(/^0+/, '');
