@@ -10,10 +10,11 @@ export interface AnamnesisFormProps {
   isSubmitting?: boolean;
   initialValues?: TCreateAnamnesisFormDTO;
   onSubmit: (data: TCreateAnamnesisFormDTO) => Promise<void>;
+  titleDescription?: string;
 }
 
 export function AnamnesisForm(props: AnamnesisFormProps) {
-  const { isSubmitting } = props;
+  const { isSubmitting, titleDescription } = props;
 
   const { formId, control, handleSubmit } = useAnamnesisFormHook(props);
 
@@ -37,7 +38,8 @@ export function AnamnesisForm(props: AnamnesisFormProps) {
                 />
               </FormField.Control>
               <FormField.Description>
-                Dê um nome para esta anamnese do paciente.
+                {titleDescription ||
+                  'Dê um nome para esta anamnese do paciente.'}
               </FormField.Description>
               <FormField.Message />
             </FormField.Item>
