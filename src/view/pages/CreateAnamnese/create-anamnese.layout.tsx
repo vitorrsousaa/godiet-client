@@ -18,10 +18,5 @@ interface CreateAnamneseLayoutProps {
 export function CreateAnamneseLayout(props: CreateAnamneseLayoutProps) {
   const { children } = props;
 
-  return (
-    <div>
-      CreateAnamnese layout
-      {children}
-    </div>
-  );
+  return <>{children}</>;
 }

@@ -16,7 +16,13 @@ import { CreateAnamneseView } from './create-anamnese.view';
  * @returns Retorna o componente da página de exemplo.
  */
 export function CreateAnamneseController(props: CreateAnamneseHookOutput) {
-  const { pageStatus, state } = props;
+  const {
+    pageStatus,
+    anamnesisTemplate,
+    handleSubmit,
+    isCreatingAnamnesis,
+    handleReturnPage,
+  } = props;
 
   const { isError, isLoading, noData } = pageStatus;
 
@@ -32,5 +38,12 @@ export function CreateAnamneseController(props: CreateAnamneseHookOutput) {
     return <CreateAnamneseEmpty />;
   }
 
-  return <CreateAnamneseView data={state} />;
+  return (
+    <CreateAnamneseView
+      initialValues={anamnesisTemplate || { text: '', title: '' }}
+      isSubmitting={isCreatingAnamnesis}
+      onSubmit={handleSubmit}
+      onReturnPage={handleReturnPage}
+    />
+  );
 }
