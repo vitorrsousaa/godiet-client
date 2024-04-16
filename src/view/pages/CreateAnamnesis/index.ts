@@ -1,1 +1,0 @@
-export { CreateAnamnesis } from './CreateAnamnesis';
