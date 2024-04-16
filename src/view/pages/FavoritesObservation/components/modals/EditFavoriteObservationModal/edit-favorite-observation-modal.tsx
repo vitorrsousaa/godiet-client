@@ -1,6 +1,7 @@
 import { TFavoritesObservation } from '@godiet-entities';
 import { Button } from '@godiet-ui/Button';
 import { Modal } from '@godiet-ui/Modal';
+import { ScrollArea } from '@godiet-ui/ScrollArea';
 
 import { FavoriteObservationForm } from '../../FavoriteObservationForm';
 
@@ -34,16 +35,19 @@ export function EditFavoriteObservationModal(
         </Modal.Description>
       </Modal.Header>
 
-      <FavoriteObservationForm
-        isSubmitting={isUpdatingFavoritesObservation}
-        onSubmit={handleSubmit}
-        formId="edit-favorite-observation"
-        controller={controller}
-        initialValues={{
-          text: initialValues?.text || '',
-          title: initialValues?.title || '',
-        }}
-      />
+      <ScrollArea>
+        <FavoriteObservationForm
+          isSubmitting={isUpdatingFavoritesObservation}
+          onSubmit={handleSubmit}
+          formId="edit-favorite-observation"
+          controller={controller}
+          initialValues={{
+            text: initialValues?.text || '',
+            title: initialValues?.title || '',
+          }}
+          className="max-h-80"
+        />
+      </ScrollArea>
 
       <Modal.Footer>
         <Button

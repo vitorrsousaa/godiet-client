@@ -1,6 +1,7 @@
 import { FormField } from '@godiet-ui/FormField';
 import { Input } from '@godiet-ui/Input';
 import { TextEditor } from '@godiet-ui/TextEditor';
+import { cn } from '@godiet-utils/cn';
 
 import { UseFavoriteObservationFormController } from './favorite-observation-form.controller';
 import {
@@ -14,17 +15,18 @@ export interface FavoriteObservationFormProps {
   formId?: string;
   controller?: UseFavoriteObservationFormController;
   initialValues?: TCreateFavoriteObservationDTO;
+  className?: string;
 }
 
 export function FavoriteObservationForm(props: FavoriteObservationFormProps) {
-  const { isSubmitting, formId } = props;
+  const { isSubmitting, formId, className } = props;
 
   const { control, handleSubmit } = useFavoriteObservationFormHook(props);
 
   return (
     <form
       id={formId || 'create-favorite-observation'}
-      className="flex flex-col gap-4"
+      className={cn('flex flex-col gap-4', className)}
       onSubmit={handleSubmit}
       aria-label="form"
     >
