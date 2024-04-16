@@ -19,6 +19,7 @@ export function useAnamnesisFormHook(props: AnamnesisFormProps) {
   const { handleSubmit: hookFormSubmit, control } = methods;
 
   const handleSubmit = hookFormSubmit(async (data) => {
+    if (data.text.length === 0 || data.title.length === 0) return;
     await onSubmit(data);
   });
 
