@@ -18,7 +18,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     name,
     placeholder,
     error,
-    minVersion,
+    minVersion = true,
     ...inputProps
   } = props;
 

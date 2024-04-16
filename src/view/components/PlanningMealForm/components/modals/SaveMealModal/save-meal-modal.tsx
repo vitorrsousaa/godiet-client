@@ -41,7 +41,6 @@ export function SaveMealModal(props: SaveMealModalProps) {
         placeholder="Nome da refeição favorita"
         value={nameOfFavoriteMeal}
         onChange={handleChangeNameOfFavoriteMeal}
-        minVersion
         className="mb-4 mt-4"
       />
 

@@ -12,10 +12,11 @@ export interface DatePickerProps {
   error?: string;
   placeholder?: string;
   disabledAfterDays?: boolean;
+  minVersion?: boolean;
 }
 
 export function DatePicker(props: DatePickerProps) {
-  const { error, placeholder, disabledAfterDays } = props;
+  const { error, placeholder, disabledAfterDays, minVersion } = props;
 
   const {
     popoverIsVisible,
@@ -37,6 +38,7 @@ export function DatePicker(props: DatePickerProps) {
             type="text"
             value={inputValue}
             onChange={handleInputChange}
+            minVersion={minVersion}
           />
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">

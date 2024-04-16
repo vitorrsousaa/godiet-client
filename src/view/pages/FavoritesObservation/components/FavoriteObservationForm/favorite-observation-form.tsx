@@ -40,7 +40,6 @@ export function FavoriteObservationForm(props: FavoriteObservationFormProps) {
                 value={value}
                 name="title"
                 onChange={onChange}
-                minVersion
                 disabled={isSubmitting}
               />
             </FormField.Control>

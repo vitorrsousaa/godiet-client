@@ -59,7 +59,7 @@ export function AddFoodModal(props: AddFoodModalProps) {
           event?.stopPropagation();
           handleInternalFormSubmit(event);
         }}
-        className="flex flex-col gap-4"
+        className="mb-4 mt-4 flex flex-col gap-4"
       >
         <Controller
           control={internalControl}
@@ -117,6 +117,7 @@ export function AddFoodModal(props: AddFoodModalProps) {
                 <Input
                   placeholder="Quantidade do alimento"
                   type="number"
+                  minVersion={false}
                   value={value}
                   onChange={(event) => {
                     const newValue = event.target.value.replace(/^0+/, '');

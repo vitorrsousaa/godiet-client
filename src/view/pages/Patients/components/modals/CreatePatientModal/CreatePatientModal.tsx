@@ -16,7 +16,7 @@ export function CreatePatientModal(props: CreatePatientModalProps) {
 
   return (
     <Modal.Root isOpen={isOpen} onClose={onClose}>
-      <Modal.Header>
+      <Modal.Header className="mb-4">
         <Modal.Title>Criar novo paciente</Modal.Title>
         <Modal.Description>
           Preencha as informações abaixo. Os demais dados podem ser completados

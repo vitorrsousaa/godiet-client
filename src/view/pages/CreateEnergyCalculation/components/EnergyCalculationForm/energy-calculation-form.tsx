@@ -46,7 +46,6 @@ export function EnergyCalculationForm(props: EnergyCalculationFormProps) {
         <span className="font-medium">Dados básicos</span>
         <Input
           placeholder="Título do cálculo"
-          minVersion
           {...register('title')}
           error={errors.title?.message}
           disabled={isSubmitting}
@@ -57,7 +56,6 @@ export function EnergyCalculationForm(props: EnergyCalculationFormProps) {
             <Input
               placeholder="Peso (kg)"
               type="number"
-              minVersion
               min={0}
               {...register('weight')}
               error={errors.weight?.message}
@@ -68,7 +66,6 @@ export function EnergyCalculationForm(props: EnergyCalculationFormProps) {
             <Input
               placeholder="Altura (cm)"
               type="number"
-              minVersion
               min={0}
               {...register('height')}
               error={errors.height?.message}
@@ -79,7 +76,6 @@ export function EnergyCalculationForm(props: EnergyCalculationFormProps) {
             <Input
               placeholder="Massa livre de gordura (Kg)"
               type="number"
-              minVersion
               min={0}
               {...register('freeMass')}
               error={errors.freeMass?.message}
