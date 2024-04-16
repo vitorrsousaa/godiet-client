@@ -40,7 +40,7 @@ export function CreateAnamneseView(props: CreateAnamneseViewProps) {
         formId="create-anamnesis"
       />
 
-      <div className="mb-4 flex w-full flex-row-reverse items-center justify-end gap-2">
+      <div className="mb-4 flex w-full items-center justify-end gap-2">
         <Button
           variant={'destructive'}
           disabled={isSubmitting}
