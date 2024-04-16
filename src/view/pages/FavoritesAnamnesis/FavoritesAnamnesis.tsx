@@ -67,7 +67,7 @@ export function FavoritesAnamnesis() {
                     {formatDate(anamnesis.createdAt.toString(), 'PP')}
                   </Card.Description>
                 </Card.Header>
-                <Card.Footer>
+                <Card.Footer className="flex gap-2 [&>button]:h-8 [&>button]:px-2">
                   <Button
                     variant={'outline'}
                     onClick={() => handleOpenModalToEditAnamnesis(anamnesis.id)}
